@@ -22,7 +22,9 @@ export default ({ mode }) => {
     return defineConfig({
         plugins: [react()],
         server: {
+            https: process.env.VITE_APP_HTTPS === 'true',
             host: process.env.VITE_APP_HOST,
+            port: parseInt(process.env.VITE_APP_PORT),
         },
         resolve: {
             alias: resolveTsconfigPathsToAlias(),
