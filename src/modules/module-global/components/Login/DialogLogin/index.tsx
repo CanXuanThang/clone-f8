@@ -7,10 +7,13 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import PersonIcon from '@mui/icons-material/Person';
 import FormLogin from './FormLogin';
 import { useState } from 'react';
+import FormRegister from './FormRegister';
 
 interface Props {
     open: boolean;
     setOpen: (value: boolean) => void;
+    type: string;
+    setType: (value: string) => void;
 }
 
 type TIconButton = {
@@ -37,7 +40,7 @@ const communicate: TIconButton[] = [
     },
 ];
 
-function DialogLogin({ open, setOpen }: Props) {
+function DialogLogin({ open, setOpen, type, setType }: Props) {
     const [openForm, setOpenForm] = useState<boolean>(false);
     const handleOpenLogin = (id: number) => {
         id === 1 ? setOpenForm(true) : setOpenForm(false);
@@ -69,33 +72,52 @@ function DialogLogin({ open, setOpen }: Props) {
                     </Typography>
                 </DialogTitle>
                 <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
-                    {!openForm ? (
-                        communicate.map((item: TIconButton) => (
-                            <IconButton
-                                key={item.label}
-                                sx={{
-                                    border: '2px solid #ccc',
-                                    borderRadius: '44px',
-                                    width: '60%',
-                                    mb: 2,
-                                    color: 'black',
-                                    p: '12px',
-                                }}
-                                onClick={() => handleOpenLogin(item.id)}>
-                                {item.icon}
-                                <Typography variant="body2">{item.label}</Typography>
-                            </IconButton>
-                        ))
+                    {type === 'login' ? (
+                        <>
+                            {!openForm ? (
+                                communicate.map((item: TIconButton) => (
+                                    <IconButton
+                                        key={item.label}
+                                        sx={{
+                                            border: '2px solid #ccc',
+                                            borderRadius: '44px',
+                                            width: '60%',
+                                            mb: 2,
+                                            color: 'black',
+                                            p: '12px',
+                                        }}
+                                        onClick={() => handleOpenLogin(item.id)}>
+                                        {item.icon}
+                                        <Typography variant="body2">{item.label}</Typography>
+                                    </IconButton>
+                                ))
+                            ) : (
+                                <FormLogin />
+                            )}
+                            <Box sx={{ display: 'flex', my: '38px' }}>
+                                <Typography variant="body2">Bạn chưa có tài khoản?</Typography>
+                                <Typography
+                                    variant="body2"
+                                    sx={{ color: '#f05123', pl: '4px', cursor: 'pointer' }}
+                                    onClick={() => setType('register')}>
+                                    Đăng ký
+                                </Typography>
+                            </Box>
+                        </>
                     ) : (
-                        <FormLogin />
+                        <>
+                            <FormRegister />
+                            <Box sx={{ display: 'flex', my: '38px' }}>
+                                <Typography variant="body2">Bạn đã có tài khoản?</Typography>
+                                <Typography
+                                    variant="body2"
+                                    sx={{ color: '#f05123', pl: '4px', cursor: 'pointer' }}
+                                    onClick={() => setType('login')}>
+                                    Đăng nhập
+                                </Typography>
+                            </Box>
+                        </>
                     )}
-
-                    <Box sx={{ display: 'flex', my: '38px' }}>
-                        <Typography variant="body2">Bạn chưa có tài khoản?</Typography>
-                        <Typography variant="body2" color="#f05123" pl="4px">
-                            Đăng ký
-                        </Typography>
-                    </Box>
                 </DialogContent>
             </Box>
         </Dialog>

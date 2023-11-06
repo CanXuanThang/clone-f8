@@ -60,7 +60,6 @@ function FormLogin() {
                         <Box sx={{ display: 'flex', border: '1px solid #ccc', borderRadius: '44px', alignItems: 'center' }}>
                             <TextFieldElement
                                 name="code"
-                                required
                                 placeholder="Nhập mã xác nhận"
                                 fullWidth
                                 sx={{
@@ -91,7 +90,7 @@ function FormLogin() {
                 ) : (
                     <FormContainer defaultValues={{ email: '', password: '' }}>
                         <TextFieldElement
-                            name="phone"
+                            name="email"
                             required
                             placeholder="Địa chỉ email"
                             fullWidth
@@ -130,6 +129,7 @@ function FormLogin() {
                 )}
                 <Button
                     fullWidth
+                    type="submit"
                     sx={{
                         mt: 3,
                         p: '8px 16px',
