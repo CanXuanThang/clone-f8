@@ -25,13 +25,13 @@ function FooterComponent() {
                             Học lập trình để đi làm
                         </Typography>
                     </Box>
-                    <Stack flexDirection="row">
+                    <Stack flexDirection="row" mb={1}>
                         <Typography sx={{ mr: 1 }}>Điện thoại: </Typography>
                         <Link href="tel:0961010601" sx={{ textDecoration: 'none', color: '#a9b3bb' }}>
                             0961010601
                         </Link>
                     </Stack>
-                    <Stack flexDirection="row">
+                    <Stack flexDirection="row" mb={1}>
                         <Typography sx={{ mr: 1 }}>Email: </Typography>
                         <Link href="mailto:canxuanthang2001tt@gmail.com" sx={{ textDecoration: 'none', color: '#a9b3bb' }}>
                             canxuanthang2001tt@gmail.com
@@ -46,7 +46,7 @@ function FooterComponent() {
                         Về chúng tôi
                     </Typography>
                     <Typography
-                        sx={{ cursor: 'pointer' }}
+                        sx={{ cursor: 'pointer', mb: 1 }}
                         onClick={() => {
                             setOpen(true);
                             setTitle('info');
@@ -54,7 +54,7 @@ function FooterComponent() {
                         Giới thiệu
                     </Typography>
                     <Typography
-                        sx={{ cursor: 'pointer' }}
+                        sx={{ cursor: 'pointer', mb: 1 }}
                         onClick={() => {
                             setOpen(true);
                             setTitle('contact');
@@ -62,7 +62,7 @@ function FooterComponent() {
                         Liên hệ
                     </Typography>
                     <Typography
-                        sx={{ cursor: 'pointer' }}
+                        sx={{ cursor: 'pointer', mb: 1 }}
                         onClick={() => {
                             setOpen(true);
                             setTitle('term');
