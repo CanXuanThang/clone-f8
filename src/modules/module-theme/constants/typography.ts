@@ -55,8 +55,8 @@ export const typography: TypographyOptions = {
         letterSpacing: -0.02,
     },
     h5: {
-        fontFamily: FONT_TITLE,
-        fontWeight: 400,
+        fontFamily: FONT_PRIMARY_REGULAR,
+        fontWeight: 800,
         lineHeight: 1.25,
         fontSize: '1.571rem',
         letterSpacing: -0.02,
@@ -78,7 +78,7 @@ export const typography: TypographyOptions = {
         fontFamily: FONT_PRIMARY_REGULAR,
         fontWeight: 600,
         lineHeight: 1.25,
-        fontSize: '0.8rem',
+        fontSize: '0.9rem',
     },
     body1: {
         fontFamily: FONT_PRIMARY_REGULAR,

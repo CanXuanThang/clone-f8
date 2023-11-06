@@ -2,8 +2,9 @@ import { Box, Button, IconButton, Stack, Toolbar, Typography } from '@mui/materi
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import SearchComponent from './SearchComponent';
 import SliderShow from './SliderShow';
-import { useState } from 'react';
 import Login from '../Login';
+import BodyComponent from './BodyComponent';
+import FooterComponent from './FooterComponent';
 
 function HomeScreen() {
     return (
@@ -20,8 +21,10 @@ function HomeScreen() {
                 <SearchComponent />
                 <Login />
             </Toolbar>
-            <Box sx={{ margin: '32px', borderRadius: '12px' }}>
+            <Box>
                 <SliderShow />
+                <BodyComponent />
+                <FooterComponent />
             </Box>
         </Stack>
     );
