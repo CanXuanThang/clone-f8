@@ -1,8 +1,12 @@
 import { ErrorBoundary } from '@src/modules/module-error/components';
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import MainScreen from './MainScreen';
+import { SCREEN } from '../constants/screen';
 
-const HomeScreen = React.lazy(() => import('../components/HomeScreen'));
+const HomeScreen = React.lazy(() => import('./HomeScreen'));
+const CourseScreen = React.lazy(() => import('./CourseScreen'));
+const NotFoundScreen = React.lazy(() => import('./NotFoundScreen'));
 
 function HomeRouter() {
     const renderRouter = ({ path, element, visible }: { path: string; element: React.ReactNode; visible?: boolean }) =>
@@ -12,10 +16,36 @@ function HomeRouter() {
         <React.Suspense fallback={null}>
             <Routes>
                 {renderRouter({
-                    path: '',
+                    path: SCREEN.HOME,
                     element: <HomeScreen />,
                     visible: true,
                 })}
+                {renderRouter({
+                    path: SCREEN.ADVANCED_JAVASCRIPT,
+                    element: <CourseScreen />,
+                    visible: true,
+                })}
+                {renderRouter({
+                    path: SCREEN.BASIC_JAVASCRIPT,
+                    element: <CourseScreen />,
+                    visible: true,
+                })}
+                {renderRouter({
+                    path: SCREEN.C,
+                    element: <CourseScreen />,
+                    visible: true,
+                })}
+                {renderRouter({
+                    path: SCREEN.HTML_CSS_PRO,
+                    element: <CourseScreen />,
+                    visible: true,
+                })}
+                {renderRouter({
+                    path: SCREEN.NODE_EXPRESSJS,
+                    element: <CourseScreen />,
+                    visible: true,
+                })}
+                <Route path="*" element={<NotFoundScreen />} />
             </Routes>
         </React.Suspense>
     );
@@ -27,7 +57,7 @@ export default function AppRouter() {
             <BrowserRouter>
                 <React.Suspense fallback={null}>
                     <Routes>
-                        <Route path="*" element={<HomeRouter />} />
+                        <Route path="*" element={<MainScreen element={<HomeRouter />} />} />
                     </Routes>
                 </React.Suspense>
             </BrowserRouter>

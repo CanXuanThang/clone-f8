@@ -1,19 +1,18 @@
-import { Box, Button, IconButton, Stack, Toolbar, Typography } from '@mui/material';
+import { Box, Divider, Stack, Toolbar, Typography } from '@mui/material';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import SearchComponent from './SearchComponent';
-import SliderShow from './SliderShow';
 import Login from '../Login';
-import BodyComponent from './BodyComponent';
-import FooterComponent from './FooterComponent';
+import { Link } from 'react-router-dom';
+import { SCREEN } from '../../constants/screen';
 
-function HomeScreen() {
+function AppHeader() {
     return (
-        <Stack>
+        <Box sx={{ position: 'fixed', zIndex: 999, width: '100%', background: '#fff' }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Stack flexDirection="row" alignItems="center" sx={{ display: { md: 'flex', xs: 'none' } }}>
-                    <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: '#ff8f26' }}>
-                        <AutoStoriesIcon />
-                    </IconButton>
+                    <Link to={SCREEN.HOME}>
+                        <AutoStoriesIcon sx={{ mr: 2, color: '#ff8f26' }} />
+                    </Link>
                     <Typography variant="body1" sx={{ flexGrow: 1 }} color="grey.1100">
                         Học lập trình để đi làm
                     </Typography>
@@ -21,13 +20,9 @@ function HomeScreen() {
                 <SearchComponent />
                 <Login />
             </Toolbar>
-            <Box>
-                <SliderShow />
-                <BodyComponent />
-                <FooterComponent />
-            </Box>
-        </Stack>
+            <Divider sx={{ borderWidth: '1px', borderStyle: 'revert-layer' }} />
+        </Box>
     );
 }
 
-export default HomeScreen;
+export default AppHeader;

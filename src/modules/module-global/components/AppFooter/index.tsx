@@ -6,19 +6,21 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import { useState } from 'react';
 import AboutUs from './AboutUs';
 
-function FooterComponent() {
+function AppFooter() {
     const [open, setOpen] = useState<boolean>(false);
     const [title, setTitle] = useState<string>('');
+
     return (
         <Box sx={{ px: 8, mt: 8, py: 8, bgcolor: '#181821', color: '#a9b3bb' }}>
             <Grid container spacing={1}>
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Box display="flex" flexDirection="row" alignItems="center" mb={2}>
                         <IconButton
                             size="large"
                             edge="start"
                             aria-label="menu"
-                            sx={{ mr: 2, ml: '4px', color: '#ff8f26', p: 0 }}>
+                            sx={{ mr: 2, ml: '4px', color: '#ff8f26', p: 0 }}
+                            href="">
                             <AutoStoriesIcon />
                         </IconButton>
                         <Typography variant="subtitle1" sx={{ flexGrow: 1 }} color="white">
@@ -41,7 +43,7 @@ function FooterComponent() {
                         Số 11D, lô A10, khu đô thị Nam Trung Yên, Phường Yên Hòa, Quận Cầu Giấy, TP. Hà Nội
                     </Typography>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Typography variant="subtitle1" color="white" mb={2}>
                         Về chúng tôi
                     </Typography>
@@ -70,7 +72,7 @@ function FooterComponent() {
                         Điều khoản
                     </Typography>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={12} md={4}>
                     <Typography variant="subtitle1" color="white" mb={2}>
                         Theo dõi chúng tôi
                     </Typography>
@@ -85,4 +87,4 @@ function FooterComponent() {
     );
 }
 
-export default FooterComponent;
+export default AppFooter;

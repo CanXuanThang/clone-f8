@@ -1,8 +1,8 @@
-import { Box, DialogContent, Divider, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 
 function Term() {
     return (
-        <DialogContent sx={{ px: 6 }}>
+        <Box sx={{ px: 6 }}>
             <Box>
                 <Typography variant="subtitle2">I. Nguyên tắc chung</Typography>
                 <Typography mb={1}>
@@ -99,7 +99,7 @@ function Term() {
                 <Typography mb={1}>- Email: contact@fullstack.edu.vn</Typography>
                 <Typography mb={1}>- Số điện thoại: 0246.329.1102</Typography>
             </Box>
-        </DialogContent>
+        </Box>
     );
 }
 

@@ -1,4 +1,4 @@
-import { Box, Button, DialogContent, Link, Stack, Typography } from '@mui/material';
+import { Box, Button, Link, Stack, Typography } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
@@ -7,7 +7,7 @@ import TexFieldElementBase from '@module-base/components/react-hook-form-mui-bas
 
 function ContactUs() {
     return (
-        <DialogContent sx={{ mx: 6 }}>
+        <Box sx={{ mx: 6 }}>
             <Box mb={4}>
                 <Typography mb={4}>
                     Chúng tôi luôn sẵn sàng tiếp nhận mọi ý kiến ​đóng góp và giải đáp những yêu cầu của bạn. <br />
@@ -99,7 +99,7 @@ function ContactUs() {
                     Gửi đi
                 </Button>
             </FormContainer>
-        </DialogContent>
+        </Box>
     );
 }
 
