@@ -2,6 +2,8 @@ import { Box, Grid, List, ListItem, ListItemIcon, Typography } from '@mui/materi
 import DoneIcon from '@mui/icons-material/Done';
 import AccordionCourse from './AccordionCourse';
 import Intro from './Intro';
+import { Link } from 'react-router-dom';
+import { SCREEN } from '../../constants/screen';
 
 function Courses() {
     return (
@@ -98,9 +100,11 @@ function Courses() {
                     </Box>
                     <Box display="flex" justifyContent="space-between" alignItems="center">
                         <Box>
-                            <Typography variant="h4" my={3}>
-                                Nội dung khóa học
-                            </Typography>
+                            <Link to={SCREEN.LEARNING}>
+                                <Typography variant="h4" my={3}>
+                                    Nội dung khóa học
+                                </Typography>
+                            </Link>
                             <Box display="flex">
                                 <Typography variant="caption" mr={1}>
                                     20 chương

@@ -11,7 +11,7 @@ function AppFooter() {
     const [title, setTitle] = useState<string>('');
 
     return (
-        <Box sx={{ px: 8, mt: 8, py: 8, bgcolor: '#181821', color: '#a9b3bb' }}>
+        <Box sx={{ px: 8, py: 8, bgcolor: '#181821', color: '#a9b3bb' }}>
             <Grid container spacing={1}>
                 <Grid item xs={12} sm={6} md={4}>
                     <Box display="flex" flexDirection="row" alignItems="center" mb={2}>

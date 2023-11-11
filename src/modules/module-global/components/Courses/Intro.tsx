@@ -7,9 +7,13 @@ import PlayCircle from '@mui/icons-material/PlayCircle';
 import a1 from '../../imgs/1.png';
 import { useState } from 'react';
 import DialogBase from '@src/modules/module-base/components/DialogBase';
+import DialogLogin from '../Login/DialogLogin';
 
 function Intro() {
     const [open, setOpen] = useState<boolean>(false);
+    const [openLogin, setOpenLogin] = useState<boolean>(false);
+    const [type, setType] = useState<string>('register');
+
     return (
         <Card>
             <CardMedia
@@ -49,7 +53,9 @@ function Intro() {
                 <Typography variant="h3" color="#f05123">
                     Miễn phí
                 </Typography>
-                <Button sx={{ borderRadius: '99px', bgcolor: '#f05123', p: '6px 30px', color: '#fff', my: 2 }}>
+                <Button
+                    sx={{ borderRadius: '99px', bgcolor: '#f05123', p: '6px 30px', color: '#fff', my: 2 }}
+                    onClick={() => setOpenLogin(true)}>
                     ĐĂNG KÝ HỌC
                 </Button>
                 <Box pl="30%">
@@ -100,6 +106,7 @@ function Intro() {
                     </>
                 }
             />
+            <DialogLogin open={openLogin} setOpen={setOpenLogin} type={type} setType={setType} />
         </Card>
     );
 }

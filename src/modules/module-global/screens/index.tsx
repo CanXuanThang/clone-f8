@@ -7,6 +7,7 @@ import { SCREEN } from '../constants/screen';
 const HomeScreen = React.lazy(() => import('./HomeScreen'));
 const CourseScreen = React.lazy(() => import('./CourseScreen'));
 const NotFoundScreen = React.lazy(() => import('./NotFoundScreen'));
+const LearningScreen = React.lazy(() => import('./LearningScreen'));
 
 function HomeRouter() {
     const renderRouter = ({ path, element, visible }: { path: string; element: React.ReactNode; visible?: boolean }) =>
@@ -43,6 +44,11 @@ function HomeRouter() {
                 {renderRouter({
                     path: SCREEN.NODE_EXPRESSJS,
                     element: <CourseScreen />,
+                    visible: true,
+                })}
+                {renderRouter({
+                    path: SCREEN.LEARNING,
+                    element: <LearningScreen />,
                     visible: true,
                 })}
                 <Route path="*" element={<NotFoundScreen />} />

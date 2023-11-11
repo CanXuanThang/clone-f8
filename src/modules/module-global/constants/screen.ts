@@ -8,6 +8,7 @@ const SCREEN = Object.freeze({
     HTML_CSS_PRO: '/courses/html-css-pro',
     C: '/courses/c',
     SASS: '/courses/sass',
+    LEARNING: '/learning',
 });
 
 export { SCREEN };
