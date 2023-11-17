@@ -46,11 +46,24 @@ function BodyComponent() {
                                         </Typography>
                                     </Link>
                                 </CardMedia>
-                                <CardContent sx={{ p: 0, pt: 1, pb: '0px !important' }}>
-                                    <Typography variant="subtitle2">{item.name}</Typography>
-                                    <Typography variant="subtitle2" color="#f05123" my={1}>
-                                        {item.price}
-                                    </Typography>
+                                <CardContent
+                                    sx={{
+                                        p: 0,
+                                        pt: 1,
+                                        pb: '0px !important',
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                    }}>
+                                    <Box>
+                                        <Typography variant="subtitle2">{item.name}</Typography>
+                                        <Typography variant="subtitle2" color="#f05123" my={1}>
+                                            {item.price}
+                                        </Typography>
+                                    </Box>
+                                    <Button
+                                        sx={{ bgcolor: '#ff8f26', borderRadius: '99px', fontSize: '12px', color: '#fff' }}>
+                                        Thêm vào giỏ hàng
+                                    </Button>
                                 </CardContent>
                             </Card>
                         </Grid>

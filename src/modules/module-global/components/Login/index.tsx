@@ -8,7 +8,7 @@ function Login() {
 
     return (
         <>
-            <Box>
+            <Box ml={2}>
                 <Button
                     color="inherit"
                     onClick={() => {
