@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, CardMedia, IconButton, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, IconButton, Rating, Typography } from '@mui/material';
 import SpeedIcon from '@mui/icons-material/Speed';
 import TheatersIcon from '@mui/icons-material/Theaters';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
@@ -13,6 +13,7 @@ function Intro() {
     const [open, setOpen] = useState<boolean>(false);
     const [openLogin, setOpenLogin] = useState<boolean>(false);
     const [type, setType] = useState<string>('register');
+    const [value, setValue] = useState<number | null>(2);
 
     return (
         <Card>
@@ -83,6 +84,14 @@ function Intro() {
                             Học mọi lúc mọi nơi
                         </Typography>
                     </Box>
+                    <Rating
+                        sx={{ display: 'flex', alignItems: 'center', mt: 1 }}
+                        name="simple-controlled"
+                        value={value}
+                        onChange={(event, newValue) => {
+                            setValue(newValue);
+                        }}
+                    />
                 </Box>
             </CardContent>
             <DialogBase
