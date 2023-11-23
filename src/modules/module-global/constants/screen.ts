@@ -9,6 +9,8 @@ const SCREEN = Object.freeze({
     C: '/courses/c',
     SASS: '/courses/sass',
     LEARNING: '/learning',
+
+    CART: '/cart',
 });
 
 export { SCREEN };

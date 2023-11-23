@@ -7,7 +7,7 @@ import './BodyComponent.scss';
 
 function BodyComponent() {
     return (
-        <Box px={10} sx={{ md: { px: 0 } }}>
+        <Box px={10} sx={{ md: { px: 0 } }} mb={8}>
             <Box>
                 <Typography variant="h5" sx={{ pt: 6, pb: 2 }}>
                     Khóa học Pro
