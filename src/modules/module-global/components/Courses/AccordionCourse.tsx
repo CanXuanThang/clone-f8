@@ -1,10 +1,31 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Drawer, IconButton, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import { useTheme } from '@mui/material/styles';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-function AccordionCourse() {
+interface Props {
+    open?: boolean;
+    setOpen?: (value: boolean) => void;
+}
+
+function AccordionCourse({ open, setOpen }: Props) {
+    const theme = useTheme();
+
     return (
-        <Box>
+        <Drawer
+            open={open}
+            sx={{
+                width: '25%',
+                flexShrink: 0,
+                '& .MuiDrawer-paper': {
+                    width: '25%',
+                    mt: '62px',
+                },
+            }}
+            variant="persistent"
+            anchor="right">
             <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ div: { justifyContent: 'space-between' } }}>
                     <Typography variant="subtitle2">1. Khái niệm kỹ thuật cần biết</Typography>
@@ -45,7 +66,12 @@ function AccordionCourse() {
                     </Box>
                 </AccordionDetails>
             </Accordion>
-        </Box>
+            <Box sx={{ width: '100%', bgcolor: '#f0f0f0', position: 'fixed', bottom: 0, height: '64px', display: 'flex' }}>
+                <IconButton onClick={() => setOpen && setOpen(false)} sx={{ color: 'black' }}>
+                    {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                </IconButton>
+            </Box>
+        </Drawer>
     );
 }
 
