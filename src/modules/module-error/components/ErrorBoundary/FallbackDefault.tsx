@@ -1,12 +1,9 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Box, Typography, Button } from '@mui/material';
 
 /** constants */
-import { SECOND_COUNT_DOWN_ERROR } from '@module-error/constants';
 
 /** utils */
-import { errorMessage } from '@module-error/utils';
 import Logo from '@module-error/assets/error.jpeg';
 
 /** components lazy */
@@ -50,7 +47,7 @@ function FallbackDefault({ isAutoReload }: { isAutoReload: boolean }) {
                             color: 'primary.main',
                         },
                     }}>
-                    <FormattedMessage {...errorMessage['module.error.fallback.title']} />
+                    Đã xảy ra lỗi
                 </Typography>
 
                 <Typography
@@ -64,7 +61,7 @@ function FallbackDefault({ isAutoReload }: { isAutoReload: boolean }) {
                             color: 'primary.main',
                         },
                     }}>
-                    <FormattedMessage {...errorMessage['module.error.fallback.content']} />
+                    Bạn hãy thử chạy lại ứng dụng
                 </Typography>
 
                 <Button
@@ -78,7 +75,7 @@ function FallbackDefault({ isAutoReload }: { isAutoReload: boolean }) {
                         color: 'common.white',
                         '&:hover': { bgcolor: 'error.main' },
                     }}>
-                    <FormattedMessage {...errorMessage['module.error.fallback.retry']} />
+                    Thử lại
                 </Button>
             </Box>
         </Box>

@@ -1,14 +1,9 @@
-/**
- *
- * @author dong.nguyenthanh@powergatesoftware.com on 14/08/2023.
- *
- */
-
 /** constants */
 import { ERROR_ACTION } from '@module-error/constants';
 
 /** types */
 import type { StoreErrorType } from '@module-error/models';
+import { ActionType, createCustomAction, getType } from 'typesafe-actions';
 
 const initialState: StoreErrorType = {
     notify: {
@@ -20,22 +15,27 @@ const initialState: StoreErrorType = {
     },
 } as const;
 
-const toggleNotify = (state: StoreErrorType, payload: StoreErrorType['notify']) => ({
-    ...state,
-    notify: {
-        open: !!payload?.message,
-        message: payload?.message,
-        mode: payload?.mode,
-        close: payload?.close,
-        duration: payload?.duration,
-    },
-});
+export const toggleNotify = createCustomAction('notify', (data: StoreErrorType) => ({
+    data,
+}));
 
-function errorReducer(state = initialState, action: { type: string; payload?: any }) {
-    const { type, payload } = action;
-    switch (type) {
-        case ERROR_ACTION.TOGGLE_NOTIFY:
-            return toggleNotify(state, payload);
+const actions = { toggleNotify };
+
+type Action = ActionType<typeof actions>;
+
+function errorReducer(state = initialState, action: Action) {
+    switch (action.type) {
+        case getType(toggleNotify):
+            return {
+                ...state,
+                notify: {
+                    open: !!action.data.notify.message,
+                    message: action.data.notify.message,
+                    mode: action.data.notify.mode,
+                    close: action.data.notify.close,
+                    duration: action.data.notify.duration,
+                },
+            };
         default:
             return state;
     }

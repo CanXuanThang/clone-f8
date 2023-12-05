@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 
 export interface AuthState {
     auth?: any;
-    user?: any;
 }
 
 export const setAuth = createCustomAction('auth/set-auth', (data: AuthState) => ({

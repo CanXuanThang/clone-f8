@@ -1,9 +1,3 @@
-/**
- *
- * @author dong.nguyenthanh@powergatesoftware.com on 14/08/2023.
- *
- */
-
 export const REGEX_EMAIL = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 export const REGEX_PHONE =
     /^(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d*)\)?[\\. /]?)?((?:\(?\d+\)?[-. \\/]?)+)(?:[-. \\/]?(?:#|ext\.?|extension|x)[-. \\/]?(\d+))?$/i;

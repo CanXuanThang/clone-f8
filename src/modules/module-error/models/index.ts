@@ -1,9 +1,3 @@
-/**
- *
- * @author dong.nguyenthanh@powergatesoftware.com on 14/08/2023.
- *
- */
-
 /** types */
 import type { ReactNode } from 'react';
 import type { AlertColor } from '@mui/material/Alert/Alert';

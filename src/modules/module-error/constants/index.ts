@@ -1,9 +1,3 @@
-/**
- *
- * @author dong.nguyenthanh@powergatesoftware.com on 14/08/2023.
- *
- */
-
 const SECOND_COUNT_DOWN_ERROR = 99;
 
 const ERROR_STORE_KEY = Object.freeze({

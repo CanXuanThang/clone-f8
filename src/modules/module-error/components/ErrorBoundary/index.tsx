@@ -2,6 +2,7 @@ import * as React from 'react';
 
 /** types */
 import type { ReactNode, FunctionComponent, ErrorInfo } from 'react';
+import NotifyBoundary from '../NotifyBoundary';
 
 type Props = {
     children: ReactNode;
@@ -37,7 +38,10 @@ class ErrorBoundary extends React.Component<Props, States> {
         const { hasError } = this.state;
 
         return (
-            <React.Suspense fallback={null}>{hasError ? <FallBack isAutoReload={isAutoReload} /> : children}</React.Suspense>
+            <React.Suspense fallback={null}>
+                {hasError ? <FallBack isAutoReload={isAutoReload} /> : children}
+                <NotifyBoundary />
+            </React.Suspense>
         );
     }
 }

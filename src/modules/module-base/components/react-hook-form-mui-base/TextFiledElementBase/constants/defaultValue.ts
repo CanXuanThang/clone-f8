@@ -1,9 +1,3 @@
-/**
- *
- * @author dong.nguyenthanh@powergatesoftware.com on 14/08/2023.
- *
- */
-
 const emptyFunction = Object.freeze(() => {});
 
 const emptyObject = Object.freeze<Record<string, undefined>>({});
