@@ -4,7 +4,6 @@ import SearchComponent from './SearchComponent';
 import Login from '../Login';
 import { Link } from 'react-router-dom';
 import { SCREEN } from '../../constants/screen';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 function AppHeader() {
     return (
@@ -20,7 +19,6 @@ function AppHeader() {
                 </Stack>
                 <SearchComponent />
                 <Box display="flex" alignItems="center">
-                    <ShoppingCartIcon sx={{ color: '#ff8f26', cursor: 'pointer' }} />
                     <Login />
                 </Box>
             </Toolbar>

@@ -9,6 +9,7 @@ const SCREEN = Object.freeze({
     C: '/courses/c',
     SASS: '/courses/sass',
     LEARNING: '/learning',
+    PAYMENT: '/payment',
 });
 
 export { SCREEN };
