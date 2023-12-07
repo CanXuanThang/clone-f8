@@ -1,13 +1,44 @@
+import { LoadingButton } from '@mui/lab';
 import { Box, Button, Typography } from '@mui/material';
+import TexFieldElementBase from '@src/modules/module-base/components/react-hook-form-mui-base/TextFiledElementBase';
+import { accessToken } from '@src/modules/module-base/constants';
+import { loginApi } from '@src/modules/module-global/api/Auth';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import React from 'react';
 import { useState } from 'react';
 import { FormContainer, TextFieldElement } from 'react-hook-form-mui';
+
+type FormLoginState = {
+    username: string;
+    password: string;
+};
 
 function FormLogin() {
     const [typeLogin, setTypeLogin] = useState<string>('phone');
 
+    // const mutation = useMutation({
+    //     mutationFn: loginApi,
+    //     onSuccess: (response) => {
+    //         if (response?.status === 200) {
+    //             Cookies.set(accessToken, response.data.access_token, { expires: 1 });
+    //         }
+    //     },
+    // });
+
+    const onSubmit = React.useCallback(
+        (data: FormLoginState) =>
+            axios.post('http://localhost:8090/ndz/oauth/token', {
+                username: data.username,
+                password: data.password,
+            }),
+        []
+    );
+
     return (
         <Box width="100%" px={12}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            {/* <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 {typeLogin === 'phone' ? (
                     <>
                         <Typography fontSize="14px" fontWeight="600">
@@ -31,9 +62,9 @@ function FormLogin() {
                         </Box>
                     </>
                 )}
-            </Box>
+            </Box> */}
             <Box>
-                {typeLogin === 'phone' ? (
+                {/* {typeLogin === 'phone' ? (
                     <FormContainer defaultValues={{ phone: '', code: '' }}>
                         <TextFieldElement
                             name="phone"
@@ -87,59 +118,64 @@ function FormLogin() {
                             </Button>
                         </Box>
                     </FormContainer>
-                ) : (
-                    <FormContainer defaultValues={{ email: '', password: '' }}>
-                        <TextFieldElement
-                            name="email"
-                            required
-                            placeholder="Địa chỉ email"
-                            fullWidth
-                            sx={{
-                                '& > div': {
-                                    borderRadius: '44px',
-                                    '& > input': {
-                                        p: '12px 5px 12px 20px',
-                                    },
-                                    '& > fieldset': {
-                                        border: '1px solid #ccc',
-                                    },
+                ) : ( */}
+                <FormContainer
+                    defaultValues={{ username: '', password: '' }}
+                    onSuccess={onSubmit}
+                    mode="onChange"
+                    reValidateMode="onChange">
+                    <TextFieldElement
+                        name="username"
+                        required
+                        placeholder="Tên đăng nhập"
+                        fullWidth
+                        sx={{
+                            '& > div': {
+                                borderRadius: '44px',
+                                '& > input': {
+                                    p: '12px 5px 12px 20px',
                                 },
-                                my: 1,
-                            }}
-                        />
-                        <br />
-                        <TextFieldElement
-                            name="password"
-                            required
-                            placeholder="Mật khẩu"
-                            fullWidth
-                            sx={{
-                                '& > div': {
-                                    borderRadius: '44px',
-                                    '& > input': {
-                                        p: '12px 5px 12px 20px',
-                                    },
-                                    '& > fieldset': {
-                                        border: '1px solid #ccc',
-                                    },
+                                '& > fieldset': {
+                                    border: '1px solid #ccc',
                                 },
-                            }}
-                        />
-                    </FormContainer>
-                )}
-                <Button
-                    fullWidth
-                    type="submit"
-                    sx={{
-                        mt: 3,
-                        p: '8px 16px',
-                        bgcolor: '#1dbfaf',
-                        backgroundImage: 'linear-gradient(70.06deg, #2cccff -5%, #22dfbf 106%)',
-                        borderRadius: '44px',
-                        color: '#fff',
-                    }}>
-                    Đăng nhập
-                </Button>
+                            },
+                            my: 1,
+                        }}
+                    />
+                    <br />
+                    <TextFieldElement
+                        name="password"
+                        required
+                        placeholder="Mật khẩu"
+                        fullWidth
+                        sx={{
+                            '& > div': {
+                                borderRadius: '44px',
+                                '& > input': {
+                                    p: '12px 5px 12px 20px',
+                                },
+                                '& > fieldset': {
+                                    border: '1px solid #ccc',
+                                },
+                            },
+                        }}
+                    />
+                    <LoadingButton
+                        fullWidth
+                        // loading={mutation.is}
+                        type="submit"
+                        sx={{
+                            mt: 3,
+                            p: '8px 16px',
+                            bgcolor: '#1dbfaf',
+                            backgroundImage: 'linear-gradient(70.06deg, #2cccff -5%, #22dfbf 106%)',
+                            borderRadius: '44px',
+                            color: '#fff',
+                        }}>
+                        Đăng nhập
+                    </LoadingButton>
+                </FormContainer>
+                {/* )} */}
             </Box>
         </Box>
     );

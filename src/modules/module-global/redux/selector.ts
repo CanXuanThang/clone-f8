@@ -1,5 +1,6 @@
 import { ActionType, createCustomAction, getType } from 'typesafe-actions';
 import Cookies from 'js-cookie';
+import { accessToken } from '@module-base/constants';
 
 export interface AuthState {
     auth?: any;
@@ -19,7 +20,7 @@ export default function reduceAuth(state: AuthState = {}, action: Action) {
         case getType(setAuth):
             return { ...state, auth: action.data };
         case getType(logout):
-            Cookies.remove('token');
+            Cookies.remove(accessToken);
         default:
             return state;
     }
