@@ -2,9 +2,6 @@ import { Box, Dialog, DialogContent, DialogTitle, IconButton, Typography } from 
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import GoogleIcon from '@mui/icons-material/Google';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import PersonIcon from '@mui/icons-material/Person';
 import FormLogin from './FormLogin';
 import { useState } from 'react';
 import FormRegister from './FormRegister';
@@ -16,35 +13,8 @@ interface Props {
     setType: (value: string) => void;
 }
 
-type TIconButton = {
-    id: number;
-    icon: JSX.Element;
-    label: string;
-};
-
-const communicate: TIconButton[] = [
-    {
-        id: 1,
-        icon: <PersonIcon sx={{ position: 'absolute', left: '24px' }} />,
-        label: 'Sử dụng emai/ Số điện thoại',
-    },
-    {
-        id: 2,
-        icon: <GoogleIcon sx={{ position: 'absolute', left: '24px' }} />,
-        label: 'Đăng nhập với Google',
-    },
-    {
-        id: 3,
-        icon: <FacebookIcon sx={{ position: 'absolute', left: '24px' }} />,
-        label: 'Đăng nhập với Facebook',
-    },
-];
-
 function DialogLogin({ open, setOpen, type, setType }: Props) {
     const [openForm, setOpenForm] = useState<boolean>(false);
-    const handleOpenLogin = (id: number) => {
-        id === 1 ? setOpenForm(true) : setOpenForm(false);
-    };
 
     return (
         <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
@@ -74,26 +44,7 @@ function DialogLogin({ open, setOpen, type, setType }: Props) {
                 <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
                     {type === 'login' ? (
                         <>
-                            {!openForm ? (
-                                communicate.map((item: TIconButton) => (
-                                    <IconButton
-                                        key={item.label}
-                                        sx={{
-                                            border: '2px solid #ccc',
-                                            borderRadius: '44px',
-                                            width: '60%',
-                                            mb: 2,
-                                            color: 'black',
-                                            p: '12px',
-                                        }}
-                                        onClick={() => handleOpenLogin(item.id)}>
-                                        {item.icon}
-                                        <Typography variant="body2">{item.label}</Typography>
-                                    </IconButton>
-                                ))
-                            ) : (
-                                <FormLogin />
-                            )}
+                            <FormLogin setOpen={setOpen} />
                             <Box sx={{ display: 'flex', my: '38px' }}>
                                 <Typography variant="body2">Bạn chưa có tài khoản?</Typography>
                                 <Typography

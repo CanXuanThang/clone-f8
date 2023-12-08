@@ -15,27 +15,27 @@ const initialState: StoreErrorType = {
     },
 } as const;
 
-export const toggleNotify = createCustomAction('notify', (data: StoreErrorType) => ({
-    data,
-}));
+export const toggleNotify = (state: StoreErrorType, payload: StoreErrorType['notify']) => ({
+    ...state,
+    notify: {
+        open: !!payload?.message,
+        message: payload?.message,
+        mode: payload?.mode,
+        close: payload?.close,
+        duration: payload?.duration,
+    },
+});
 
 const actions = { toggleNotify };
 
 type Action = ActionType<typeof actions>;
 
-function errorReducer(state = initialState, action: Action) {
-    switch (action.type) {
-        case getType(toggleNotify):
-            return {
-                ...state,
-                notify: {
-                    open: !!action.data.notify.message,
-                    message: action.data.notify.message,
-                    mode: action.data.notify.mode,
-                    close: action.data.notify.close,
-                    duration: action.data.notify.duration,
-                },
-            };
+function errorReducer(state = initialState, action: { type: Action; payload?: any }) {
+    const { type, payload } = action;
+
+    switch (type) {
+        case 'notify':
+            return toggleNotify(state, payload);
         default:
             return state;
     }

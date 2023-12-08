@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Snackbar, Alert, Typography } from '@mui/material';
 
-import { ERROR_ACTION } from '@module-error/constants';
-
 /** types */
 import type { SnackbarProps } from '@mui/material/Snackbar/Snackbar';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +11,7 @@ const NotifyBoundary = React.memo((props: Props) => {
     const { open, message, mode, close, duration = 2000 } = useSelector((state: AppState) => state.notify.notify);
     const dispatch = useDispatch();
 
-    const closeSnackbar = React.useCallback(() => dispatch({ type: ERROR_ACTION.TOGGLE_NOTIFY }), []);
+    const closeSnackbar = React.useCallback(() => dispatch({ type: 'notify' }), []);
 
     return (
         <Snackbar
