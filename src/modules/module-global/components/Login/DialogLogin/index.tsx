@@ -18,7 +18,7 @@ function DialogLogin({ open, setOpen, type, setType }: Props) {
 
     return (
         <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
-            <Box p="48px 16px">
+            <Box>
                 <DialogTitle textAlign="center" mt={4} variant="h4">
                     {openForm && (
                         <IconButton
@@ -36,7 +36,7 @@ function DialogLogin({ open, setOpen, type, setType }: Props) {
                         <AutoStoriesIcon />
                     </IconButton>
                     <br />
-                    Đăng nhập
+                    {type === 'login' ? 'Đăng nhập' : 'Đăng ký'}
                     <Typography component="p" fontSize="13px" color="#f33a58" m="12px 60px">
                         Mỗi người nên sử dụng riêng một tài khoản, tài khoản nhiều người sử dụng chung có thể sẽ bị khóa.
                     </Typography>
@@ -57,7 +57,7 @@ function DialogLogin({ open, setOpen, type, setType }: Props) {
                         </>
                     ) : (
                         <>
-                            <FormRegister />
+                            <FormRegister setType={setType} />
                             <Box sx={{ display: 'flex', my: '38px' }}>
                                 <Typography variant="body2">Bạn đã có tài khoản?</Typography>
                                 <Typography

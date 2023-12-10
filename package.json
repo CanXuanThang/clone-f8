@@ -25,6 +25,7 @@
     "mui-tel-input": "^4.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.48.2",
     "react-hook-form-mui": "^6.5.4",
     "react-intl": "^6.5.1",
     "react-player": "^2.13.0",

@@ -5,6 +5,7 @@ import { debounce } from '@module-base/hooks';
 
 const AUTH_API_PATH = Object.freeze({
     SIGN_IN: '/oauth/token',
+    REGISTER: '/public/register',
 });
 
 const loginApi = async (payload: AuthApiProps['SignIn']['Payload']): Promise<AuthApiProps['SignIn']['Response']> => {
@@ -24,4 +25,21 @@ const loginApi = async (payload: AuthApiProps['SignIn']['Payload']): Promise<Aut
     return error || response;
 };
 
-export { loginApi };
+const registerApi = async (payload: AuthApiProps['Register']['Payload']): Promise<AuthApiProps['Register']['Response']> => {
+    const {
+        timer = TIMING_API_PENDING,
+        data: { username, email, password, confirmPassword, displayName, phoneNumber },
+    } = payload;
+    const options = {
+        url: AUTH_API_PATH.REGISTER,
+        method: 'post',
+        data: { username, email, password, confirmPassword, displayName, phoneNumber },
+    };
+    const [{ response, error }] = await Promise.all([
+        callApi<AuthApiProps['Register']['Response']>(options),
+        debounce(timer),
+    ]);
+    return error || response;
+};
+
+export { loginApi, registerApi };
