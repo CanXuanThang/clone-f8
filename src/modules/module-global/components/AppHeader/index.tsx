@@ -23,7 +23,7 @@ import { AppState } from '../../redux';
 import Login from '../Auth/Login';
 import ChangePassword from '../Auth/ChangePassword';
 import Cookies from 'js-cookie';
-import { accessToken } from '@src/modules/module-base/constants';
+import { accessToken, username } from '@src/modules/module-base/constants';
 
 function AppHeader() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -102,6 +102,7 @@ function AppHeader() {
                                 <Button
                                     onClick={() => {
                                         dispatch(setToken('logout', ''));
+                                        Cookies.remove(username);
                                         handleClose();
                                     }}>
                                     <ListItemIcon>
