@@ -7,7 +7,7 @@ import PlayCircle from '@mui/icons-material/PlayCircle';
 import a1 from '../../imgs/1.png';
 import { useState } from 'react';
 import DialogBase from '@src/modules/module-base/components/DialogBase';
-import DialogLogin from '../Login/DialogLogin';
+import DialogLogin from '../Auth/Login/DialogLogin';
 
 function Intro() {
     const [open, setOpen] = useState<boolean>(false);

@@ -2,7 +2,7 @@ import { ActionType, createCustomAction, getType } from 'typesafe-actions';
 import Cookies from 'js-cookie';
 import { accessToken } from '@module-base/constants';
 
-export const setAuth = createCustomAction('auth/set-auth', (data: any) => ({
+export const setAuth = createCustomAction('auth/setauth', (data: any) => ({
     data,
 }));
 
@@ -22,7 +22,7 @@ export default function reduceAuth(state: any = {}, action: Action) {
             return { ...state, auth: action.data };
         case getType(setToken):
             if (action.action === 'login') {
-                return { ...state, token: Cookies.set(accessToken, action.data, { expires: 0.5 }) };
+                return { ...state, token: action.data };
             }
             if (action.action === 'logout') {
                 return { ...state, token: Cookies.remove(accessToken) };

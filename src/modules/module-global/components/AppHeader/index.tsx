@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import SearchComponent from './SearchComponent';
-import Login from '../Login';
 import { Link } from 'react-router-dom';
 import { SCREEN } from '../../constants/screen';
 import React from 'react';
@@ -21,10 +20,15 @@ import { Logout } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from '../../redux/selector';
 import { AppState } from '../../redux';
+import Login from '../Auth/Login';
+import ChangePassword from '../Auth/ChangePassword';
+import Cookies from 'js-cookie';
+import { accessToken } from '@src/modules/module-base/constants';
 
 function AppHeader() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const isToken = useSelector((state: AppState) => state.profile.token);
+    const token = Cookies.get(accessToken);
 
     const open = Boolean(anchorEl);
     const dispatch = useDispatch();
@@ -48,7 +52,7 @@ function AppHeader() {
                     </Typography>
                 </Stack>
                 <SearchComponent />
-                {!!isToken ? (
+                {!!isToken || !!token ? (
                     <Box display="flex" alignItems="center">
                         <Button sx={{ color: '#333', fontWeight: 600, fontSize: '14px' }}>Khóa học của tôi</Button>
                         <IconButton
@@ -65,7 +69,6 @@ function AppHeader() {
                             id="account-menu"
                             open={open}
                             onClose={handleClose}
-                            onClick={handleClose}
                             PaperProps={{
                                 elevation: 0,
                                 sx: {
@@ -94,8 +97,13 @@ function AppHeader() {
                             }}
                             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
-                            <MenuItem onClick={handleClose}>
-                                <Button onClick={() => dispatch(setToken('logout', ''))}>
+                            <MenuItem sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                                <ChangePassword />
+                                <Button
+                                    onClick={() => {
+                                        dispatch(setToken('logout', ''));
+                                        handleClose();
+                                    }}>
                                     <ListItemIcon>
                                         <Logout fontSize="small" />
                                     </ListItemIcon>

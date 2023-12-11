@@ -1,7 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import { Box } from '@mui/material';
 import TexFieldElementBase from '@src/modules/module-base/components/react-hook-form-mui-base/TextFiledElementBase';
-import { accessToken } from '@src/modules/module-base/constants';
+import { accessToken, username } from '@src/modules/module-base/constants';
 import { loginApi } from '@src/modules/module-global/api/Auth';
 import { setAuth, setToken } from '@src/modules/module-global/redux/selector';
 import { useMutation } from '@tanstack/react-query';
@@ -27,6 +27,7 @@ function FormLogin({ setOpen }: Props) {
         onSuccess: (response) => {
             if (response?.status === 200) {
                 const token = Cookies.set(accessToken, response.data.access_token, { expires: 1 });
+                Cookies.set(username, response.data.username, { expires: 1 });
                 setOpen(false);
                 dispatch(setToken('login', token));
                 return dispatch(setAuth(response.data));

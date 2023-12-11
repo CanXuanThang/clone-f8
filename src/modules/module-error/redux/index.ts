@@ -1,5 +1,4 @@
 /** constants */
-import { ERROR_ACTION } from '@module-error/constants';
 
 /** types */
 import type { StoreErrorType } from '@module-error/models';

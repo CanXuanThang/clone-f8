@@ -1,10 +1,11 @@
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import FormControlInput from '@module-base/components/react-hook-form-mui-base/FormControlInput';
 import { useMutation } from '@tanstack/react-query';
 import { registerApi } from '@src/modules/module-global/api/Auth';
 import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
+import { LoadingButton } from '@mui/lab';
 
 type FormData = {
     displayName: string;
@@ -33,14 +34,14 @@ function DialogRegister({ setType }: Props) {
             let message;
             let mode;
             if (res?.status === 200) {
-                mode = 'sucess';
+                mode = 'success';
                 message = 'Đăng ký tài khoản thành công';
                 setType('login');
             } else {
                 mode = 'error';
                 message = 'Đăng ký tài khoản thất bại';
             }
-            dispatch({
+            return dispatch({
                 type: 'notify',
                 payload: {
                     mode: mode,
@@ -131,8 +132,9 @@ function DialogRegister({ setType }: Props) {
                     }}
                 />
             </Box>
-            <Button
+            <LoadingButton
                 fullWidth
+                loading={mutation.isLoading}
                 type="submit"
                 sx={{
                     mt: 3,
@@ -143,7 +145,7 @@ function DialogRegister({ setType }: Props) {
                     color: '#fff',
                 }}>
                 Đăng ký
-            </Button>
+            </LoadingButton>
         </Box>
     );
 }
