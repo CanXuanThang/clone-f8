@@ -1,34 +1,17 @@
-# React + TypeScript + Vite
+# Cách để chạy dự án
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+-   Chạy lần lượt câu lệnh sau:
+    -   npm i
+    -   npm run dev
 
-Currently, two official plugins are available:
+# Cấu hình router
 
--   [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
--   [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   Tìm kiếm: const SCREEN = Object.freeze
+-   Thay url từ name của khóa học (ví dụ: Khóa học JavaScript cơ bản => khoa-hoc-javascript-co-ban)
 
-## Expanding the ESLint configuration
+# Cấu hình lại file ảnh
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
--   Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
--   Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
--   Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
--   Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
-
-=======================================================================================================================
-
--   Search CHANGE_LINK
--   Thay đường dẫn changLink thành nơi lưu trữ clone-f8
+-   Tìm kiếm: CHANGE_LINK
+-   Thay đường dẫn CHANGE_LINK thành nơi lưu trữ clone-f8 (VÍ DỤ:C:/Users/thang/OneDrive/Front-end/clone-f8 )
 -   Sửa IMAGE_PATH trong back end thành nơi nơi trữ clone-f8 + "/src/modules/module-global/imgs/"
 -   Ví dụ public static String IMAGE_PATH = "C:/Users/thang/OneDrive/Front-end/clone-f8/src/modules/module-global/imgs/";
