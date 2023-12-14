@@ -1,9 +1,10 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, CircularProgress, Grid, Typography } from '@mui/material';
 import Intro from './Intro';
 import { useMutation } from '@tanstack/react-query';
 import { getCourseById } from '../../api/Course';
 import { useEffect } from 'react';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import CircularBase from '@src/modules/module-base/components/CircularBase';
 
 interface Props {
     code?: number;
@@ -20,6 +21,7 @@ function Courses({ code }: Props) {
 
     return (
         <Box mt={4} mx={8} minHeight="100vh">
+            <CircularBase isLoading={mutation.isLoading} />
             <Grid container spacing={6}>
                 <Grid item xs={12} sm={12} md={8} sx={{ order: { xs: 2, sm: 2, md: 1 } }}>
                     <Box>
@@ -39,7 +41,7 @@ function Courses({ code }: Props) {
                     </Box>
                     <Box mt={1}>
                         {mutation.data?.data.lessons.map((lesson, index) => (
-                            <Box display="flex" alignItems="center" mb={2}>
+                            <Box display="flex" alignItems="center" mb={2} key={index}>
                                 <PlayCircleIcon sx={{ color: 'rgba(240,81,35,.4)', mr: 1 }} />
                                 <Typography>
                                     {index + 1}. {lesson.name}{' '}
@@ -49,7 +51,7 @@ function Courses({ code }: Props) {
                     </Box>
                 </Grid>
                 <Grid item xs={12} sm={12} md={4} sx={{ order: { xs: 1, sm: 1, md: 2 } }}>
-                    <Intro data={mutation.data?.data} />
+                    <Intro data={mutation.data?.data} isLoading={mutation.isLoading} />
                 </Grid>
             </Grid>
         </Box>

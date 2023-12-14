@@ -10,12 +10,14 @@ import DialogLogin from '../Auth/Login/DialogLogin';
 import { DataCourse } from '../../models/apis/Course';
 import { CHANGE_LINK } from '../../constants/screen';
 import ReactPlayer from 'react-player';
+import CircularBase from '@src/modules/module-base/components/CircularBase';
 
 interface Props {
     data: DataCourse | undefined;
+    isLoading: boolean;
 }
 
-function Intro({ data }: Props) {
+function Intro({ data, isLoading }: Props) {
     const [open, setOpen] = useState<boolean>(false);
     const [openLogin, setOpenLogin] = useState<boolean>(false);
     const [type, setType] = useState<string>('register');
@@ -102,6 +104,7 @@ function Intro({ data }: Props) {
                 setOpen={setOpen}
                 textTitle={
                     <>
+                        <CircularBase isLoading={isLoading} />
                         <Box textAlign="center">
                             <Typography>Giới thiệu khóa học</Typography>
                             <Typography variant="h5" my={3}>

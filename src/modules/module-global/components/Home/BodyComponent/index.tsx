@@ -6,9 +6,10 @@ import { getCourseAll } from '@src/modules/module-global/api/Course';
 import { useEffect } from 'react';
 import slugify from 'slugify';
 import { CHANGE_LINK } from '@src/modules/module-global/constants/screen';
+import CircularBase from '@src/modules/module-base/components/CircularBase';
 
 function BodyComponent() {
-    const { refetch, data } = useQuery({
+    const { refetch, data, isLoading } = useQuery({
         queryKey: ['GET_COURSE_ALL'],
         queryFn: () => getCourseAll({}),
         enabled: false,
@@ -20,6 +21,7 @@ function BodyComponent() {
 
     return (
         <Box px={10} sx={{ md: { px: 0 } }} mb={8}>
+            <CircularBase isLoading={isLoading} />
             <Box>
                 <Typography variant="h5" sx={{ pt: 6, pb: 2 }}>
                     Khóa học Pro
