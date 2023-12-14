@@ -25,9 +25,9 @@ function FormLogin({ setOpen }: Props) {
     const mutation = useMutation({
         mutationFn: loginApi,
         onSuccess: (response) => {
-            if (response?.status === 200) {
-                const token = Cookies.set(accessToken, response.data.access_token, { expires: 1 });
-                Cookies.set(username, response.data.username, { expires: 1 });
+            if (response?.code === '200') {
+                const token = Cookies.set(accessToken, response.data.access_token, { expires: 0.5 });
+                Cookies.set(username, response.data.username, { expires: 0.5 });
                 setOpen(false);
                 dispatch(setToken('login', token));
                 return dispatch(setAuth(response.data));

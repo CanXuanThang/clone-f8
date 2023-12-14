@@ -34,6 +34,7 @@
     "react-slideshow-image": "^4.3.0",
     "redux": "^4.2.1",
     "sass": "^1.69.5",
+    "slugify": "^1.6.6",
     "typesafe-actions": "^5.1.0"
   },
   "devDependencies": {

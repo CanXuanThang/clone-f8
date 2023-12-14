@@ -23,13 +23,13 @@ function HomeRouter() {
                     visible: true,
                 })}
                 {renderRouter({
-                    path: SCREEN.ADVANCED_JAVASCRIPT,
-                    element: <CourseScreen />,
+                    path: SCREEN.ADVANCED_JAVASCRIPT.url,
+                    element: <CourseScreen code={SCREEN.ADVANCED_JAVASCRIPT.id} />,
                     visible: true,
                 })}
                 {renderRouter({
-                    path: SCREEN.BASIC_JAVASCRIPT,
-                    element: <CourseScreen />,
+                    path: SCREEN.BASIC_JAVASCRIPT.url,
+                    element: <CourseScreen code={SCREEN.BASIC_JAVASCRIPT.id} />,
                     visible: true,
                 })}
                 {renderRouter({

@@ -4,12 +4,18 @@ import TheatersIcon from '@mui/icons-material/Theaters';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 import PlayCircle from '@mui/icons-material/PlayCircle';
-import a1 from '../../imgs/1.png';
 import { useState } from 'react';
 import DialogBase from '@src/modules/module-base/components/DialogBase';
 import DialogLogin from '../Auth/Login/DialogLogin';
+import { DataCourse } from '../../models/apis/Course';
+import { CHANGE_LINK } from '../../constants/screen';
+import ReactPlayer from 'react-player';
 
-function Intro() {
+interface Props {
+    data: DataCourse | undefined;
+}
+
+function Intro({ data }: Props) {
     const [open, setOpen] = useState<boolean>(false);
     const [openLogin, setOpenLogin] = useState<boolean>(false);
     const [type, setType] = useState<string>('register');
@@ -25,7 +31,7 @@ function Intro() {
                         width: '100%',
                     },
                 }}>
-                <img src={a1} alt="" />
+                <img src={data?.image.replace(CHANGE_LINK, '.')} alt="" />
                 <IconButton
                     sx={{
                         position: 'absolute',
@@ -51,15 +57,12 @@ function Intro() {
                 </IconButton>
             </CardMedia>
             <CardContent sx={{ textAlign: 'center' }}>
-                <Typography variant="h3" color="#f05123">
-                    Miễn phí
-                </Typography>
                 <Button
                     sx={{ borderRadius: '99px', bgcolor: '#f05123', p: '6px 30px', color: '#fff', my: 2 }}
                     onClick={() => setOpenLogin(true)}>
                     ĐĂNG KÝ HỌC
                 </Button>
-                <Box pl="30%">
+                <Box display="flex" flexDirection="column" alignItems="center">
                     <Box display="flex" alignItems="center">
                         <SpeedIcon />
                         <Typography ml={1} my={1}>
@@ -69,15 +72,15 @@ function Intro() {
                     <Box display="flex" alignItems="center">
                         <TheatersIcon />
                         <Typography ml={1} my={1}>
-                            Tổng số 204 bài học
+                            Tổng số {data?.lessons.length} bài học
                         </Typography>
                     </Box>
-                    <Box display="flex" alignItems="center">
+                    {/* <Box display="flex" alignItems="center">
                         <AccessTimeIcon />
                         <Typography ml={1} my={1}>
                             Thời lượng
                         </Typography>
-                    </Box>
+                    </Box> */}
                     <Box display="flex" alignItems="center">
                         <BatteryChargingFullIcon />
                         <Typography ml={1} my={1}>
@@ -102,16 +105,10 @@ function Intro() {
                         <Box textAlign="center">
                             <Typography>Giới thiệu khóa học</Typography>
                             <Typography variant="h5" my={3}>
-                                Lập trình JavaScript cơ bản
+                                {data?.name}
                             </Typography>
                         </Box>
-                        <iframe
-                            width="100%"
-                            height="500px"
-                            src="https://www.youtube.com/embed/0SJE9dYdpps"
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen></iframe>
+                        <ReactPlayer url={data?.lessons[0].embeddedLink} controls={true} width="100%" height="500px" />
                     </>
                 }
             />

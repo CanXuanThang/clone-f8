@@ -11,7 +11,7 @@ import { username } from '@src/modules/module-base/constants';
 import { useMutation } from '@tanstack/react-query';
 
 type FormData = {
-    username: string;
+    username: string | undefined;
     oldPassword: string;
     password: string;
     confirmPassword: string;
@@ -19,9 +19,8 @@ type FormData = {
 
 function ChangePassword() {
     const [open, setOpen] = useState<boolean>(false);
-    const getUserName = useSelector((state: AppState) => state.profile.auth.username);
     const formData: FormData = {
-        username: getUserName ? getUserName : Cookies.get(username),
+        username: Cookies.get(username),
         oldPassword: '',
         password: '',
         confirmPassword: '',

@@ -1,7 +1,7 @@
 type CallApiResponse<Data> = {
     data: Data;
-    message: string;
-    status?: number;
+    code: string;
+    desc?: number;
 };
 
 type CallApiDebounse = { timer?: number };
