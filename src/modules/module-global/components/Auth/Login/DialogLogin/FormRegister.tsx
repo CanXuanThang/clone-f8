@@ -33,13 +33,19 @@ function DialogRegister({ setType }: Props) {
         onSuccess: (res) => {
             let message;
             let mode;
-            if (res?.status === 200) {
+            if (res?.code === '200') {
                 mode = 'success';
                 message = 'Đăng ký tài khoản thành công';
                 setType('login');
-            } else {
+            }
+            if (res?.code === '400') {
                 mode = 'error';
-                message = 'Đăng ký tài khoản thất bại';
+                message = 'Tên đăng nhập đã tồn tại';
+            } else {
+                {
+                    mode = 'error';
+                    message = 'Đăng ký tài khoản thất bại';
+                }
             }
             return dispatch({
                 type: 'notify',

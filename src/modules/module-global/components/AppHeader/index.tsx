@@ -28,6 +28,7 @@ import { accessToken, username } from '@src/modules/module-base/constants';
 function AppHeader() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const isToken = useSelector((state: AppState) => state.profile.token);
+
     const token = Cookies.get(accessToken);
 
     const open = Boolean(anchorEl);
@@ -103,6 +104,8 @@ function AppHeader() {
                                     onClick={() => {
                                         dispatch(setToken('logout', ''));
                                         Cookies.remove(username);
+                                        Cookies.remove('role');
+                                        window.location.reload();
                                         handleClose();
                                     }}>
                                     <ListItemIcon>

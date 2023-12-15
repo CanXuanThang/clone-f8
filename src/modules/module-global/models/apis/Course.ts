@@ -1,4 +1,4 @@
-import { CallApiDebounse, CallApiResponse } from '../type/AuthType';
+import { CallApiDebounse, CallApiResponse, CallApiResponseData } from '../type/AuthType';
 
 type Lesson = {
     id: number;
@@ -40,14 +40,37 @@ type CourseAll = {
     data: DataCourse[];
 };
 
+type CourseByUser = {
+    content: any;
+    pageable: {
+        sort: {
+            empty: boolean;
+            unsorted: boolean;
+            sorted: boolean;
+        };
+        offset: number;
+        pageNumber: number;
+        pageSize: number;
+        unpage: boolean;
+        page: boolean;
+    };
+    numberOfElements: number;
+    first: boolean;
+    empty: boolean;
+};
+
 interface CourseApiProps {
     CourseAll: {
         Payload: CallApiDebounse;
-        Response?: CallApiResponse<CourseAll>;
+        Response?: CallApiResponseData<CourseAll>;
     };
     CourseById: {
         Payload: CallApiDebounse & { data: { id?: number } };
-        Response?: CallApiResponse<DataCourse>;
+        Response?: CallApiResponseData<DataCourse>;
+    };
+    CourseUser: {
+        Payload: CallApiDebounse & { data: { pageIndex: number; pageSize: number } };
+        Response?: CallApiResponse<CourseByUser>;
     };
 }
 

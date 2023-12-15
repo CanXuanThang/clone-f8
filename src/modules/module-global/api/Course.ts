@@ -6,6 +6,7 @@ import { debounce } from '@src/modules/module-base/hooks';
 const COURSE_API_PATH = Object.freeze({
     COURSE_ALL: '/public/course/all',
     COURSE_BY_ID: (id?: number) => `/public/course/${id}`,
+    COURSE_USER: '/user-course/get-page',
 });
 
 const getCourseAll = async (
@@ -38,4 +39,20 @@ const getCourseById = async (
     return error || response;
 };
 
-export { getCourseAll, getCourseById };
+const getCourseByUser = async (
+    payload: CourseApiProps['CourseUser']['Payload']
+): Promise<CourseApiProps['CourseUser']['Response']> => {
+    const { timer = TIMING_API_PENDING, data } = payload;
+    const options = {
+        url: COURSE_API_PATH.COURSE_USER,
+        method: 'post',
+        data,
+    };
+    const [{ response, error }] = await Promise.all([
+        callApi<CourseApiProps['CourseUser']['Response']>(options),
+        debounce(timer),
+    ]);
+    return error || response;
+};
+
+export { getCourseAll, getCourseById, getCourseByUser };

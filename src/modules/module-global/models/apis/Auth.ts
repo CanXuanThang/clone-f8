@@ -1,4 +1,4 @@
-import { CallApiDebounse, CallApiResponse } from '../type/AuthType';
+import { CallApiDebounse, CallApiResponse, CallApiResponseData } from '../type/AuthType';
 
 type SignIn = {
     access_token: string;
@@ -53,7 +53,7 @@ interface AuthApiProps {
                 phoneNumber?: string;
             };
         };
-        Response?: CallApiResponse<Register>;
+        Response?: CallApiResponseData<Register>;
     };
 }
 
