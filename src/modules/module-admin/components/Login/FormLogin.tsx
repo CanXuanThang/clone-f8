@@ -9,6 +9,8 @@ import Cookies from 'js-cookie';
 import React from 'react';
 import { FormContainer } from 'react-hook-form-mui';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { SCREEN_ADMIN } from '../../constants';
 
 type FormLoginState = {
     username: string;
@@ -21,25 +23,33 @@ interface Props {
 
 function FormLogin({ setOpen }: Props) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const mutation = useMutation({
         mutationFn: loginApi,
         onSuccess: (response) => {
-            if (response?.status === 200) {
+            let message;
+            if (response?.status === 200 && response?.data.roles[0] === 'ROLE_ADMIN') {
                 const token = Cookies.set(accessToken, response.data.access_token, { expires: 0.5 });
                 Cookies.set(username, response.data.username, { expires: 0.5 });
+                Cookies.set('role', response.data.roles[0], { expires: 0.5 });
                 setOpen(false);
                 dispatch(setToken('login', token));
-                return dispatch(setAuth(response.data));
-            } else {
-                dispatch({
-                    type: 'notify',
-                    payload: {
-                        mode: 'error',
-                        message: 'Sai tài khoản hoặc mật khẩu',
-                    },
-                });
+                dispatch(setAuth(response.data));
+                return navigate(SCREEN_ADMIN.DASHBOARD_ADMIN, { replace: true });
             }
+            if (response?.status === 200 && response?.data.roles[0] !== 'ROLE_ADMIN') {
+                message = 'Bạn không có quyền admin';
+            } else {
+                message = 'Sai tài khoản hoặc mật khẩu';
+            }
+            dispatch({
+                type: 'notify',
+                payload: {
+                    mode: 'error',
+                    message: message,
+                },
+            });
         },
     });
 

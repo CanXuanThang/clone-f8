@@ -1,18 +1,20 @@
-import { Box, Dialog, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import CloseIcon from '@mui/icons-material/Close';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import FormLogin from './FormLogin';
-import { useState } from 'react';
-
-interface Props {
-    open: boolean;
-    setOpen: (value: boolean) => void;
-}
+import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import { accessToken } from '@src/modules/module-base/constants';
+import { useNavigate } from 'react-router-dom';
+import { SCREEN_ADMIN } from '../../constants';
 
 function Login() {
     const [open, setOpen] = useState<boolean>(true);
-    const [openForm, setOpenForm] = useState<boolean>(true);
+    const navigate = useNavigate();
+
+    const isToken = Cookies.get(accessToken);
+    useEffect(() => {
+        isToken ? navigate(SCREEN_ADMIN.DASHBOARD_ADMIN, { replace: true }) : null;
+    }, [isToken]);
 
     return (
         <Dialog open={open} maxWidth="sm" fullWidth>
@@ -24,7 +26,8 @@ function Login() {
                     <br />
                     Đăng nhập
                 </DialogTitle>
-                <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
+                <DialogContent
+                    sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', mb: 2 }}>
                     <FormLogin setOpen={setOpen} />
                 </DialogContent>
             </Box>

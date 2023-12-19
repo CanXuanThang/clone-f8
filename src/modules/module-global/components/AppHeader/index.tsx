@@ -28,11 +28,10 @@ import { accessToken, username } from '@src/modules/module-base/constants';
 function AppHeader() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const isToken = useSelector((state: AppState) => state.profile.token);
+    const dispatch = useDispatch();
 
     const token = Cookies.get(accessToken);
-
     const open = Boolean(anchorEl);
-    const dispatch = useDispatch();
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);

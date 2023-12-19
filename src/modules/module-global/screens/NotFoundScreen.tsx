@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import imgError from '@module-base/assets/404.jpg';
 
 function NotFoundScreen() {
     return (
@@ -8,14 +9,14 @@ function NotFoundScreen() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 width: '100%',
-                height: '100%',
+                height: '620px',
                 img: {
                     objectFit: 'cover',
                     width: '60%',
                     height: '60%',
                 },
             }}>
-            {/* <img src={Cover} alt="" /> */}
+            <img src={imgError} alt="" />
         </Box>
     );
 }

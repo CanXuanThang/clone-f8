@@ -30,6 +30,19 @@ axiosClient.interceptors.request.use(
     }
 );
 
+axiosClientCDN.interceptors.request.use(
+    function (config) {
+        const token = Cookies.get(accessToken);
+        if (config.headers) {
+            config.headers.Authorization = token ? `Bearer ${token}` : '';
+        }
+        return config;
+    },
+    function (err) {
+        return Promise.reject(err);
+    }
+);
+
 axiosClient.interceptors.response.use(
     function (response: AxiosResponse) {
         return {

@@ -59,6 +59,12 @@ type CourseByUser = {
     empty: boolean;
 };
 
+type TCourseTypeAll = {
+    id: number;
+    code: string;
+    name: string;
+};
+
 interface CourseApiProps {
     CourseAll: {
         Payload: CallApiDebounse;
@@ -71,6 +77,10 @@ interface CourseApiProps {
     CourseUser: {
         Payload: CallApiDebounse & { data: { pageIndex: number; pageSize: number } };
         Response?: CallApiResponse<CourseByUser>;
+    };
+    CourseTypeAll: {
+        Payload: CallApiDebounse;
+        Response?: CallApiResponseData<TCourseTypeAll[]>;
     };
 }
 
