@@ -1,33 +1,34 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Link } from '@mui/material';
 import { IconButton, Typography } from '@mui/material';
 import TableBase from '@src/modules/module-base/components/TableBase';
 import { TableBaseProps } from '@src/modules/module-base/constants';
-import { getCourseAll } from '@src/modules/module-global/api/Course';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { getCourseById } from '@src/modules/module-global/api/Course';
+import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { deleteCourseApi } from '../../apis/Course';
+import { deleteCourseApi, deleteLessonApi } from '../../apis/Course';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import BreakCrumbBase from '@src/modules/module-base/components/BreakCrumbBase';
 import { SCREEN_ADMIN } from '../../constants';
-import DialogAddCourse from './DialogAddCourse';
-import { useNavigate } from 'react-router-dom';
-import { DataCourse } from '@src/modules/module-global/models/apis/Course';
+import EditIcon from '@mui/icons-material/Edit';
+import DialogAddLesson from './DialogAddLesson';
 
 interface Data {
     id: number;
-    code: string | null;
-    name: string;
-    price: number;
-    totalBuy: number;
-    discount: number;
+    code: string;
+    course: string | null;
     description: string;
+    embeddedLink: string;
+    image: string | null;
+    indexOrder: number;
+    name: string;
 }
 
-function Course() {
+function Lessons() {
     const dispatch = useDispatch();
-    const navigation = useNavigate();
+    const param = useParams();
     const [open, setOpen] = useState<boolean>(false);
 
     const column: TableBaseProps<Data>['rows'] = [
@@ -52,29 +53,20 @@ function Course() {
             render: (item) => <Typography variant="caption">{item.description}</Typography>,
         },
         {
-            id: 'price',
-            label: 'Giá',
-            render: (item) => item.price,
-        },
-        {
-            id: 'discount',
-            label: 'Giảm giá',
-            render: (item) => item.discount,
-        },
-        {
-            id: 'totalBuy',
-            label: 'Số lượng đã mua',
-            render: (item) => item.totalBuy,
+            id: 'embeddedLink',
+            label: 'Link',
+            render: (item) => (
+                <Link href={item.embeddedLink} target="_blank" sx={{ textDecoration: 'none', color: '#56C1FF' }}>
+                    LINK
+                </Link>
+            ),
         },
         {
             id: 'action',
             label: '',
             render: (item) => (
                 <Box display="flex" flexDirection="row">
-                    <IconButton color="info" onClick={() => {}} title="Xem danh sách bài học">
-                        <ChecklistIcon aria-label="asdsd" />
-                    </IconButton>
-                    <IconButton color="error" onClick={() => deleteCourse.mutate({ data: { id: item.id } })} title="Xóa">
+                    <IconButton color="error" onClick={() => deleteLesson.mutate({ data: { id: item.id } })} title="Xóa">
                         <DeleteIcon />
                     </IconButton>
                 </Box>
@@ -82,24 +74,18 @@ function Course() {
         },
     ];
 
-    const { data, refetch, isLoading } = useQuery({
-        queryKey: ['getListCourse'],
-        queryFn: () => getCourseAll({}),
+    const getCourse = useMutation({
+        mutationFn: getCourseById,
     });
 
-    useEffect(() => {
-        refetch().then();
-    }, []);
-
-    const deleteCourse = useMutation({
-        mutationFn: deleteCourseApi,
+    const deleteLesson = useMutation({
+        mutationFn: deleteLessonApi,
         onSuccess: (response) => {
             let mode;
             let message;
-            console.log(response, response?.code);
 
             if (response?.code === '200') {
-                refetch().then();
+                getCourse.mutate({ data: { id: Number(param.courseId) } });
                 mode = 'success';
                 message = 'Xóa thành công';
             } else {
@@ -116,29 +102,38 @@ function Course() {
         },
     });
 
-    const handleClick = (item: DataCourse) => {
-        navigation(SCREEN_ADMIN.LESSONS.replace('/:courseId', `/${item.id}`));
-    };
+    useEffect(() => {
+        getCourse.mutate({ data: { id: Number(param.courseId) } });
+    }, [param]);
 
     return (
         <Box>
+            <BreakCrumbBase
+                arrPath={[
+                    { title: 'Danh sách khóa học', link: SCREEN_ADMIN.COURSES },
+                    { title: 'Danh sách bài học', link: SCREEN_ADMIN.LESSONS },
+                ]}
+            />
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography variant="h3" mb={4} mt={2}>
-                    Danh sách khóa học
+                    Danh sách bài học
                 </Typography>
                 <Button color="info" variant="contained" onClick={() => setOpen(true)}>
-                    Thêm khóa học
+                    Thêm bài học
                 </Button>
             </Box>
             <TableBase
                 rows={column}
-                data={data?.data.data}
-                loading={isLoading || deleteCourse.isLoading}
-                onClickItem={handleClick}
+                data={getCourse.data?.data.lessons}
+                loading={getCourse.isLoading || deleteLesson.isLoading}
             />
-            <DialogAddCourse open={open} setOpen={setOpen} onRefesh={() => refetch().then()} />
+            <DialogAddLesson
+                open={open}
+                setOpen={setOpen}
+                onRefesh={() => getCourse.mutate({ data: { id: Number(param.courseId) } })}
+            />
         </Box>
     );
 }
 
-export default Course;
+export default Lessons;

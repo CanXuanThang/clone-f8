@@ -71,7 +71,7 @@ function HomeRouter() {
                     visible: role === 'ROLE_ADMIN' && !!isToken,
                 })}
                 {renderRouter({
-                    path: SCREEN_ADMIN.COURSES,
+                    path: `${SCREEN_ADMIN.COURSES}/*`,
                     element: <CourseAdminScreen />,
                     visible: role === 'ROLE_ADMIN' && !!isToken,
                 })}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TableBody as TableBodyElem, TableCell, TableRow } from '@mui/material';
+import { Box, TableBody as TableBodyElem, TableCell, TableRow } from '@mui/material';
 import classNames from 'classnames';
 
 /** constants */
@@ -7,6 +7,7 @@ import classNames from 'classnames';
 /** styles */
 import useStyles from '@module-base/components/TableBase/styles';
 import { TableBaseProps } from '../../constants';
+import { Typography } from '@mui/material';
 
 /** types */
 
@@ -40,6 +41,13 @@ function TableBody<T>(props: Pick<TableBaseProps<T>, 'data' | 'onClickItem' | 'r
                     </TableRow>
                 );
             })}
+            {data?.length === 0 && (
+                <Typography
+                    variant="h6"
+                    sx={{ display: 'flex', justifyContent: 'center', position: 'absolute', left: '40%', mt: 5 }}>
+                    Chưa có dữ liệu
+                </Typography>
+            )}
         </TableBodyElem>
     );
 }

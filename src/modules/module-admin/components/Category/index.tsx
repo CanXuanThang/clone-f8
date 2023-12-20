@@ -26,29 +26,17 @@ function Category() {
         {
             id: 'id',
             label: 'ID',
-            render: (item) => (
-                <Typography variant="caption" sx={{ textTransform: 'uppercase' }}>
-                    {item.id}
-                </Typography>
-            ),
+            render: (item) => <Typography variant="caption">{item.id}</Typography>,
         },
         {
             id: 'code',
             label: 'Code',
-            render: (item) => (
-                <Typography variant="caption" sx={{ textTransform: 'uppercase' }}>
-                    {item.code}
-                </Typography>
-            ),
+            render: (item) => <Typography variant="caption">{item.code}</Typography>,
         },
         {
             id: 'name',
             label: 'Tên khóa học',
-            render: (item) => (
-                <Typography variant="caption" sx={{ textTransform: 'uppercase' }}>
-                    {item.name}
-                </Typography>
-            ),
+            render: (item) => <Typography variant="caption">{item.name}</Typography>,
         },
         {
             id: 'action',
@@ -95,12 +83,12 @@ function Category() {
 
     return (
         <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography variant="h3" mb={4}>
                     Danh mục
                 </Typography>
                 <Button color="info" variant="contained" onClick={() => setOpen(true)}>
-                    Thêm khóa học
+                    Thêm danh mục
                 </Button>
             </Box>
             <TableBase

@@ -4,11 +4,11 @@ import DialogBase from '@src/modules/module-base/components/DialogBase';
 import FormControlInput from '@src/modules/module-base/components/react-hook-form-mui-base/FormControlInput';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { addCourseApi, addCourseType, addImage } from '../../apis/Course';
+import { addLessonApi } from '../../apis/Course';
 import { useDispatch } from 'react-redux';
-import FormControlSelect from '@src/modules/module-base/components/react-hook-form-mui-base/FormControlSelector';
 import { getCourseTypeAll } from '@src/modules/module-global/api/Course';
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 interface Props {
     open: boolean;
@@ -16,44 +16,34 @@ interface Props {
     onRefesh: () => void;
 }
 
-type DataCourse = {
+type Lesson = {
+    courseId: number;
     code: any;
-    name: string;
-    idType: any;
     description: string;
-    shortDescription: string;
-    price: number;
-    discount: number;
-    image: File;
+    embeddedLink: string;
+    name: string;
 };
 
-function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
-    const { control, handleSubmit, reset, setValue, watch } = useForm<DataCourse>({});
+function DialogAddLesson({ open, setOpen, onRefesh }: Props) {
+    const { control, handleSubmit, reset, setValue, watch } = useForm<Lesson>();
     const dispatch = useDispatch();
+    const param = useParams();
 
     const mutation = useMutation({
-        mutationFn: addCourseApi,
-        onSuccess: (res) => {
-            if (res?.code === '200') {
-                addImageApi.mutate({ data: { id: res.data.id, image: watch('image') } });
-            }
-        },
-    });
-    const addImageApi = useMutation({
-        mutationFn: addImage,
+        mutationFn: addLessonApi,
         onSuccess: (res) => {
             let mode;
             let message;
 
-            if (res?.data.code === '200') {
+            if (res?.code === '200') {
                 mode = 'success';
-                message = 'Thêm khóa học thành công';
+                message = 'Thêm bài học thành công';
                 setOpen(false);
                 reset();
                 onRefesh();
             } else {
                 mode = 'error';
-                message = 'Thêm khóa học thất bại';
+                message = 'Thêm bài học thất bại';
             }
             return dispatch({
                 type: 'notify',
@@ -76,19 +66,21 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
     }, []);
 
     useEffect(() => {
-        setValue('code', data?.data.find((item) => watch('idType') === item.id)?.code);
-    }, [watch('idType')]);
+        setValue('code', data?.data.find((item) => Number(param.courseId) === item.id)?.code);
+    }, [watch('courseId')]);
 
-    const onSubmit = (formData: DataCourse) => {
+    console.log(data);
+
+    console.log(watch('code'));
+
+    const onSubmit = (formData: Lesson) => {
         mutation.mutate({
             data: {
-                code: formData.code,
+                code: watch('code'),
                 name: formData.name,
-                courseType: { id: formData.idType },
+                course: { id: Number(param.courseId) },
                 description: formData.description,
-                shortDescription: formData.shortDescription,
-                price: formData.price,
-                discount: formData.discount,
+                embeddedLink: formData.embeddedLink,
             },
         });
     };
@@ -103,28 +95,15 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
                 <Box component="form" onSubmit={handleSubmit(onSubmit)}>
                     <FormControlInput
                         name="name"
-                        label="Tên khóa học"
+                        label="Tên bài học"
                         control={control}
                         required
                         rules={{
-                            required: 'Bạn cần nhập tên khóa học',
+                            required: 'Bạn cần nhập tên bài học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập tên khóa học',
+                                value: (value) => !!value.trim() || 'Bạn cần nhập tên bài học',
                             },
                         }}
-                    />
-                    <FormControlSelect
-                        label="Danh mục"
-                        name="codeType"
-                        control={control}
-                        rules={{
-                            required: 'Bạn cần chọn danh mục',
-                        }}
-                        data={data?.data}
-                        placeholder="Danh mục"
-                        required
-                        renderLabelItem={(item) => item.name}
-                        renderValueItem={(item) => item.id}
                     />
                     <FormControlInput
                         name="description"
@@ -132,33 +111,29 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
                         control={control}
                         required
                         rules={{
-                            required: 'Bạn cần nhập mô tả khóa học',
+                            required: 'Bạn cần nhập mô tả của bài học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập mô tả khóa học',
+                                value: (value) => !!value.trim() || 'Bạn cần nhập mô tả của bài học',
                             },
                         }}
                     />
-                    <FormControlInput name="shortDescription" label="Mô tả ngắn" control={control} required={false} />
                     <FormControlInput
                         name="price"
-                        label="Giá"
+                        label="Đường dẫn"
                         control={control}
                         required
                         rules={{
-                            required: 'Bạn cần nhập giá của khóa học',
+                            required: 'Bạn cần nhập đường dẫn của bài học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập giá của khóa học',
+                                value: (value) => !!value.trim() || 'Bạn cần nhập đường dẫn của bài học',
                             },
                         }}
                     />
-                    <FormControlInput name="discount" label="Giảm giá" control={control} required={false} />
-
-                    <input type="file" required onChange={(e) => e.target.files && setValue('image', e.target.files[0])} />
 
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <LoadingButton
                             sx={{ bgcolor: '#ff8f26', borderRadius: '99px', p: '9px 36px', mr: 2, color: '#fff' }}
-                            loading={mutation.isLoading || addImageApi.isLoading}
+                            loading={mutation.isLoading}
                             type="submit">
                             Đồng ý
                         </LoadingButton>
@@ -176,4 +151,4 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
     );
 }
 
-export default DialogAddCourse;
+export default DialogAddLesson;
