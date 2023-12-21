@@ -1,23 +1,22 @@
-import { Box, CircularProgress, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import Intro from './Intro';
 import { useMutation } from '@tanstack/react-query';
 import { getCourseById } from '../../api/Course';
 import { useEffect } from 'react';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import CircularBase from '@src/modules/module-base/components/CircularBase';
+import { useParams } from 'react-router-dom';
 
-interface Props {
-    code?: number;
-}
+function Courses() {
+    const param = useParams();
 
-function Courses({ code }: Props) {
     const mutation = useMutation({
         mutationFn: getCourseById,
     });
 
     useEffect(() => {
-        mutation.mutate({ data: { id: code } });
-    }, [code]);
+        mutation.mutate({ data: { id: Number(param.courseId) } });
+    }, [param]);
 
     return (
         <Box mt={4} mx={8} minHeight="100vh">
@@ -26,10 +25,10 @@ function Courses({ code }: Props) {
                 <Grid item xs={12} sm={12} md={8} sx={{ order: { xs: 2, sm: 2, md: 1 } }}>
                     <Box>
                         <Typography variant="h3" my={3}>
-                            {mutation.data?.data.name}
+                            {mutation.data?.data?.name}
                         </Typography>
                         <Typography variant="caption" mt={1}>
-                            {mutation.data?.data.description}
+                            {mutation.data?.data?.description}
                         </Typography>
                     </Box>
                     <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -40,18 +39,18 @@ function Courses({ code }: Props) {
                         </Box>
                     </Box>
                     <Box mt={1}>
-                        {mutation.data?.data.lessons.map((lesson, index) => (
+                        {mutation.data?.data?.lessons.map((lesson, index) => (
                             <Box display="flex" alignItems="center" mb={2} key={index}>
                                 <PlayCircleIcon sx={{ color: 'rgba(240,81,35,.4)', mr: 1 }} />
                                 <Typography>
-                                    {index + 1}. {lesson.name}{' '}
+                                    {index + 1}. {lesson?.name}{' '}
                                 </Typography>
                             </Box>
                         ))}
                     </Box>
                 </Grid>
                 <Grid item xs={12} sm={12} md={4} sx={{ order: { xs: 1, sm: 1, md: 2 } }}>
-                    <Intro data={mutation.data?.data} isLoading={mutation.isLoading} />
+                    <Intro data={mutation?.data?.data} isLoading={mutation.isLoading} />
                 </Grid>
             </Grid>
         </Box>

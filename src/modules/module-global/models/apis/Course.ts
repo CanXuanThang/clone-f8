@@ -41,7 +41,7 @@ type CourseAll = {
 };
 
 type CourseByUser = {
-    content: any;
+    content: DataCourse[];
     pageable: {
         sort: {
             empty: boolean;
@@ -76,7 +76,7 @@ interface CourseApiProps {
     };
     CourseUser: {
         Payload: CallApiDebounse & { data: { pageIndex: number; pageSize: number } };
-        Response?: CallApiResponse<CourseByUser>;
+        Response?: CourseByUser;
     };
     CourseTypeAll: {
         Payload: CallApiDebounse;
@@ -84,4 +84,4 @@ interface CourseApiProps {
     };
 }
 
-export type { CourseApiProps, DataCourse };
+export type { CourseApiProps, DataCourse, Lesson };

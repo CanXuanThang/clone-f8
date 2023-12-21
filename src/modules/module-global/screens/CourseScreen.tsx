@@ -2,14 +2,10 @@ import React from 'react';
 
 const Courses = React.lazy(() => import('../components/Courses'));
 
-interface Props {
-    code?: number;
-}
-
-function CourseScreen({ code }: Props) {
+function CourseScreen() {
     return (
         <React.Suspense fallback={null}>
-            <Courses code={code} />
+            <Courses />
         </React.Suspense>
     );
 }

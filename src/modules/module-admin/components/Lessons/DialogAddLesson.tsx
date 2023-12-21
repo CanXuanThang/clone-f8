@@ -69,10 +69,6 @@ function DialogAddLesson({ open, setOpen, onRefesh }: Props) {
         setValue('code', data?.data.find((item) => Number(param.courseId) === item.id)?.code);
     }, [watch('courseId')]);
 
-    console.log(data);
-
-    console.log(watch('code'));
-
     const onSubmit = (formData: Lesson) => {
         mutation.mutate({
             data: {

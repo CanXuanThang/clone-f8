@@ -96,7 +96,6 @@ function Course() {
         onSuccess: (response) => {
             let mode;
             let message;
-            console.log(response, response?.code);
 
             if (response?.code === '200') {
                 refetch().then();

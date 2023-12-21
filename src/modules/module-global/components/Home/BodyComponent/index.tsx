@@ -21,14 +21,10 @@ function BodyComponent() {
 
     const mutation = useMutation({
         mutationFn: getCourseByUser,
-        onSuccess: (response) => {
-            if (response?.status === 200) {
-            }
-        },
     });
 
     useEffect(() => {
-        !!token && !!tokenCookie && mutation.mutate({ data: { pageIndex: 1, pageSize: 10 } });
+        (!!token || !!tokenCookie) && mutation.mutate({ data: { pageIndex: 1, pageSize: 10 } });
     }, [token, tokenCookie]);
 
     useEffect(() => {
@@ -37,7 +33,37 @@ function BodyComponent() {
 
     return (
         <Box px={10} sx={{ md: { px: 0 } }} mb={8}>
-            <CircularBase isLoading={isLoading} />
+            <CircularBase isLoading={isLoading || mutation.isLoading} />
+            <Box>
+                {mutation?.data ? (
+                    <>
+                        <Typography variant="h5" sx={{ pt: 6, pb: 2 }}>
+                            Khóa học của bạn
+                        </Typography>
+
+                        {mutation.data?.content.length !== 0 ? (
+                            <Grid container spacing={2}>
+                                {mutation.data?.content.map((data: any) => (
+                                    <Grid item xs={12} sm={6} md={3} key={data.id}>
+                                        <CardBase item={data} disable={true} />
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        ) : (
+                            <Typography
+                                variant="h5"
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignContent: 'center',
+                                    alignItems: 'center',
+                                }}>
+                                Chưa có khóa học nào
+                            </Typography>
+                        )}
+                    </>
+                ) : null}
+            </Box>
             <Box>
                 <Typography variant="h5" sx={{ pt: 6, pb: 2 }}>
                     Khóa học Pro
@@ -53,24 +79,6 @@ function BodyComponent() {
                         <Typography>Chưa có khóa học nào</Typography>
                     )}
                 </Grid>
-            </Box>
-            <Box>
-                {mutation.data?.data ? (
-                    <>
-                        <Typography variant="h5" sx={{ pt: 6, pb: 2 }}>
-                            Khóa học của bạn
-                        </Typography>
-
-                        <Grid container spacing={2}>
-                            {mutation.data?.data &&
-                                mutation.data?.data.content.map((data: any) => (
-                                    <Grid item xs={12} sm={6} md={3} key={data.id}>
-                                        <CardBase item={data} disable={true} />
-                                    </Grid>
-                                ))}
-                        </Grid>
-                    </>
-                ) : null}
             </Box>
         </Box>
     );

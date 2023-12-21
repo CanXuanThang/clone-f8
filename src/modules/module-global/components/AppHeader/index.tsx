@@ -110,7 +110,7 @@ function AppHeader() {
                                     <ListItemIcon>
                                         <Logout fontSize="small" />
                                     </ListItemIcon>
-                                    Logout
+                                    Đăng xuất
                                 </Button>
                             </MenuItem>
                         </Menu>

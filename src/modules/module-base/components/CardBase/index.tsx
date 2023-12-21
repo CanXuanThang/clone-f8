@@ -1,7 +1,6 @@
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
-import { CHANGE_LINK } from '@src/modules/module-global/constants/screen';
-import { Link } from 'react-router-dom';
-import slugify from 'slugify';
+import { Box, Button, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { CHANGE_LINK, SCREEN } from '@src/modules/module-global/constants/screen';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     item: any;
@@ -9,6 +8,8 @@ interface Props {
 }
 
 function CardBase({ item, disable = false }: Props) {
+    const navigation = useNavigate();
+
     return (
         <Card>
             <CardMedia
@@ -19,15 +20,16 @@ function CardBase({ item, disable = false }: Props) {
                         width: '100%',
                     },
                     '&:hover': {
-                        a: {
+                        button: {
                             display: 'flex',
                             bgcolor: 'rgba(0,0,0,.5)',
                             overflow: 'hidden',
+                            cursor: 'pointer',
                         },
                     },
                 }}>
-                <img src={item.image.replace(CHANGE_LINK, '.')} alt={item.name} />
-                <Link className="course" to={slugify(item.name, { replacement: '-', lower: true })}>
+                {item.image && <img src={item.image.replace(CHANGE_LINK, '.')} alt={item.name} />}
+                <Button className="course" onClick={() => navigation(SCREEN.COURSE.replace('/:courseId', `/${item.id}`))}>
                     <Typography
                         variant="subtitle2"
                         sx={{
@@ -39,7 +41,7 @@ function CardBase({ item, disable = false }: Props) {
                         }}>
                         Xem khóa học
                     </Typography>
-                </Link>
+                </Button>
             </CardMedia>
             <CardContent
                 sx={{
@@ -47,14 +49,20 @@ function CardBase({ item, disable = false }: Props) {
                     pt: 1,
                     pb: '0px !important',
                     display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
+                    // justifyContent: 'space-between',
+                    // alignItems: 'center',
+                    flexDirection: 'column',
                 }}>
                 <Typography variant="subtitle2">{item.name}</Typography>
                 {!disable && (
-                    <Typography variant="subtitle2" color="#f05123" my={1}>
-                        {item.price}
-                    </Typography>
+                    <Box display="flex" alignItems="center" my={1}>
+                        <Typography variant="caption" color="black" mr={1} sx={{ textDecoration: 'line-through' }}>
+                            {`${item.price.toLocaleString()}đ`}
+                        </Typography>
+                        <Typography variant="subtitle2" color="#f05123">
+                            {`${item.priceDiscount.toLocaleString()}đ`}
+                        </Typography>
+                    </Box>
                 )}
             </CardContent>
         </Card>

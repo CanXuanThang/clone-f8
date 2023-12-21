@@ -29,7 +29,6 @@ function FormLogin({ setOpen }: Props) {
         mutationFn: loginApi,
         onSuccess: (response) => {
             let message;
-            console.log(response);
 
             if (response?.status === 200 && response?.data.roles[0] === 'ROLE_ADMIN') {
                 const token = Cookies.set(accessToken, response.data.access_token, { expires: 0.5 });

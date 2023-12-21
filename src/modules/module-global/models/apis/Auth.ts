@@ -11,8 +11,8 @@ type DataRegister = {
     id: string;
     username: string;
     oldPassword: string | null;
-    password: string;
-    confirmPassword: string;
+    password: string | null;
+    confirmPassword: string | null;
     email: string;
     displayName: string;
     phoneNumber: string;
@@ -57,4 +57,4 @@ interface AuthApiProps {
     };
 }
 
-export type { AuthApiProps };
+export type { AuthApiProps, DataRegister };

@@ -1,16 +1,22 @@
 import { Box, Button, Card, CardContent, CardMedia, IconButton, Rating, Typography } from '@mui/material';
 import SpeedIcon from '@mui/icons-material/Speed';
 import TheatersIcon from '@mui/icons-material/Theaters';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 import PlayCircle from '@mui/icons-material/PlayCircle';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DialogBase from '@src/modules/module-base/components/DialogBase';
 import DialogLogin from '../Auth/Login/DialogLogin';
 import { DataCourse } from '../../models/apis/Course';
-import { CHANGE_LINK } from '../../constants/screen';
+import { CHANGE_LINK, SCREEN } from '../../constants/screen';
 import ReactPlayer from 'react-player';
 import CircularBase from '@src/modules/module-base/components/CircularBase';
+import { useMutation } from '@tanstack/react-query';
+import { getCourseByUser } from '../../api/Course';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
+import { accessToken } from '@src/modules/module-base/constants';
+import { AppState } from '../../redux';
 
 interface Props {
     data: DataCourse | undefined;
@@ -20,8 +26,32 @@ interface Props {
 function Intro({ data, isLoading }: Props) {
     const [open, setOpen] = useState<boolean>(false);
     const [openLogin, setOpenLogin] = useState<boolean>(false);
-    const [type, setType] = useState<string>('register');
+    const [type, setType] = useState<string>('login');
     const [value, setValue] = useState<number | null>(2);
+    const [isCourse, setIsCourse] = useState<boolean>();
+
+    const navigation = useNavigate();
+    const token = useSelector((state: AppState) => state.profile.token);
+    const tokenCookie = Cookies.get(accessToken);
+
+    const mutation = useMutation({
+        mutationFn: getCourseByUser,
+        onSuccess: (res) => {
+            if (res && data) {
+                res.content.map((item) => {
+                    if (item.id === data.id) {
+                        return setIsCourse(true);
+                    }
+                });
+            } else {
+                setIsCourse(false);
+            }
+        },
+    });
+
+    useEffect(() => {
+        (!!token || !!tokenCookie) && mutation.mutate({ data: { pageIndex: 1, pageSize: 10 } });
+    }, [token, tokenCookie]);
 
     return (
         <Card>
@@ -33,7 +63,7 @@ function Intro({ data, isLoading }: Props) {
                         width: '100%',
                     },
                 }}>
-                <img src={data?.image.replace(CHANGE_LINK, '.')} alt="" />
+                <img src={data?.image.replace(CHANGE_LINK, '')} alt="" />
                 <IconButton
                     sx={{
                         position: 'absolute',
@@ -61,8 +91,14 @@ function Intro({ data, isLoading }: Props) {
             <CardContent sx={{ textAlign: 'center' }}>
                 <Button
                     sx={{ borderRadius: '99px', bgcolor: '#f05123', p: '6px 30px', color: '#fff', my: 2 }}
-                    onClick={() => setOpenLogin(true)}>
-                    ĐĂNG KÝ HỌC
+                    onClick={() =>
+                        isCourse
+                            ? navigation(SCREEN.LEARNING, { replace: true })
+                            : !!token || !!tokenCookie
+                            ? navigation(SCREEN.PAYMENT.replace('/:courseId', `/${data?.id}`), { state: data && data })
+                            : setOpenLogin(true)
+                    }>
+                    {isCourse ? 'TIẾP TỤC HỌC' : !!token || !!tokenCookie ? 'ĐĂNG KÝ HỌC' : 'ĐĂNG NHẬP'}
                 </Button>
                 <Box display="flex" flexDirection="column" alignItems="center">
                     <Box display="flex" alignItems="center">
@@ -77,12 +113,6 @@ function Intro({ data, isLoading }: Props) {
                             Tổng số {data?.lessons.length} bài học
                         </Typography>
                     </Box>
-                    {/* <Box display="flex" alignItems="center">
-                        <AccessTimeIcon />
-                        <Typography ml={1} my={1}>
-                            Thời lượng
-                        </Typography>
-                    </Box> */}
                     <Box display="flex" alignItems="center">
                         <BatteryChargingFullIcon />
                         <Typography ml={1} my={1}>
@@ -111,7 +141,13 @@ function Intro({ data, isLoading }: Props) {
                                 {data?.name}
                             </Typography>
                         </Box>
-                        <ReactPlayer url={data?.lessons[0].embeddedLink} controls={true} width="100%" height="500px" />
+                        {data && data?.lessons.length > 0 ? (
+                            <ReactPlayer url={data?.lessons[0]?.embeddedLink} controls={true} width="100%" height="500px" />
+                        ) : (
+                            <Typography color="red">
+                                Người bán hàng chưa bổ sung video giới thiệu. Vui lòng quay lại sau !!
+                            </Typography>
+                        )}
                     </>
                 }
             />

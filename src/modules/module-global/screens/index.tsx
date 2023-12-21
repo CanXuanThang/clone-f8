@@ -38,24 +38,19 @@ function HomeRouter() {
                     visible: true,
                 })}
                 {renderRouter({
-                    path: SCREEN.ADVANCED_JAVASCRIPT.url,
-                    element: <CourseScreen code={SCREEN.ADVANCED_JAVASCRIPT.id} />,
-                    visible: true,
-                })}
-                {renderRouter({
-                    path: SCREEN.BASIC_JAVASCRIPT.url,
-                    element: <CourseScreen code={SCREEN.BASIC_JAVASCRIPT.id} />,
+                    path: SCREEN.COURSE,
+                    element: <CourseScreen />,
                     visible: true,
                 })}
                 {renderRouter({
                     path: SCREEN.LEARNING,
                     element: <LearningScreen />,
-                    visible: role === 'ROLE_CUSTOMER',
+                    visible: !!isToken,
                 })}
                 {renderRouter({
                     path: SCREEN.PAYMENT,
                     element: <PaymentScreen />,
-                    visible: true,
+                    visible: !!isToken,
                 })}
 
                 {/* router admin */}
