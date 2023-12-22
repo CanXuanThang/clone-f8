@@ -6,7 +6,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -16,12 +15,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { SCREEN_ADMIN } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import ListIcon from '@mui/icons-material/List';
 import CategoryIcon from '@mui/icons-material/Category';
+import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 
 const drawerWidth = 300;
 
@@ -85,6 +83,11 @@ const listItem = [
         url: SCREEN_ADMIN.COURSES,
         icon: <ListIcon />,
     },
+    {
+        name: 'Hóa đơn',
+        url: SCREEN_ADMIN.BILL,
+        icon: <LocalAtmIcon />,
+    },
 ];
 
 export default function SideBar({ element }: { element: React.ReactNode }) {
@@ -147,7 +150,9 @@ export default function SideBar({ element }: { element: React.ReactNode }) {
                     ))}
                 </List>
             </Drawer>
-            <Main open={open}>{element}</Main>
+            <Main open={open} sx={{ mr: 6 }}>
+                {element}
+            </Main>
         </Box>
     );
 }

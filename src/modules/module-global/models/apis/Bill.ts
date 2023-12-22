@@ -17,6 +17,30 @@ type TPayment = {
 
 type TBuyer = {
     content: TPayment[];
+    pageable: {
+        sort: {
+            empty: boolean;
+            unsorted: boolean;
+            sorted: boolean;
+        };
+        offset: number;
+        pageNumber: number;
+        pageSize: number;
+        unpage: boolean;
+        page: boolean;
+    };
+    last: boolean;
+    totalElements: number;
+    totalPages: number;
+    size: number;
+    number: number;
+    sort: {
+        empty: boolean;
+        sorted: boolean;
+        unsorted: boolean;
+    };
+    first: boolean;
+    numberOfElements: number;
     empty: boolean;
 };
 

@@ -17,6 +17,7 @@ const PaymentScreen = React.lazy(() => import('./PaymentScreen'));
 const LoginAdminScreeen = React.lazy(() => import('@src/modules/module-admin/components/Login'));
 const CategoryAdminScreen = React.lazy(() => import('./CategoryAdminScreen'));
 const CourseAdminScreen = React.lazy(() => import('./CourseAdminScreen'));
+const BillAdminScreen = React.lazy(() => import('./BillAdminScreen'));
 
 function HomeRouter() {
     const role = Cookies.get('role');
@@ -68,6 +69,11 @@ function HomeRouter() {
                 {renderRouter({
                     path: `${SCREEN_ADMIN.COURSES}/*`,
                     element: <CourseAdminScreen />,
+                    visible: role === 'ROLE_ADMIN' && !!isToken,
+                })}
+                {renderRouter({
+                    path: `${SCREEN_ADMIN.BILL}/*`,
+                    element: <BillAdminScreen />,
                     visible: role === 'ROLE_ADMIN' && !!isToken,
                 })}
                 <Route path="*" element={<NotFoundScreen />} />

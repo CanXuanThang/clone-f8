@@ -3,6 +3,7 @@ const SCREEN_ADMIN = Object.freeze({
     DASHBOARD_ADMIN: '/admin/dashboard',
     COURSES: '/admin/danh-sach-khoa-hoc',
     LESSONS: '/admin/danh-sach-khoa-hoc/:courseId',
+    BILL: '/admin/hoa-don',
 });
 
 export { SCREEN_ADMIN };
