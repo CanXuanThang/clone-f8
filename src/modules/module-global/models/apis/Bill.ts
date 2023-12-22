@@ -15,6 +15,11 @@ type TPayment = {
     status: number;
 };
 
+type TBuyer = {
+    content: TPayment[];
+    empty: boolean;
+};
+
 interface BillApiProps {
     GetQRCode: {
         Payload: CallApiDebounse & { data: { courseId: number } };
@@ -24,6 +29,10 @@ interface BillApiProps {
         Payload: CallApiDebounse & { data: { courseId: number } };
         Response?: CallApiResponseData<TPayment>;
     };
+    Buyer: {
+        Payload: CallApiDebounse & { data: { pageIndex: number; pageSize: number } };
+        Response?: TBuyer;
+    };
 }
 
-export type { BillApiProps };
+export type { BillApiProps, TBuyer };

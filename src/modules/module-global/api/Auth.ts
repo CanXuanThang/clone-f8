@@ -6,6 +6,7 @@ import { debounce } from '@module-base/hooks';
 const AUTH_API_PATH = Object.freeze({
     SIGN_IN: '/oauth/token',
     REGISTER: '/public/register',
+    CHANGEPASSWORD: '/user/change-password',
 });
 
 const loginApi = async (payload: AuthApiProps['SignIn']['Payload']): Promise<AuthApiProps['SignIn']['Response']> => {
@@ -42,4 +43,20 @@ const registerApi = async (payload: AuthApiProps['Register']['Payload']): Promis
     return error || response;
 };
 
-export { loginApi, registerApi };
+const changePasswordApi = async (
+    payload: AuthApiProps['ChangePassword']['Payload']
+): Promise<AuthApiProps['ChangePassword']['Response']> => {
+    const { timer = TIMING_API_PENDING, data } = payload;
+    const options = {
+        url: AUTH_API_PATH.CHANGEPASSWORD,
+        method: 'post',
+        data,
+    };
+    const [{ response, error }] = await Promise.all([
+        callApi<AuthApiProps['ChangePassword']['Response']>(options),
+        debounce(timer),
+    ]);
+    return error || response;
+};
+
+export { loginApi, registerApi, changePasswordApi };

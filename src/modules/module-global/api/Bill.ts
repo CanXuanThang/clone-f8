@@ -6,6 +6,7 @@ import { debounce } from '@src/modules/module-base/hooks';
 const BILL = Object.freeze({
     QRCODE: '/bill/get-qrcode',
     PAYMENT: '/bill/payment',
+    BUYER: '/bill/buyer/get',
 });
 
 const getQRCodeApi = async (
@@ -35,4 +36,15 @@ const paymentApi = async (payload: BillApiProps['Payment']['Payload']): Promise<
     return error || response;
 };
 
-export { getQRCodeApi, paymentApi };
+const getBuyerApi = async (payload: BillApiProps['Buyer']['Payload']): Promise<BillApiProps['Buyer']['Response']> => {
+    const { timer = TIMING_API_PENDING, data } = payload;
+    const options = {
+        url: BILL.BUYER,
+        method: 'post',
+        data,
+    };
+    const [{ response, error }] = await Promise.all([callApi<BillApiProps['Buyer']['Response']>(options), debounce(timer)]);
+    return error || response;
+};
+
+export { getQRCodeApi, paymentApi, getBuyerApi };

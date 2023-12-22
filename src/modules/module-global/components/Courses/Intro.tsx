@@ -17,9 +17,10 @@ import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { accessToken } from '@src/modules/module-base/constants';
 import { AppState } from '../../redux';
+import { LoadingButton } from '@mui/lab';
 
 interface Props {
-    data: DataCourse | undefined;
+    data: DataCourse;
     isLoading: boolean;
 }
 
@@ -29,6 +30,7 @@ function Intro({ data, isLoading }: Props) {
     const [type, setType] = useState<string>('login');
     const [value, setValue] = useState<number | null>(2);
     const [isCourse, setIsCourse] = useState<boolean>();
+    const [text, setText] = useState<string>('ĐĂNG NHẬP');
 
     const navigation = useNavigate();
     const token = useSelector((state: AppState) => state.profile.token);
@@ -37,9 +39,9 @@ function Intro({ data, isLoading }: Props) {
     const mutation = useMutation({
         mutationFn: getCourseByUser,
         onSuccess: (res) => {
-            if (res && data) {
+            if (res) {
                 res.content.map((item) => {
-                    if (item.id === data.id) {
+                    if (item.course.id === data.id) {
                         return setIsCourse(true);
                     }
                 });
@@ -50,8 +52,12 @@ function Intro({ data, isLoading }: Props) {
     });
 
     useEffect(() => {
-        (!!token || !!tokenCookie) && mutation.mutate({ data: { pageIndex: 1, pageSize: 10 } });
-    }, [token, tokenCookie]);
+        mutation.mutate({ data: { pageIndex: 1, pageSize: 10 } });
+    }, []);
+
+    useEffect(() => {
+        isCourse ? setText('TIẾP TỤC HỌC') : !!tokenCookie ? setText('ĐĂNG KÝ HỌC') : setText('ĐĂNG NHẬP');
+    }, [isCourse]);
 
     return (
         <Card>
@@ -89,17 +95,18 @@ function Intro({ data, isLoading }: Props) {
                 </IconButton>
             </CardMedia>
             <CardContent sx={{ textAlign: 'center' }}>
-                <Button
+                <LoadingButton
                     sx={{ borderRadius: '99px', bgcolor: '#f05123', p: '6px 30px', color: '#fff', my: 2 }}
+                    loading={mutation.isLoading}
                     onClick={() =>
                         isCourse
-                            ? navigation(SCREEN.LEARNING, { replace: true })
+                            ? navigation(SCREEN.LEARNING.replace('/:courseId', `/${data?.id}`), { replace: true })
                             : !!token || !!tokenCookie
                             ? navigation(SCREEN.PAYMENT.replace('/:courseId', `/${data?.id}`), { state: data && data })
                             : setOpenLogin(true)
                     }>
-                    {isCourse ? 'TIẾP TỤC HỌC' : !!token || !!tokenCookie ? 'ĐĂNG KÝ HỌC' : 'ĐĂNG NHẬP'}
-                </Button>
+                    {text}
+                </LoadingButton>
                 <Box display="flex" flexDirection="column" alignItems="center">
                     <Box display="flex" alignItems="center">
                         <SpeedIcon />

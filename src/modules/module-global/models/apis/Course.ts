@@ -1,4 +1,5 @@
 import { CallApiDebounse, CallApiResponse, CallApiResponseData } from '../type/AuthType';
+import { DataRegister } from './Auth';
 
 type Lesson = {
     id: number;
@@ -40,8 +41,14 @@ type CourseAll = {
     data: DataCourse[];
 };
 
+type TCourseTypeUser = {
+    active: true;
+    buyUser: DataRegister;
+    course: DataCourse;
+};
+
 type CourseByUser = {
-    content: DataCourse[];
+    content: TCourseTypeUser[];
     pageable: {
         sort: {
             empty: boolean;
@@ -84,4 +91,4 @@ interface CourseApiProps {
     };
 }
 
-export type { CourseApiProps, DataCourse, Lesson };
+export type { CourseApiProps, DataCourse, Lesson, TCourseTypeUser };

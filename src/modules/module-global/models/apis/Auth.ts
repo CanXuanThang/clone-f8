@@ -55,6 +55,17 @@ interface AuthApiProps {
         };
         Response?: CallApiResponseData<Register>;
     };
+    ChangePassword: {
+        Payload: CallApiDebounse & {
+            data: {
+                username: string | undefined;
+                oldPassword: string;
+                password: string;
+                confirmPassword: string;
+            };
+        };
+        Response?: CallApiResponseData<null>;
+    };
 }
 
 export type { AuthApiProps, DataRegister };

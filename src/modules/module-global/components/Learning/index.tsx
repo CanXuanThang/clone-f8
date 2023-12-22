@@ -1,7 +1,7 @@
 import { Box, Grid, IconButton, Toolbar, Typography } from '@mui/material';
 import Comment from './Comment';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { useMutation } from '@tanstack/react-query';
 import { getCourseById, getCourseByUser } from '../../api/Course';
@@ -9,19 +9,20 @@ import { useParams } from 'react-router-dom';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { Lesson } from '../../models/apis';
 import CircularBase from '@src/modules/module-base/components/CircularBase';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 function Learning() {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const [isCourse, setIsCourse] = useState<boolean>(false);
-    const [data, setData] = useState<Lesson>();
     const param = useParams();
+    const [data, setData] = useState<Lesson>();
 
     const mutation = useMutation({
         mutationFn: getCourseByUser,
         onSuccess: (res) => {
             if (res) {
                 res.content.map((item) => {
-                    if (item.id === Number(param.courseId)) {
+                    if (item.course.id === Number(param.courseId)) {
                         return setIsCourse(true);
                     }
                 });
@@ -32,14 +33,21 @@ function Learning() {
     });
     const lessons = useMutation({
         mutationFn: getCourseById,
+        onSuccess: (res) => {
+            if (res?.code === '200') {
+            }
+        },
     });
 
     useEffect(() => {
         if (isCourse) {
             lessons.mutate({ data: { id: Number(param.courseId) } });
-            setData(lessons.data?.data.lessons[0]);
         }
     }, [isCourse]);
+
+    useLayoutEffect(() => {
+        lessons.data && setData(lessons.data?.data.lessons[0]);
+    }, [lessons.data]);
 
     useEffect(() => {
         mutation.mutate({ data: { pageIndex: 1, pageSize: 10 } });
@@ -51,7 +59,7 @@ function Learning() {
 
     return (
         <Box>
-            <CircularBase isLoading={lessons.isLoading || mutation.isLoading} />
+            <CircularBase isLoading={lessons.isLoading} />
             {isCourse ? (
                 <Box position="relative">
                     <Grid container>
@@ -75,14 +83,27 @@ function Learning() {
                         </Grid>
                         {open && (
                             <Grid item xs={3}>
-                                {lessons.data?.data.lessons.map((item, index) => (
-                                    <Box display="flex" alignItems="center" mb={2} key={index} onClick={() => setData(item)}>
-                                        <PlayCircleIcon sx={{ color: 'rgba(240,81,35,.4)', mr: 1 }} />
-                                        <Typography>
-                                            {index + 1}. {item?.name}
-                                        </Typography>
-                                    </Box>
-                                ))}
+                                <Box sx={{ height: '100%', bgcolor: '#f0f0f0', pt: 2 }}>
+                                    {lessons.data?.data.lessons.map((item, index) => (
+                                        <Box
+                                            display="flex"
+                                            alignItems="center"
+                                            sx={{ cursor: 'pointer', '&:hover': { opacity: 0.7 } }}
+                                            mb={2}
+                                            key={index}
+                                            onClick={() => setData(item)}>
+                                            <PlayCircleIcon sx={{ color: 'rgba(240,81,35,.4)', mr: 1 }} />
+                                            <Typography>
+                                                {index + 1}. {item?.name}
+                                            </Typography>
+                                        </Box>
+                                    ))}
+                                    <IconButton
+                                        onClick={() => setOpen(false)}
+                                        sx={{ color: 'black', alignItems: 'end', position: 'fixed', bottom: '12px' }}>
+                                        <ChevronRightIcon />
+                                    </IconButton>
+                                </Box>
                             </Grid>
                         )}
                     </Grid>
@@ -96,13 +117,9 @@ function Learning() {
                             flexDirection: 'column',
                             alignItems: 'flex-end',
                             width: '100%',
+                            ...(open && { display: 'none' }),
                         }}>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            edge="end"
-                            onClick={handleDrawerOpen}
-                            sx={{ ...(open && { display: 'none' }) }}>
+                        <IconButton color="inherit" aria-label="open drawer" edge="end" onClick={handleDrawerOpen}>
                             <MenuIcon />
                         </IconButton>
                     </Toolbar>

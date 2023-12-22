@@ -3,8 +3,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import { useLocation, useParams } from 'react-router-dom';
-import { DataCourse } from '../../models/apis';
+import { useParams } from 'react-router-dom';
 import DialogBanking from './DialogBanking';
 import { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
@@ -13,7 +12,6 @@ import CircularBase from '@src/modules/module-base/components/CircularBase';
 import { getCourseById } from '../../api/Course';
 
 function Payment() {
-    const location = useLocation();
     const [open, setOpen] = useState<boolean>(false);
     const param = useParams();
 

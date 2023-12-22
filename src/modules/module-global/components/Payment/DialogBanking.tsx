@@ -23,7 +23,7 @@ function DialogBanking({ open, setOpen }: Props) {
             let message;
             if (res?.code === '200') {
                 mode = 'success';
-                message = 'Thanh toán thành công. Vui lòng chờ phản hồi của admin';
+                message = 'Vui lòng chờ phản hồi của admin';
                 setOpen(false);
                 navigation(SCREEN.HOME, { replace: true });
             } else {

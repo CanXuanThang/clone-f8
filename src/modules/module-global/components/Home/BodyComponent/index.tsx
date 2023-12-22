@@ -9,6 +9,7 @@ import { AppState } from '@src/modules/module-global/redux';
 import Cookies from 'js-cookie';
 import { accessToken } from '@src/modules/module-base/constants';
 import CardBase from '@src/modules/module-base/components/CardBase';
+import { DataCourse, TCourseTypeUser } from '@src/modules/module-global/models/apis';
 
 function BodyComponent() {
     const token = useSelector((state: AppState) => state.profile.token);
@@ -43,9 +44,9 @@ function BodyComponent() {
 
                         {mutation.data?.content.length !== 0 ? (
                             <Grid container spacing={2}>
-                                {mutation.data?.content.map((data: any) => (
-                                    <Grid item xs={12} sm={6} md={3} key={data.id}>
-                                        <CardBase item={data} disable={true} />
+                                {mutation.data?.content.map((data: TCourseTypeUser, index) => (
+                                    <Grid item xs={12} sm={6} md={3} key={index}>
+                                        <CardBase item={data.course} disable={true} />
                                     </Grid>
                                 ))}
                             </Grid>

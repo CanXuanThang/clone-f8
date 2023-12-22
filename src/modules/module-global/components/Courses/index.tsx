@@ -50,7 +50,7 @@ function Courses() {
                     </Box>
                 </Grid>
                 <Grid item xs={12} sm={12} md={4} sx={{ order: { xs: 1, sm: 1, md: 2 } }}>
-                    <Intro data={mutation?.data?.data} isLoading={mutation.isLoading} />
+                    {mutation?.data?.data && <Intro data={mutation?.data?.data} isLoading={mutation.isLoading} />}
                 </Grid>
             </Grid>
         </Box>
