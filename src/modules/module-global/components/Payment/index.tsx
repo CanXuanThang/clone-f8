@@ -10,10 +10,12 @@ import { useMutation } from '@tanstack/react-query';
 import { getQRCodeApi } from '../../api/Bill';
 import CircularBase from '@src/modules/module-base/components/CircularBase';
 import { getCourseById } from '../../api/Course';
+import { useDispatch } from 'react-redux';
 
 function Payment() {
     const [open, setOpen] = useState<boolean>(false);
     const param = useParams();
+    const dispatch = useDispatch();
 
     const mutation = useMutation({
         mutationFn: getQRCodeApi,
@@ -30,6 +32,16 @@ function Payment() {
     useEffect(() => {
         data.mutate({ data: { id: Number(param.courseId) } });
     }, [param]);
+
+    // if (mutation.data?.code !== '200') {
+    //     return dispatch({
+    //         type: 'notify',
+    //         payload: {
+    //             mode: 'error',
+    //             message: 'Hệ thống đang lỗi',
+    //         },
+    //     });
+    // }
 
     return (
         <Container sx={{ my: 14 }}>
@@ -51,7 +63,7 @@ function Payment() {
                     </Box>
                     <Box sx={{ bgcolor: '#ccc', textAlign: 'end', p: '16px', borderRadius: '12px' }}>
                         <Box display="flex" justifyContent="space-between" alignItems="end">
-                            <img src={mutation.data?.data.qrDataURL} style={{ width: '180px', textAlign: 'center' }} />
+                            {/* <img src={mutation.data?.data.qrDataURL || ''} style={{ width: '180px', textAlign: 'center' }} /> */}
                             <Box>
                                 <Typography color="#a2adbd">
                                     Giá bán:{' '}

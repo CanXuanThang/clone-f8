@@ -8,6 +8,7 @@ const COURSE_API_PATH = Object.freeze({
     COURSE_BY_ID: (id?: number) => `/public/course/${id}`,
     COURSE_USER: '/user-course/get-page',
     COURSE_TYPE_ALL: '/public/course-type-all',
+    EVALUATE: '/evaluate/save',
 });
 
 const getCourseAll = async (
@@ -71,4 +72,20 @@ const getCourseTypeAll = async (
     return error || response;
 };
 
-export { getCourseAll, getCourseById, getCourseByUser, getCourseTypeAll };
+const setEvaluateApi = async (
+    payload: CourseApiProps['Evaluate']['Payload']
+): Promise<CourseApiProps['Evaluate']['Response']> => {
+    const { timer = TIMING_API_PENDING, data } = payload;
+    const options = {
+        url: COURSE_API_PATH.EVALUATE,
+        method: 'post',
+        data,
+    };
+    const [{ response, error }] = await Promise.all([
+        callApi<CourseApiProps['Evaluate']['Response']>(options),
+        debounce(timer),
+    ]);
+    return error || response;
+};
+
+export { getCourseAll, getCourseById, getCourseByUser, getCourseTypeAll, setEvaluateApi };

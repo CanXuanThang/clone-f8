@@ -33,6 +33,8 @@ type DataCourse = {
     courseType: string | null;
     seller: any;
     lessons: Lesson[];
+    rating: number;
+    evaluates: Evaluate[];
 };
 
 type CourseAll = {
@@ -72,6 +74,14 @@ type TCourseTypeAll = {
     name: string;
 };
 
+type Evaluate = {
+    id: number;
+    numberStar: number;
+    content: string;
+    buyer: any;
+    courseId: any;
+};
+
 interface CourseApiProps {
     CourseAll: {
         Payload: CallApiDebounse;
@@ -88,6 +98,16 @@ interface CourseApiProps {
     CourseTypeAll: {
         Payload: CallApiDebounse;
         Response?: CallApiResponseData<TCourseTypeAll[]>;
+    };
+    Evaluate: {
+        Payload: CallApiDebounse & {
+            data: {
+                courseId: number;
+                numberStar?: number;
+                content?: string;
+            };
+        };
+        Response?: CallApiResponseData<Evaluate>;
     };
 }
 

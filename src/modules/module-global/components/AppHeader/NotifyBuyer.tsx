@@ -66,23 +66,24 @@ function NotifyBuyer({ data }: Props) {
                 }}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
-                {data?.content.map((item) => (
-                    <MenuItem key={item.id} sx={{ my: 1 }}>
-                        {item.course.image && (
-                            <img
-                                src={item.course.image.replace(CHANGE_LINK, '.')}
-                                alt={item.course.name}
-                                style={{ width: '120px', borderRadius: '8px', marginRight: '8px' }}
-                            />
-                        )}
-                        <Box>
-                            <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>{item.course.name}</Typography>
-                            <Typography sx={{ fontSize: '12px', color: item.status === 1 ? 'red' : 'green' }}>
-                                {item.status === 1 ? 'Chờ xác nhận' : null}
-                            </Typography>
-                        </Box>
-                    </MenuItem>
-                ))}
+                {data?.content &&
+                    data?.content.map((item) => (
+                        <MenuItem key={item.id} sx={{ my: 1 }}>
+                            {item.course.image && (
+                                <img
+                                    src={item.course.image.replace(CHANGE_LINK, '.')}
+                                    alt={item.course.name}
+                                    style={{ width: '120px', borderRadius: '8px', marginRight: '8px' }}
+                                />
+                            )}
+                            <Box>
+                                <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>{item.course.name}</Typography>
+                                <Typography sx={{ fontSize: '12px', color: item.status === 1 ? 'red' : 'green' }}>
+                                    {item.status === 1 ? 'Chờ xác nhận' : null}
+                                </Typography>
+                            </Box>
+                        </MenuItem>
+                    ))}
             </Menu>
         </Box>
     );

@@ -11,9 +11,9 @@ import { CHANGE_LINK, SCREEN } from '../../constants/screen';
 import ReactPlayer from 'react-player';
 import CircularBase from '@src/modules/module-base/components/CircularBase';
 import { useMutation } from '@tanstack/react-query';
-import { getCourseByUser } from '../../api/Course';
+import { getCourseByUser, setEvaluateApi } from '../../api/Course';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { accessToken } from '@src/modules/module-base/constants';
 import { AppState } from '../../redux';
@@ -22,15 +22,16 @@ import { LoadingButton } from '@mui/lab';
 interface Props {
     data: DataCourse;
     isLoading: boolean;
+    onRefetch: () => void;
 }
 
-function Intro({ data, isLoading }: Props) {
+function Intro({ data, isLoading, onRefetch }: Props) {
     const [open, setOpen] = useState<boolean>(false);
     const [openLogin, setOpenLogin] = useState<boolean>(false);
     const [type, setType] = useState<string>('login');
-    const [value, setValue] = useState<number | null>(2);
     const [isCourse, setIsCourse] = useState<boolean>();
     const [text, setText] = useState<string>('ĐĂNG NHẬP');
+    const dispatch = useDispatch();
 
     const navigation = useNavigate();
     const token = useSelector((state: AppState) => state.profile.token);
@@ -48,6 +49,30 @@ function Intro({ data, isLoading }: Props) {
             } else {
                 setIsCourse(false);
             }
+        },
+    });
+
+    const setEvaluate = useMutation({
+        mutationFn: setEvaluateApi,
+        onSuccess: (res) => {
+            let message;
+            let mode;
+            if (res?.code === '200') {
+                mode = 'success';
+                message = 'Đánh giá thành công';
+                onRefetch();
+            }
+            if (res?.code === '400') {
+                mode = 'error';
+                message = 'Đánh giá thất bại';
+            }
+            return dispatch({
+                type: 'notify',
+                payload: {
+                    mode: mode,
+                    message: message,
+                },
+            });
         },
     });
 
@@ -129,10 +154,18 @@ function Intro({ data, isLoading }: Props) {
                     <Rating
                         sx={{ display: 'flex', alignItems: 'center', mt: 1 }}
                         name="simple-controlled"
-                        value={value}
-                        onChange={(event, newValue) => {
-                            setValue(newValue);
-                        }}
+                        value={data.rating}
+                        onChange={(e, newValue) =>
+                            isCourse
+                                ? setEvaluate.mutate({ data: { courseId: data.id, numberStar: Number(newValue) } })
+                                : dispatch({
+                                      type: 'notify',
+                                      payload: {
+                                          mode: 'error',
+                                          message: 'Bạn chưa đăng ký khóa học này',
+                                      },
+                                  })
+                        }
                     />
                 </Box>
             </CardContent>

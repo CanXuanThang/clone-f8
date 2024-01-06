@@ -70,6 +70,8 @@ function DialogAddLesson({ open, setOpen, onRefesh }: Props) {
     }, [watch('courseId')]);
 
     const onSubmit = (formData: Lesson) => {
+        console.log(formData);
+
         mutation.mutate({
             data: {
                 code: watch('code'),
@@ -114,7 +116,7 @@ function DialogAddLesson({ open, setOpen, onRefesh }: Props) {
                         }}
                     />
                     <FormControlInput
-                        name="price"
+                        name="embeddedLink"
                         label="Đường dẫn"
                         control={control}
                         required
