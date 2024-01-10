@@ -1,7 +1,7 @@
 import { TIMING_API_PENDING } from '@src/modules/module-base/constants';
 import { CourseAdminApiProps } from '../models/Course';
-import { callApi } from '@src/modules/module-base/apis';
 import { debounce } from '@src/modules/module-base/hooks';
+import { callAdminApi } from '@src/modules/module-base/apis/apiAdmin';
 
 const COURSE_API_PATH = Object.freeze({
     DELETE_COURSE_TYPE: (id?: number) => `/course-type/${id}`,
@@ -22,7 +22,7 @@ const deleteCourseType = async (
         method: 'delete',
     };
     const [{ response, error }] = await Promise.all([
-        callApi<CourseAdminApiProps['DeleteCourseType']['Response']>(options),
+        callAdminApi<CourseAdminApiProps['DeleteCourseType']['Response']>(options),
         debounce(timer),
     ]);
     return error || response;
@@ -37,7 +37,7 @@ const deleteCourseApi = async (
         method: 'delete',
     };
     const [{ response, error }] = await Promise.all([
-        callApi<CourseAdminApiProps['DeleteCourse']['Response']>(options),
+        callAdminApi<CourseAdminApiProps['DeleteCourse']['Response']>(options),
         debounce(timer),
     ]);
     return error || response;
@@ -52,7 +52,7 @@ const deleteLessonApi = async (
         method: 'delete',
     };
     const [{ response, error }] = await Promise.all([
-        callApi<CourseAdminApiProps['DeleteLesson']['Response']>(options),
+        callAdminApi<CourseAdminApiProps['DeleteLesson']['Response']>(options),
         debounce(timer),
     ]);
     return error || response;
@@ -68,7 +68,7 @@ const addCourseType = async (
         data,
     };
     const [{ response, error }] = await Promise.all([
-        callApi<CourseAdminApiProps['CourseType']['Response']>(options),
+        callAdminApi<CourseAdminApiProps['CourseType']['Response']>(options),
         debounce(timer),
     ]);
     return error || response;
@@ -84,7 +84,7 @@ const addCourseApi = async (
         data,
     };
     const [{ response, error }] = await Promise.all([
-        callApi<CourseAdminApiProps['Course']['Response']>(options),
+        callAdminApi<CourseAdminApiProps['Course']['Response']>(options),
         debounce(timer),
     ]);
     return error || response;
@@ -100,7 +100,7 @@ const addImage = async (
         data,
     };
     const [{ response, error }] = await Promise.all([
-        callApi<CourseAdminApiProps['AddImage']['Response']>(options, true),
+        callAdminApi<CourseAdminApiProps['AddImage']['Response']>(options, true),
         debounce(timer),
     ]);
     return error || response;
@@ -116,7 +116,7 @@ const addLessonApi = async (
         data,
     };
     const [{ response, error }] = await Promise.all([
-        callApi<CourseAdminApiProps['AddLesson']['Response']>(options),
+        callAdminApi<CourseAdminApiProps['AddLesson']['Response']>(options),
         debounce(timer),
     ]);
     return error || response;

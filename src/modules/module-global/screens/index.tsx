@@ -18,10 +18,12 @@ const LoginAdminScreeen = React.lazy(() => import('@src/modules/module-admin/com
 const CategoryAdminScreen = React.lazy(() => import('./CategoryAdminScreen'));
 const CourseAdminScreen = React.lazy(() => import('./CourseAdminScreen'));
 const BillAdminScreen = React.lazy(() => import('./BillAdminScreen'));
+const TotalPriceAdminScreen = React.lazy(() => import('./TotalPriceAdminScreen'));
 
 function HomeRouter() {
-    const role = Cookies.get('role');
+    const role = Cookies.get('role-admin');
     const isToken = Cookies.get(accessToken);
+    const isTokenAdmin = Cookies.get('token-admin');
     const param = useLocation();
 
     const renderRouter = ({ path, element, visible }: { path: string; element: React.ReactNode; visible?: boolean }) =>
@@ -64,17 +66,22 @@ function HomeRouter() {
                 {renderRouter({
                     path: SCREEN_ADMIN.DASHBOARD_ADMIN,
                     element: <CategoryAdminScreen />,
-                    visible: role === 'ROLE_ADMIN' && !!isToken,
+                    visible: role === 'ROLE_ADMIN' && !!isTokenAdmin,
                 })}
                 {renderRouter({
                     path: `${SCREEN_ADMIN.COURSES}/*`,
                     element: <CourseAdminScreen />,
-                    visible: role === 'ROLE_ADMIN' && !!isToken,
+                    visible: role === 'ROLE_ADMIN' && !!isTokenAdmin,
                 })}
                 {renderRouter({
                     path: `${SCREEN_ADMIN.BILL}/*`,
                     element: <BillAdminScreen />,
-                    visible: role === 'ROLE_ADMIN' && !!isToken,
+                    visible: role === 'ROLE_ADMIN' && !!isTokenAdmin,
+                })}
+                {renderRouter({
+                    path: `${SCREEN_ADMIN.TOTAL_PRICE}/*`,
+                    element: <TotalPriceAdminScreen />,
+                    visible: role === 'ROLE_ADMIN' && !!isTokenAdmin,
                 })}
                 <Route path="*" element={<NotFoundScreen />} />
             </Routes>

@@ -11,7 +11,7 @@ function Login() {
     const [open, setOpen] = useState<boolean>(true);
     const navigate = useNavigate();
 
-    const isToken = Cookies.get(accessToken);
+    const isToken = Cookies.get('token-admin');
     useEffect(() => {
         isToken ? navigate(SCREEN_ADMIN.DASHBOARD_ADMIN, { replace: true }) : null;
     }, [isToken]);

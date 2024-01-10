@@ -1,20 +1,14 @@
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { TableBaseProps } from '@src/modules/module-base/constants';
 import TableBase from '@src/modules/module-base/components/TableBase';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { TAdminGet } from '../../models';
 import { deleteBillApi, getBillApi } from '../../apis/Bill';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import DialogApprove from './DialogApprove';
 
-function Bill() {
-    const [open, setOpen] = useState<boolean>(false);
-    const [id, setId] = useState<number>();
-
-    const dispatch = useDispatch();
+function TotalPrice() {
+    const [total, setTotal] = useState(0);
     const column: TableBaseProps<TAdminGet>['rows'] = [
         {
             id: 'id',
@@ -46,58 +40,28 @@ function Bill() {
             label: 'Tổng hóa đơn',
             render: (item) => <Typography variant="caption">{`${item.totalBill.toLocaleString()} đ`}</Typography>,
         },
-        {
-            id: 'action',
-            label: '',
-            render: (item) =>
-                item.status === 1 && (
-                    <>
-                        <IconButton
-                            color="success"
-                            onClick={() => {
-                                setOpen(true);
-                                setId(item.id);
-                            }}>
-                            <CheckCircleOutlineIcon />
-                        </IconButton>
-                        <IconButton color="error" onClick={() => deleteBill.mutate({ data: { id: item.id } })}>
-                            <DeleteIcon />
-                        </IconButton>
-                    </>
-                ),
-        },
     ];
 
     const getBill = useMutation({
         mutationFn: getBillApi,
     });
 
-    const deleteBill = useMutation({
-        mutationFn: deleteBillApi,
-        onSuccess: (response) => {
-            let mode;
-            let message;
-            if (response?.code === '200') {
-                getBill.mutate({ data: { pageIndex: 1, pageSize: 10 } });
-                mode = 'success';
-                message = 'Xóa thành công';
-            } else {
-                mode = 'error';
-                message = 'Xóa thất bại';
-            }
-            return dispatch({
-                type: 'notify',
-                payload: {
-                    mode: mode,
-                    message: message,
-                },
-            });
-        },
-    });
-
     useEffect(() => {
         getBill.mutate({ data: { pageIndex: 1, pageSize: 10 } });
     }, []);
+
+    useEffect(() => {
+        let total = 0;
+        const len = getBill.data?.content.length;
+        getBill.data?.content.map((item, index) => {
+            if (item.status === 2) {
+                total += item.totalBill;
+            }
+            if (len === index + 1) {
+                return setTotal(total);
+            }
+        });
+    }, [getBill.data]);
 
     return (
         <Box>
@@ -108,18 +72,18 @@ function Bill() {
             </Box>
             <TableBase
                 rows={column}
-                data={getBill.data?.content.filter((data) => data.status === 1)}
+                data={getBill.data?.content.filter((data) => data.status === 2)}
                 loading={getBill.isLoading}
                 sx={{ minWidth: '550px', overflow: 'hidden' }}
             />
-            <DialogApprove
-                open={open}
-                setOpen={setOpen}
-                onRefesh={() => getBill.mutate({ data: { pageIndex: 1, pageSize: 10 } })}
-                id={id}
-            />
+            <Typography sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }} color="green">
+                Tổng tiền:
+                <Typography component={'span'} sx={{ pl: 1, color: 'red' }}>
+                    {`${total.toLocaleString()} đ`}
+                </Typography>
+            </Typography>
         </Box>
     );
 }
 
-export default Bill;
+export default TotalPrice;

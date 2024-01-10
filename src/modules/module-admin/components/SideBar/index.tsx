@@ -20,6 +20,11 @@ import { useNavigate } from 'react-router-dom';
 import ListIcon from '@mui/icons-material/List';
 import CategoryIcon from '@mui/icons-material/Category';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import HistoryIcon from '@mui/icons-material/History';
+import { useDispatch } from 'react-redux';
+import { setToken } from '@src/modules/module-global/redux/selector';
+import Cookies from 'js-cookie';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 const drawerWidth = 300;
 
@@ -84,9 +89,14 @@ const listItem = [
         icon: <ListIcon />,
     },
     {
-        name: 'Hóa đơn',
+        name: 'Danh sách đăng ký khóa học',
         url: SCREEN_ADMIN.BILL,
         icon: <LocalAtmIcon />,
+    },
+    {
+        name: 'Tổng tiền hóa đơn',
+        url: SCREEN_ADMIN.TOTAL_PRICE,
+        icon: <MonetizationOnIcon />,
     },
 ];
 
@@ -94,6 +104,8 @@ export default function SideBar({ element }: { element: React.ReactNode }) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -139,15 +151,32 @@ export default function SideBar({ element }: { element: React.ReactNode }) {
                     </IconButton>
                 </DrawerHeader>
                 <Divider />
-                <List>
-                    {listItem.map((item, index) => (
-                        <ListItem key={index} disablePadding>
-                            <ListItemButton onClick={() => navigate(item.url, { replace: true })}>
-                                <ListItemIcon sx={{ svg: { color: 'black' } }}>{item.icon}</ListItemIcon>
-                                <ListItemText primary={item.name} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
+                <List sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height: '100%' }}>
+                    <Box>
+                        {listItem.map((item, index) => (
+                            <ListItem key={index} disablePadding>
+                                <ListItemButton onClick={() => navigate(item.url, { replace: true })}>
+                                    <ListItemIcon sx={{ svg: { color: 'black' } }}>{item.icon}</ListItemIcon>
+                                    <ListItemText primary={item.name} />
+                                </ListItemButton>
+                            </ListItem>
+                        ))}
+                    </Box>
+                    <ListItem sx={{ mb: 4, pl: 8 }}>
+                        <ListItemButton
+                            color="red"
+                            onClick={() => {
+                                dispatch(setToken('logout', ''));
+                                Cookies.remove('role-admin');
+                                Cookies.remove('token-admin');
+                                window.location.reload();
+                            }}>
+                            <ListItemIcon sx={{ svg: { color: 'red' } }}>
+                                <HistoryIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Đăng xuất" sx={{ color: 'red' }} />
+                        </ListItemButton>
+                    </ListItem>
                 </List>
             </Drawer>
             <Main open={open} sx={{ mr: 6 }}>

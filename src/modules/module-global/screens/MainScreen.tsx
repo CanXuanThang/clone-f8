@@ -10,7 +10,7 @@ import Login from '@src/modules/module-admin/components/Login';
 
 function MainScreen({ element }: { element: React.ReactNode }) {
     const param = useLocation();
-    const role = Cookies.get('role');
+    const role = Cookies.get('role-admin');
     const isRole = useSelector((state: AppState) => state.profile.auth);
 
     return (

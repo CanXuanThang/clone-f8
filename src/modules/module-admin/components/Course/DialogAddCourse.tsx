@@ -144,6 +144,7 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
                         label="Giá"
                         control={control}
                         required
+                        type="number"
                         rules={{
                             required: 'Bạn cần nhập giá của khóa học',
                             validate: {
@@ -151,7 +152,7 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
                             },
                         }}
                     />
-                    <FormControlInput name="discount" label="Giảm giá" control={control} required={false} />
+                    <FormControlInput name="discount" label="Giảm giá" type="number" control={control} required={false} />
 
                     <input type="file" required onChange={(e) => e.target.files && setValue('image', e.target.files[0])} />
 

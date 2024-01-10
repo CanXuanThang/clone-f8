@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { CHANGE_LINK } from '../../constants/screen';
 
 function SliderShow() {
-    const { refetch, data, isLoading } = useQuery({
+    const { refetch, data } = useQuery({
         queryKey: ['GET_COURSE_POPULAR'],
         queryFn: () => getCoursePopularApi({}),
         enabled: false,

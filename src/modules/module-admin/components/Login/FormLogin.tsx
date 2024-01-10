@@ -31,11 +31,9 @@ function FormLogin({ setOpen }: Props) {
             let message;
 
             if (response?.status === 200 && response?.data.roles[0] === 'ROLE_ADMIN') {
-                const token = Cookies.set(accessToken, response.data.access_token, { expires: 0.5 });
-                Cookies.set(username, response.data.username, { expires: 0.5 });
-                Cookies.set('role', response.data.roles[0], { expires: 0.5 });
+                Cookies.set('token-admin', response.data.access_token, { expires: 0.5 });
+                Cookies.set('role-admin', response.data.roles[0], { expires: 0.5 });
                 setOpen(false);
-                dispatch(setToken('login', token));
                 dispatch(setAuth(response.data));
                 return navigate(SCREEN_ADMIN.DASHBOARD_ADMIN, { replace: true });
             }

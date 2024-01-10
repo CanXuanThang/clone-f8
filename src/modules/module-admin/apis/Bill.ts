@@ -1,7 +1,7 @@
 import { TIMING_API_PENDING } from '@src/modules/module-base/constants';
 import { BillAdminApiProps } from '../models';
-import { callApi } from '@src/modules/module-base/apis';
 import { debounce } from '@src/modules/module-base/hooks';
+import { callAdminApi } from '@src/modules/module-base/apis/apiAdmin';
 
 const COURSE_API_PATH = Object.freeze({
     GET_BILL: '/bill/admin/get',
@@ -19,7 +19,7 @@ const getBillApi = async (
         data,
     };
     const [{ response, error }] = await Promise.all([
-        callApi<BillAdminApiProps['GetBill']['Response']>(options),
+        callAdminApi<BillAdminApiProps['GetBill']['Response']>(options),
         debounce(timer),
     ]);
     return error || response;
@@ -35,7 +35,7 @@ const deleteBillApi = async (
         data,
     };
     const [{ response, error }] = await Promise.all([
-        callApi<BillAdminApiProps['DeleteBill']['Response']>(options),
+        callAdminApi<BillAdminApiProps['DeleteBill']['Response']>(options),
         debounce(timer),
     ]);
     return error || response;
@@ -51,7 +51,7 @@ const approveBillApi = async (
         data,
     };
     const [{ response, error }] = await Promise.all([
-        callApi<BillAdminApiProps['Approve']['Response']>(options),
+        callAdminApi<BillAdminApiProps['Approve']['Response']>(options),
         debounce(timer),
     ]);
     return error || response;
