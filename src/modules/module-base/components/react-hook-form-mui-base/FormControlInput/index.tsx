@@ -1,11 +1,10 @@
 import { Stack, SxProps, TextFieldProps, Theme, Typography, alpha } from '@mui/material';
-import { MuiTelInput } from 'mui-tel-input';
 import { ReactNode } from 'react';
-import { Control, Controller, RegisterOptions } from 'react-hook-form';
+import { Control, RegisterOptions } from 'react-hook-form';
 import InputField from './InputField';
 
 type Props = TextFieldProps & {
-    label: ReactNode | string;
+    label?: ReactNode | string;
     sx?: SxProps<Theme>;
     required: boolean;
     name: string;

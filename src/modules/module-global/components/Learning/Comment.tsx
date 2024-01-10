@@ -1,22 +1,23 @@
-import { Avatar, Button, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
+import { ListItem } from '@mui/material';
 import { Box, List, Typography } from '@mui/material';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import React, { useEffect } from 'react';
-import { FormContainer, TextFieldElement } from 'react-hook-form-mui';
+import { useMutation } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getCourseAll, getCourseById, setEvaluateApi } from '../../api/Course';
+import { getCourseById, setEvaluateApi } from '../../api/Course';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
+import { useForm } from 'react-hook-form';
+import FormControlInput from '@src/modules/module-base/components/react-hook-form-mui-base/FormControlInput';
 
 type FormData = {
     courseId: number;
-    numberStar: number;
     content: string;
 };
 
 function Comment() {
     const param = useParams();
     const dispatch = useDispatch();
+    const { control, reset, handleSubmit } = useForm<FormData>({});
 
     const setEvaluate = useMutation({
         mutationFn: setEvaluateApi,
@@ -26,6 +27,7 @@ function Comment() {
             if (res?.code === '200') {
                 mode = 'success';
                 message = 'Đánh giá thành công';
+                reset();
                 mutation.mutate({ data: { id: Number(param.courseId) } });
             }
             if (res?.code === '400') {
@@ -46,10 +48,9 @@ function Comment() {
         mutationFn: getCourseById,
     });
 
-    const onSubmit = React.useCallback(
-        (data: FormData) => setEvaluate.mutate({ data: { courseId: Number(param.courseId), content: data.content } }),
-        []
-    );
+    const onSubmit = (data: FormData) => {
+        setEvaluate.mutate({ data: { courseId: Number(param.courseId), content: data.content } });
+    };
 
     useEffect(() => {
         mutation.mutate({ data: { id: Number(param.courseId) } });
@@ -72,47 +73,35 @@ function Comment() {
                     )}
                 </List>
             </Box>
-            <FormContainer onSuccess={onSubmit} mode="onChange" reValidateMode="onChange">
-                <Box display="flex" alignItems="center" maxWidth="30%">
-                    <TextFieldElement
-                        name="content"
-                        required
-                        placeholder="Bình luận của bạn ..."
-                        sx={{
-                            minWidth: '300px',
-                            '& > div': {
-                                borderRadius: '44px',
-                                '& > input': {
-                                    p: '12px 5px 12px 20px',
-                                    width: '200px',
-                                },
-                                '& > fieldset': {
-                                    border: '1px solid #ccc',
-                                    '& .MuiOutlinedInput-notchedOutline:hover': {
-                                        borderColor: '#ccc',
-                                    },
-                                },
-                            },
-                            my: 1,
-                        }}
-                    />
-                    <LoadingButton
-                        loading={setEvaluate.isLoading}
-                        type="submit"
-                        fullWidth
-                        sx={{
-                            p: '8px 16px',
-                            width: '80px',
-                            ml: 3,
-                            bgcolor: '#ff8f26',
-                            borderRadius: '44px',
-                            color: '#fff',
-                            minWidth: '122px',
-                        }}>
-                        Bình luận
-                    </LoadingButton>
-                </Box>
-            </FormContainer>
+            <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
+                <FormControlInput
+                    name="content"
+                    control={control}
+                    placeholder="Bình luận của bạn ..."
+                    required
+                    rules={{
+                        required: 'Bạn cần nhập tên khóa học',
+                        validate: {
+                            value: (value) => !!value.trim() || 'Bạn cần nhập tên khóa học',
+                        },
+                    }}
+                />
+                <LoadingButton
+                    loading={setEvaluate.isLoading}
+                    type="submit"
+                    fullWidth
+                    sx={{
+                        p: '8px 16px',
+                        width: '80px',
+                        ml: 3,
+                        bgcolor: '#ff8f26',
+                        borderRadius: '44px',
+                        color: '#fff',
+                        minWidth: '122px',
+                    }}>
+                    Bình luận
+                </LoadingButton>
+            </Box>
         </Box>
     );
 }
