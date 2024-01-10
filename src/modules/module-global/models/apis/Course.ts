@@ -87,6 +87,10 @@ interface CourseApiProps {
         Payload: CallApiDebounse;
         Response?: CallApiResponseData<CourseAll>;
     };
+    CoursePopular: {
+        Payload: CallApiDebounse;
+        Response?: CallApiResponseData<DataCourse[]>;
+    };
     CourseById: {
         Payload: CallApiDebounse & { data: { id?: number } };
         Response?: CallApiResponseData<DataCourse>;

@@ -35,7 +35,7 @@ function NotifyBuyer({ data }: Props) {
                 <NotificationsActiveIcon />
             </IconButton>
             <Typography component="p" color="red" sx={{ position: 'absolute', top: 0, right: 0, fontSize: '12px' }}>
-                {data?.content ? data?.content.length : 0}
+                {data?.content ? data?.content.length : null}
             </Typography>
             <Menu
                 anchorEl={anchorEl}
@@ -71,7 +71,7 @@ function NotifyBuyer({ data }: Props) {
                         <MenuItem key={item.id} sx={{ my: 1 }}>
                             {item.course.image && (
                                 <img
-                                    src={item.course.image.replace(CHANGE_LINK, '.')}
+                                    src={item.course.image.replace(CHANGE_LINK, '')}
                                     alt={item.course.name}
                                     style={{ width: '120px', borderRadius: '8px', marginRight: '8px' }}
                                 />
@@ -79,7 +79,7 @@ function NotifyBuyer({ data }: Props) {
                             <Box>
                                 <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>{item.course.name}</Typography>
                                 <Typography sx={{ fontSize: '12px', color: item.status === 1 ? 'red' : 'green' }}>
-                                    {item.status === 1 ? 'Chờ xác nhận' : null}
+                                    {item.status === 1 ? 'Chờ xác nhận' : 'Đăng ký thành công'}
                                 </Typography>
                             </Box>
                         </MenuItem>

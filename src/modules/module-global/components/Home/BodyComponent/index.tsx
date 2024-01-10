@@ -69,7 +69,7 @@ function BodyComponent() {
                 <Typography variant="h5" sx={{ pt: 6, pb: 2 }}>
                     Khóa học Pro
                 </Typography>
-                <Grid container spacing={2}>
+                <Grid container spacing={3}>
                     {data ? (
                         data?.data?.data.map((item) => (
                             <Grid item xs={12} sm={6} md={3} key={item.id}>

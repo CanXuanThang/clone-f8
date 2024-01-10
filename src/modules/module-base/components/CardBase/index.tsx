@@ -1,9 +1,10 @@
-import { Box, Button, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, Rating, Typography } from '@mui/material';
 import { CHANGE_LINK, SCREEN } from '@src/modules/module-global/constants/screen';
+import { DataCourse } from '@src/modules/module-global/models/apis';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
-    item: any;
+    item: DataCourse;
     disable?: boolean;
 }
 
@@ -28,7 +29,7 @@ function CardBase({ item, disable = false }: Props) {
                         },
                     },
                 }}>
-                {item.image && <img src={item.image.replace(CHANGE_LINK, '.')} alt={item.name} />}
+                {item.image && <img src={item.image.replace(CHANGE_LINK, '')} alt={item.name} />}
                 <Button className="course" onClick={() => navigation(SCREEN.COURSE.replace('/:courseId', `/${item.id}`))}>
                     <Typography
                         variant="subtitle2"
@@ -49,18 +50,19 @@ function CardBase({ item, disable = false }: Props) {
                     pt: 1,
                     pb: '0px !important',
                     display: 'flex',
-                    // justifyContent: 'space-between',
-                    // alignItems: 'center',
                     flexDirection: 'column',
                 }}>
-                <Typography variant="subtitle2">{item.name}</Typography>
+                <Box display="flex" alignItems="center" justifyContent="space-between">
+                    <Typography variant="subtitle2">{item.name}</Typography>
+                    <Rating size="small" name="simple-controlled" defaultValue={item.rating} readOnly />
+                </Box>
                 {!disable && (
-                    <Box display="flex" alignItems="center" my={1}>
+                    <Box display="flex" alignItems="center" justifyContent="space-between" my={1}>
                         <Typography variant="caption" color="black" mr={1} sx={{ textDecoration: 'line-through' }}>
-                            {`${item.price.toLocaleString()}đ`}
+                            {`${item.price.toLocaleString()} đ`}
                         </Typography>
                         <Typography variant="subtitle2" color="#f05123">
-                            {`${item.priceDiscount.toLocaleString()}đ`}
+                            {`${item.priceDiscount.toLocaleString()} đ`}
                         </Typography>
                     </Box>
                 )}

@@ -9,6 +9,7 @@ const COURSE_API_PATH = Object.freeze({
     COURSE_USER: '/user-course/get-page',
     COURSE_TYPE_ALL: '/public/course-type-all',
     EVALUATE: '/evaluate/save',
+    COURSE_POPULAR: '/public/course/popular',
 });
 
 const getCourseAll = async (
@@ -72,6 +73,21 @@ const getCourseTypeAll = async (
     return error || response;
 };
 
+const getCoursePopularApi = async (
+    payload: CourseApiProps['CoursePopular']['Payload']
+): Promise<CourseApiProps['CoursePopular']['Response']> => {
+    const { timer = TIMING_API_PENDING } = payload;
+    const options = {
+        url: COURSE_API_PATH.COURSE_POPULAR,
+        method: 'get',
+    };
+    const [{ response, error }] = await Promise.all([
+        callApi<CourseApiProps['CoursePopular']['Response']>(options),
+        debounce(timer),
+    ]);
+    return error || response;
+};
+
 const setEvaluateApi = async (
     payload: CourseApiProps['Evaluate']['Payload']
 ): Promise<CourseApiProps['Evaluate']['Response']> => {
@@ -88,4 +104,4 @@ const setEvaluateApi = async (
     return error || response;
 };
 
-export { getCourseAll, getCourseById, getCourseByUser, getCourseTypeAll, setEvaluateApi };
+export { getCourseAll, getCourseById, getCourseByUser, getCourseTypeAll, setEvaluateApi, getCoursePopularApi };

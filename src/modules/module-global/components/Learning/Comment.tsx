@@ -56,19 +56,22 @@ function Comment() {
     }, [param.courseId]);
 
     return (
-        <Box mx={8} maxHeight="500px" my={4}>
-            <Typography variant="h5">Bình luận</Typography>
-            <List>
-                {mutation.data?.data ? (
-                    mutation.data.data.evaluates.map((item) => (
-                        <ListItem alignItems="flex-start">
-                            <Typography>{item.content}</Typography>
-                        </ListItem>
-                    ))
-                ) : (
-                    <Typography>Chưa có bình luận nào</Typography>
-                )}
-            </List>
+        <Box mx={8} my={4}>
+            <Box maxHeight="400px" overflow="auto">
+                <Typography variant="h5">Bình luận</Typography>
+                <List>
+                    {mutation.data?.data ? (
+                        mutation.data.data.evaluates.map((item) => (
+                            <ListItem alignItems="flex-start" sx={{ display: 'flex', flexDirection: 'column' }}>
+                                <Typography sx={{ fontWeight: 600, mb: 1 }}>{item.buyer}</Typography>
+                                <Typography>{item.content}</Typography>
+                            </ListItem>
+                        ))
+                    ) : (
+                        <Typography>Chưa có bình luận nào</Typography>
+                    )}
+                </List>
+            </Box>
             <FormContainer onSuccess={onSubmit} mode="onChange" reValidateMode="onChange">
                 <Box display="flex" alignItems="center" maxWidth="30%">
                     <TextFieldElement

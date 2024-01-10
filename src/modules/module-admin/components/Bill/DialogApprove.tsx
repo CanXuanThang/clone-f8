@@ -30,6 +30,7 @@ function DialogApprove({ open, setOpen, onRefesh, id }: Props) {
                 onRefesh();
                 mode = 'success';
                 message = 'Xác nhận thành công';
+                setOpen(false);
             } else {
                 mode = 'error';
                 message = 'Xác nhận thất bại';

@@ -12,6 +12,5 @@
 # Cấu hình lại file ảnh
 
 -   Tìm kiếm: CHANGE_LINK
--   Thay đường dẫn CHANGE_LINK thành nơi lưu trữ clone-f8 (VÍ DỤ:C:/Users/thang/OneDrive/Front-end/clone-f8 )
--   Sửa IMAGE_PATH trong back end thành nơi nơi trữ clone-f8 + "/src/modules/module-global/imgs/"
--   Ví dụ public static String IMAGE_PATH = "C:/Users/thang/OneDrive/Front-end/clone-f8/src/modules/module-global/imgs/";
+-   Thay đường dẫn CHANGE_LINK thành nơi lưu trữ clone-f8 (VÍ DỤ:C:/Users/thang/OneDrive/Front-end/clone-f8/public )
+-   Sửa IMAGE_PATH trong back end thành: "C:/Users/thang/OneDrive/Front-end/clone-f8/public"

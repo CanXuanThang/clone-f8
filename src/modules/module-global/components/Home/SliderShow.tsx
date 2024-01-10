@@ -2,19 +2,28 @@ import { Box } from '@mui/material';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import './SliderShowStyle.scss';
+import { useQuery } from '@tanstack/react-query';
+import { getCoursePopularApi } from '../../api/Course';
+import { useEffect } from 'react';
+import { CHANGE_LINK } from '../../constants/screen';
 
 function SliderShow() {
-    const images = [
-        'https://images.unsplash.com/photo-1509721434272-b79147e0e708?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
-        'https://images.unsplash.com/photo-1506710507565-203b9f24669b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1536&q=80',
-        'https://images.unsplash.com/photo-1536987333706-fc9adfb10d91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
-    ];
+    const { refetch, data, isLoading } = useQuery({
+        queryKey: ['GET_COURSE_POPULAR'],
+        queryFn: () => getCoursePopularApi({}),
+        enabled: false,
+    });
+
+    useEffect(() => {
+        refetch().then();
+    }, []);
+
     return (
         <Box sx={{ margin: '32px' }}>
             <Slide autoplay={true}>
-                {images.map((image: string, index: number) => (
+                {data?.data.map((item) => (
                     <Box
-                        key={index}
+                        key={item.id}
                         sx={{
                             '> div': {
                                 display: 'flex',
@@ -27,7 +36,7 @@ function SliderShow() {
                         }}>
                         <Box
                             sx={{
-                                backgroundImage: `url(${image})`,
+                                backgroundImage: `url(${item.image.replace(CHANGE_LINK, '')})`,
                                 backgroundRepeat: 'no-repeat',
                                 backgroundAttachment: 'fixed',
                                 backgroundPosition: 'center',
