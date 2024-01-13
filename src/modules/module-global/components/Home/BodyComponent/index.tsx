@@ -9,7 +9,7 @@ import { AppState } from '@src/modules/module-global/redux';
 import Cookies from 'js-cookie';
 import { accessToken } from '@src/modules/module-base/constants';
 import CardBase from '@src/modules/module-base/components/CardBase';
-import { DataCourse, TCourseTypeUser } from '@src/modules/module-global/models/apis';
+import { TCourseTypeUser } from '@src/modules/module-global/models/apis';
 
 function BodyComponent() {
     const token = useSelector((state: AppState) => state.profile.token);
@@ -42,7 +42,7 @@ function BodyComponent() {
                             Khóa học của bạn
                         </Typography>
 
-                        {mutation.data?.content.length !== 0 ? (
+                        {mutation.data?.content && mutation.data?.content.length !== 0 ? (
                             <Grid container spacing={2}>
                                 {mutation.data?.content.map((data: TCourseTypeUser, index) => (
                                     <Grid item xs={12} sm={6} md={3} key={index}>

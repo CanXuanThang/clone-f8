@@ -9,28 +9,20 @@ import ChecklistIcon from '@mui/icons-material/Checklist';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteCourseApi } from '../../apis/Course';
 import { useDispatch } from 'react-redux';
-import BreakCrumbBase from '@src/modules/module-base/components/BreakCrumbBase';
 import { SCREEN_ADMIN } from '../../constants';
 import DialogAddCourse from './DialogAddCourse';
 import { useNavigate } from 'react-router-dom';
 import { DataCourse } from '@src/modules/module-global/models/apis/Course';
-
-interface Data {
-    id: number;
-    code: string | null;
-    name: string;
-    price: number;
-    totalBuy: number;
-    discount: number;
-    description: string;
-}
+import DialogUpdate from './DialogUpdate';
 
 function Course() {
     const dispatch = useDispatch();
     const navigation = useNavigate();
     const [open, setOpen] = useState<boolean>(false);
+    const [openUpdate, setOpenUpdate] = useState<boolean>(false);
+    const [dataUpdate, setDataUpdate] = useState<DataCourse>();
 
-    const column: TableBaseProps<Data>['rows'] = [
+    const column: TableBaseProps<DataCourse>['rows'] = [
         {
             id: 'id',
             label: 'ID',
@@ -67,8 +59,21 @@ function Course() {
             render: (item) => (
                 <Box display="flex" flexDirection="row">
                     <IconButton
+                        color="info"
+                        onClick={(e) => {
+                            setDataUpdate(item);
+                            setOpenUpdate(true);
+                            e.stopPropagation();
+                        }}
+                        title="Sửa khóa học">
+                        <ChecklistIcon aria-label="" />
+                    </IconButton>
+                    <IconButton
                         color="error"
-                        onClick={() => deleteCourse.mutate({ data: { id: item.id, status: 2 } })}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            deleteCourse.mutate({ data: { id: item.id, status: 2 } });
+                        }}
                         title="Xóa">
                         <DeleteIcon />
                     </IconButton>
@@ -110,8 +115,7 @@ function Course() {
         },
     });
 
-    const handleClick = (e: any, item: DataCourse) => {
-        e.stopPropagation();
+    const handleClick = (item: DataCourse) => {
         navigation(SCREEN_ADMIN.LESSONS.replace('/:courseId', `/${item.id}`));
     };
 
@@ -132,6 +136,12 @@ function Course() {
                 onClickItem={handleClick}
             />
             <DialogAddCourse open={open} setOpen={setOpen} onRefesh={() => refetch().then()} />
+            <DialogUpdate
+                open={openUpdate}
+                setOpen={setOpenUpdate}
+                onRefesh={() => refetch().then()}
+                dataUpdate={dataUpdate}
+            />
         </Box>
     );
 }

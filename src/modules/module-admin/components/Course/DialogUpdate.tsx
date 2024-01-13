@@ -4,19 +4,21 @@ import DialogBase from '@src/modules/module-base/components/DialogBase';
 import FormControlInput from '@src/modules/module-base/components/react-hook-form-mui-base/FormControlInput';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { addCourseApi, addCourseType, addImage } from '../../apis/Course';
+import { addCourseApi, addImage } from '../../apis/Course';
 import { useDispatch } from 'react-redux';
 import FormControlSelect from '@src/modules/module-base/components/react-hook-form-mui-base/FormControlSelector';
 import { getCourseTypeAll } from '@src/modules/module-global/api/Course';
 import { useEffect } from 'react';
+import { DataCourse } from '@src/modules/module-global/models/apis/Course';
 
 interface Props {
     open: boolean;
     setOpen: (value: boolean) => void;
     onRefesh: () => void;
+    dataUpdate?: DataCourse;
 }
 
-type DataCourse = {
+type FormDataCourse = {
     code: any;
     name: string;
     courseType: any;
@@ -24,18 +26,48 @@ type DataCourse = {
     shortDescription: string;
     price: number;
     discount: number;
-    image: File;
+    image: File | null;
 };
 
-function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
-    const { control, handleSubmit, reset, setValue, watch } = useForm<DataCourse>({});
+const defaultValueForm: FormDataCourse = {
+    code: '',
+    name: '',
+    courseType: '',
+    description: '',
+    shortDescription: '',
+    price: 0,
+    discount: 0,
+    image: null,
+};
+
+function DialogUpdate({ open, setOpen, onRefesh, dataUpdate }: Props) {
     const dispatch = useDispatch();
+    const { control, handleSubmit, reset, setValue, watch } = useForm<FormDataCourse>({
+        defaultValues: defaultValueForm,
+    });
 
     const mutation = useMutation({
         mutationFn: addCourseApi,
         onSuccess: (res) => {
+            let mode;
+            let message;
+
             if (res?.code === '200') {
-                addImageApi.mutate({ data: { id: res.data.id, image: watch('image') } });
+                !dataUpdate && addImageApi.mutate({ data: { id: res.data.id, image: watch('image') } });
+                if (dataUpdate) {
+                    mode = 'success';
+                    message = 'Sửa khóa học thành công';
+                    setOpen(false);
+                    reset();
+                    onRefesh();
+                }
+                dispatch({
+                    type: 'notify',
+                    payload: {
+                        mode: mode,
+                        message: message,
+                    },
+                });
             }
         },
     });
@@ -79,9 +111,24 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
         setValue('code', data?.data.find((item) => watch('courseType') === item.id)?.code);
     }, [watch('courseType')]);
 
-    const onSubmit = (formData: DataCourse) => {
+    useEffect(() => {
+        if (dataUpdate) {
+            reset({
+                code: dataUpdate?.code,
+                name: dataUpdate?.name,
+                courseType: dataUpdate?.codeType,
+                description: dataUpdate?.description,
+                shortDescription: dataUpdate?.shortDescription,
+                price: dataUpdate?.price,
+                discount: dataUpdate?.discount,
+            });
+        }
+    }, [dataUpdate]);
+
+    const onSubmit = (formData: FormDataCourse) => {
         mutation.mutate({
             data: {
+                id: dataUpdate?.id,
                 code: formData.code,
                 name: formData.name,
                 courseType: { id: formData.courseType },
@@ -98,7 +145,7 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
             open={open}
             displayWitdh="sm"
             setOpen={setOpen}
-            textTitle={<Typography variant="h4">Thêm danh mục</Typography>}
+            textTitle={<Typography>Thêm danh mục</Typography>}
             contentText={
                 <Box component="form" onSubmit={handleSubmit(onSubmit)}>
                     <FormControlInput
@@ -148,13 +195,19 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
                         rules={{
                             required: 'Bạn cần nhập giá của khóa học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập giá của khóa học',
+                                value: (value) => !!value || 'Bạn cần nhập giá của khóa học',
                             },
                         }}
                     />
                     <FormControlInput name="discount" label="Giảm giá" type="number" control={control} required={false} />
 
-                    <input type="file" required onChange={(e) => e.target.files && setValue('image', e.target.files[0])} />
+                    {!dataUpdate && (
+                        <input
+                            type="file"
+                            required
+                            onChange={(e) => e.target.files && setValue('image', e.target.files[0])}
+                        />
+                    )}
 
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <LoadingButton
@@ -177,4 +230,4 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
     );
 }
 
-export default DialogAddCourse;
+export default DialogUpdate;

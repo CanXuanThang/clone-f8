@@ -53,7 +53,11 @@ interface AuthApiProps {
                 phoneNumber?: string;
             };
         };
-        Response?: CallApiResponseData<Register>;
+        Response?: CallApiResponseData<DataRegister>;
+    };
+    GetCurrentUser: {
+        Payload: CallApiDebounse;
+        Response?: CallApiResponseData<DataRegister>;
     };
     ChangePassword: {
         Payload: CallApiDebounse & {

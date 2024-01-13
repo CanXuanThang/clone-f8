@@ -26,6 +26,7 @@ interface CourseAdminApiProps {
     Course: {
         Payload: CallApiDebounse & {
             data: {
+                id?: DataCourse['id'];
                 code: DataCourse['code'];
                 name: DataCourse['name'];
                 shortDescription: DataCourse['shortDescription'];

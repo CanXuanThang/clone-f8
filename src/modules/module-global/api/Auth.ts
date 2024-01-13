@@ -7,6 +7,7 @@ const AUTH_API_PATH = Object.freeze({
     SIGN_IN: '/oauth/token',
     REGISTER: '/public/register',
     CHANGEPASSWORD: '/user/change-password',
+    GET_CURRENT_USER: '/user/get-current-user',
 });
 
 const loginApi = async (payload: AuthApiProps['SignIn']['Payload']): Promise<AuthApiProps['SignIn']['Response']> => {
@@ -43,6 +44,21 @@ const registerApi = async (payload: AuthApiProps['Register']['Payload']): Promis
     return error || response;
 };
 
+const getCurrentUserApi = async (
+    payload: AuthApiProps['GetCurrentUser']['Payload']
+): Promise<AuthApiProps['GetCurrentUser']['Response']> => {
+    const { timer = TIMING_API_PENDING } = payload;
+    const options = {
+        url: AUTH_API_PATH.GET_CURRENT_USER,
+        method: 'get',
+    };
+    const [{ response, error }] = await Promise.all([
+        callApi<AuthApiProps['GetCurrentUser']['Response']>(options),
+        debounce(timer),
+    ]);
+    return error || response;
+};
+
 const changePasswordApi = async (
     payload: AuthApiProps['ChangePassword']['Payload']
 ): Promise<AuthApiProps['ChangePassword']['Response']> => {
@@ -59,4 +75,4 @@ const changePasswordApi = async (
     return error || response;
 };
 
-export { loginApi, registerApi, changePasswordApi };
+export { loginApi, registerApi, changePasswordApi, getCurrentUserApi };

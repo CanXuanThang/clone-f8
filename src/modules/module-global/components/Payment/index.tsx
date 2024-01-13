@@ -6,11 +6,13 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { useParams } from 'react-router-dom';
 import DialogBanking from './DialogBanking';
 import { useEffect, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { getQRCodeApi } from '../../api/Bill';
 import CircularBase from '@src/modules/module-base/components/CircularBase';
 import { getCourseById } from '../../api/Course';
 import { useDispatch } from 'react-redux';
+import img from '../../../../../public/payment.jpg';
+import { getCurrentUserApi } from '../../api/Auth';
 
 function Payment() {
     const [open, setOpen] = useState<boolean>(false);
@@ -19,6 +21,12 @@ function Payment() {
 
     const mutation = useMutation({
         mutationFn: getQRCodeApi,
+    });
+
+    const getCurrentUser = useQuery({
+        queryKey: ['getCurrentUser'],
+        queryFn: () => getCurrentUserApi({}),
+        enabled: false,
     });
 
     const data = useMutation({
@@ -33,15 +41,9 @@ function Payment() {
         data.mutate({ data: { id: Number(param.courseId) } });
     }, [param]);
 
-    // if (mutation.data?.code !== '200') {
-    //     return dispatch({
-    //         type: 'notify',
-    //         payload: {
-    //             mode: 'error',
-    //             message: 'Hệ thống đang lỗi',
-    //         },
-    //     });
-    // }
+    useEffect(() => {
+        getCurrentUser.refetch().then();
+    }, []);
 
     return (
         <Container sx={{ my: 14 }}>
@@ -63,8 +65,20 @@ function Payment() {
                     </Box>
                     <Box sx={{ bgcolor: '#ccc', textAlign: 'end', p: '16px', borderRadius: '12px' }}>
                         <Box display="flex" justifyContent="space-between" alignItems="end">
-                            {/* <img src={mutation.data?.data.qrDataURL || ''} style={{ width: '180px', textAlign: 'center' }} /> */}
+                            <img src={img} style={{ width: '180px', textAlign: 'center' }} />
                             <Box>
+                                <Typography color="#a2adbd">
+                                    Người hưởng thụ:{' '}
+                                    <Typography component="span" color="#ff8f26" variant="body2">
+                                        NGUYEN BA CUONG
+                                    </Typography>
+                                </Typography>
+                                <Typography color="#a2adbd">
+                                    Nội dung chuyển khoản:{' '}
+                                    <Typography component="span" color="#ff8f26" variant="body2">
+                                        {data.data?.data.code} + {getCurrentUser.data?.data.displayName}
+                                    </Typography>
+                                </Typography>
                                 <Typography color="#a2adbd">
                                     Giá bán:{' '}
                                     <Typography component="span" color="#ff8f26" variant="body2">
@@ -97,7 +111,7 @@ function Payment() {
                         <CardContent>
                             <Box sx={{ display: 'flex', mb: 1 }}>
                                 <CheckCircleOutlineIcon />
-                                <Typography>Truy cập toàn bộ kháo {data.data?.data.name}</Typography>
+                                <Typography>Truy cập toàn bộ khóa {data.data?.data.name}</Typography>
                             </Box>
                             <Box sx={{ display: 'flex', mb: 1 }}>
                                 <EmojiPeopleIcon />
