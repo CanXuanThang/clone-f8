@@ -21,29 +21,33 @@ function SliderShow() {
     return (
         <Box sx={{ margin: '32px' }}>
             <Slide autoplay={true}>
-                {data?.data.map((item) => (
-                    <Box
-                        key={item.id}
-                        sx={{
-                            '> div': {
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                backgroundSize: 'cover',
-                                height: '350px',
-                            },
-                            borderRadius: '12px',
-                        }}>
+                {data?.data.map((item) => {
+                    const img = item.image.replace(CHANGE_LINK, '');
+
+                    return (
                         <Box
+                            key={item.id}
                             sx={{
-                                backgroundImage: `url(${item.image.replace(CHANGE_LINK, '')})`,
-                                backgroundRepeat: 'no-repeat',
-                                backgroundAttachment: 'fixed',
-                                backgroundPosition: 'center',
-                            }}
-                        />
-                    </Box>
-                ))}
+                                '> div': {
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    backgroundSize: 'cover',
+                                    height: '350px',
+                                },
+                                borderRadius: '12px',
+                            }}>
+                            <Box
+                                sx={{
+                                    backgroundImage: `url(${img})`,
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundAttachment: 'fixed',
+                                    backgroundPosition: 'center',
+                                }}
+                            />
+                        </Box>
+                    );
+                })}
             </Slide>
         </Box>
     );

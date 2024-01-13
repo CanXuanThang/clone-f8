@@ -4,8 +4,8 @@ import { debounce } from '@src/modules/module-base/hooks';
 import { callAdminApi } from '@src/modules/module-base/apis/apiAdmin';
 
 const COURSE_API_PATH = Object.freeze({
-    DELETE_COURSE_TYPE: (id?: number) => `/course-type/${id}`,
-    DELETE_COURSE: (id?: number) => `/course/${id}`,
+    DELETE_COURSE_TYPE: `/course-type/update-status`,
+    DELETE_COURSE: '/course/update-status',
     DELETE_LESSON: (id?: number) => `/lesson/${id}`,
     ADD_COURSE_TYPE: '/course-type/save',
     ADD_IMAGE: '/course/save-image',
@@ -18,8 +18,9 @@ const deleteCourseType = async (
 ): Promise<CourseAdminApiProps['DeleteCourseType']['Response']> => {
     const { timer = TIMING_API_PENDING, data } = payload;
     const options = {
-        url: COURSE_API_PATH.DELETE_COURSE_TYPE(data.id),
-        method: 'delete',
+        url: COURSE_API_PATH.DELETE_COURSE_TYPE,
+        method: 'post',
+        data,
     };
     const [{ response, error }] = await Promise.all([
         callAdminApi<CourseAdminApiProps['DeleteCourseType']['Response']>(options),
@@ -33,8 +34,9 @@ const deleteCourseApi = async (
 ): Promise<CourseAdminApiProps['DeleteCourse']['Response']> => {
     const { timer = TIMING_API_PENDING, data } = payload;
     const options = {
-        url: COURSE_API_PATH.DELETE_COURSE(data.id),
-        method: 'delete',
+        url: COURSE_API_PATH.DELETE_COURSE,
+        method: 'post',
+        data,
     };
     const [{ response, error }] = await Promise.all([
         callAdminApi<CourseAdminApiProps['DeleteCourse']['Response']>(options),

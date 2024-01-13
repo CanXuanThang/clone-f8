@@ -20,7 +20,7 @@ type Lesson = {
 
 interface CourseAdminApiProps {
     CourseType: {
-        Payload: CallApiDebounse & { data: { code: TCourseType['code']; name: TCourseType['name'] } };
+        Payload: CallApiDebounse & { data: { id?: TCourseType['id']; code: TCourseType['code']; name: TCourseType['name'] } };
         Response?: CallApiResponseData<TCourseType>;
     };
     Course: {
@@ -38,11 +38,11 @@ interface CourseAdminApiProps {
         Response?: CallApiResponseData<DataCourse>;
     };
     DeleteCourseType: {
-        Payload: CallApiDebounse & { data: { id: TCourseType['id'] } };
+        Payload: CallApiDebounse & { data: { id: TCourseType['id']; status: number } };
         Response?: CallApiResponseData<null>;
     };
     DeleteCourse: {
-        Payload: CallApiDebounse & { data: { id: TCourseType['id'] } };
+        Payload: CallApiDebounse & { data: { id: TCourseType['id']; status: number } };
         Response?: CallApiResponseData<null>;
     };
     DeleteLesson: {

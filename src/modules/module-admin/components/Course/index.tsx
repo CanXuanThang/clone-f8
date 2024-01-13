@@ -37,11 +37,6 @@ function Course() {
             render: (item) => <Typography variant="caption">{item.id}</Typography>,
         },
         {
-            id: 'code',
-            label: 'Code',
-            render: (item) => item.code,
-        },
-        {
             id: 'name',
             label: 'Tên khóa học',
             render: (item) => <Typography variant="caption">{item.name}</Typography>,
@@ -71,10 +66,10 @@ function Course() {
             label: '',
             render: (item) => (
                 <Box display="flex" flexDirection="row">
-                    <IconButton color="info" onClick={() => {}} title="Xem danh sách bài học">
-                        <ChecklistIcon aria-label="asdsd" />
-                    </IconButton>
-                    <IconButton color="error" onClick={() => deleteCourse.mutate({ data: { id: item.id } })} title="Xóa">
+                    <IconButton
+                        color="error"
+                        onClick={() => deleteCourse.mutate({ data: { id: item.id, status: 2 } })}
+                        title="Xóa">
                         <DeleteIcon />
                     </IconButton>
                 </Box>
@@ -115,7 +110,8 @@ function Course() {
         },
     });
 
-    const handleClick = (item: DataCourse) => {
+    const handleClick = (e: any, item: DataCourse) => {
+        e.stopPropagation();
         navigation(SCREEN_ADMIN.LESSONS.replace('/:courseId', `/${item.id}`));
     };
 

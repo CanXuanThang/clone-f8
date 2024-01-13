@@ -9,7 +9,7 @@ interface TableBaseProps<T> {
 
     data?: T[];
     onScroll?(event: UIEvent<HTMLDivElement>): void;
-    onClickItem?(item: T): void;
+    onClickItem?(e: any, item: T): void;
 
     loading?: boolean;
     emptyText?: string;

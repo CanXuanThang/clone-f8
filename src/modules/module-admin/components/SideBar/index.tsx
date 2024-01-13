@@ -80,7 +80,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const listItem = [
     {
         name: 'Danh mục',
-        url: SCREEN_ADMIN.DASHBOARD_ADMIN,
+        url: SCREEN_ADMIN.CATEGORY_ADMIN,
         icon: <CategoryIcon />,
     },
     {

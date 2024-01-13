@@ -64,7 +64,7 @@ function HomeRouter() {
                     visible: true,
                 })}
                 {renderRouter({
-                    path: SCREEN_ADMIN.DASHBOARD_ADMIN,
+                    path: SCREEN_ADMIN.CATEGORY_ADMIN,
                     element: <CategoryAdminScreen />,
                     visible: role === 'ROLE_ADMIN' && !!isTokenAdmin,
                 })}

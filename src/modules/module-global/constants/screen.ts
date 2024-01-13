@@ -11,6 +11,6 @@ const SCREEN = Object.freeze({
     PAYMENT: '/payment/:courseId',
 });
 
-const CHANGE_LINK = 'C:/Users/thang/OneDrive/Front-end/clone-f8/public';
+const CHANGE_LINK = 'C:/Users/thang/OneDrive/Front-end/clone-f8/public/';
 
 export { SCREEN, CHANGE_LINK };

@@ -1,6 +1,6 @@
 const SCREEN_ADMIN = Object.freeze({
     LOGIN_ADMIN: '/admin/login',
-    DASHBOARD_ADMIN: '/admin/dashboard',
+    CATEGORY_ADMIN: '/admin/danh-muc',
     COURSES: '/admin/danh-sach-khoa-hoc',
     LESSONS: '/admin/danh-sach-khoa-hoc/:courseId',
     BILL: '/admin/hoa-don',
