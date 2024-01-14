@@ -1,68 +1,53 @@
+import { LoadingButton } from '@mui/lab';
 import { Box, Typography } from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
+import TableTotalPrice from './TableTotalPrice';
 import { useMutation } from '@tanstack/react-query';
-import { TableBaseProps } from '@src/modules/module-base/constants';
-import TableBase from '@src/modules/module-base/components/TableBase';
+import { getTotalBillApi } from '../../apis/Bill';
 import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { TAdminGet } from '../../models';
-import { deleteBillApi, getBillApi } from '../../apis/Bill';
+import DateTimePickerBase from '@src/modules/module-base/components/DateTimePickerBase';
+import moment from 'moment';
+import { useState } from 'react';
+import { TGetTotalBill } from '../../models';
+
+type FormData = {
+    fromDate: Date;
+    toDate: Date;
+};
 
 function TotalPrice() {
-    const [total, setTotal] = useState(0);
-    const column: TableBaseProps<TAdminGet>['rows'] = [
-        {
-            id: 'id',
-            label: 'ID',
-            render: (item) => <Typography variant="caption">{item.id}</Typography>,
+    const dispatch = useDispatch();
+    const [data, setData] = useState<TGetTotalBill[]>([]);
+    const { control, handleSubmit, reset } = useForm<FormData>();
+    const getTotalBill = useMutation({
+        mutationFn: getTotalBillApi,
+        onSuccess: (res) => {
+            let mode;
+            let message;
+            if (res?.code === '200') {
+                mode = 'success';
+                message = 'Thành công';
+                setData(res.data);
+                reset();
+            } else {
+                mode = 'error';
+                message = 'Thất bại';
+            }
+            return dispatch({
+                type: 'notify',
+                payload: {
+                    mode: mode,
+                    message: message,
+                },
+            });
         },
-        {
-            id: 'code',
-            label: 'Code',
-            render: (item) => <Typography variant="caption">{item.course.code}</Typography>,
-        },
-        {
-            id: 'name',
-            label: 'Tên khóa học',
-            render: (item) => <Typography variant="caption">{item.course.name}</Typography>,
-        },
-        {
-            id: 'username',
-            label: 'Tên user',
-            render: (item) => <Typography variant="caption">{item.buyUser.username}</Typography>,
-        },
-        {
-            id: 'email',
-            label: 'Email',
-            render: (item) => <Typography variant="caption">{item.buyUser.email}</Typography>,
-        },
-        {
-            id: 'totalBill',
-            label: 'Tổng hóa đơn',
-            render: (item) => <Typography variant="caption">{`${item.totalBill.toLocaleString()} đ`}</Typography>,
-        },
-    ];
-
-    const getBill = useMutation({
-        mutationFn: getBillApi,
     });
 
-    useEffect(() => {
-        getBill.mutate({ data: { pageIndex: 1, pageSize: 10 } });
-    }, []);
-
-    useEffect(() => {
-        let total = 0;
-        const len = getBill.data?.content.length;
-        getBill.data?.content.map((item, index) => {
-            if (item.status === 2) {
-                total += item.totalBill;
-            }
-            if (len === index + 1) {
-                return setTotal(total);
-            }
-        });
-    }, [getBill.data]);
-
+    const onSubmit = (formData: FormData) => {
+        const fromDate = moment(formData.fromDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+        const toDate = moment(formData.toDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+        getTotalBill.mutate({ data: { fromDate: fromDate, toDate: toDate } });
+    };
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -70,18 +55,46 @@ function TotalPrice() {
                     Danh sách đăng ký khóa học
                 </Typography>
             </Box>
-            <TableBase
-                rows={column}
-                data={getBill.data?.content.filter((data) => data.status === 2)}
-                loading={getBill.isLoading}
-                sx={{ minWidth: '550px', overflow: 'hidden' }}
-            />
-            <Typography sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }} color="green">
-                Tổng tiền:
-                <Typography component={'span'} sx={{ pl: 1, color: 'red' }}>
-                    {`${total.toLocaleString()} đ`}
-                </Typography>
-            </Typography>
+            <Box component="form" display="flex" flexDirection="row" gap={3} onSubmit={handleSubmit(onSubmit)}>
+                <Controller
+                    control={control}
+                    name="fromDate"
+                    render={({
+                        field: { onChange, onBlur, value, name, ref },
+                        fieldState: { isTouched, isDirty, error },
+                    }) => {
+                        let selectedDate = value;
+                        return <DateTimePickerBase selectedDate={selectedDate} onChange={onChange} onBlur={onBlur} />;
+                    }}
+                />
+                <Controller
+                    control={control}
+                    name="toDate"
+                    render={({
+                        field: { onChange, onBlur, value, name, ref },
+                        fieldState: { isTouched, isDirty, error },
+                    }) => {
+                        let selectedDate = value;
+                        return <DateTimePickerBase selectedDate={selectedDate} onChange={onChange} onBlur={onBlur} />;
+                    }}
+                />
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', pb: 1 }}>
+                    <LoadingButton
+                        sx={{
+                            bgcolor: '#ff8f26',
+                            borderRadius: '99px',
+                            p: '9px 9px',
+                            mr: 2,
+                            color: '#fff',
+                            minWidth: '120px',
+                        }}
+                        // loading={mutation.isLoading}
+                        type="submit">
+                        Đồng ý
+                    </LoadingButton>
+                </Box>
+            </Box>
+            <TableTotalPrice data={data} loading={getTotalBill.isLoading} />
         </Box>
     );
 }

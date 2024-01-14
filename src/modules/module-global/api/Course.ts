@@ -6,6 +6,7 @@ import { debounce } from '@src/modules/module-base/hooks';
 const COURSE_API_PATH = Object.freeze({
     COURSE_ALL: '/public/course/all',
     COURSE_BY_ID: (id?: number) => `/public/course/${id}`,
+    COURSE_ALL_BY_TYPE_BY_ID: (id?: number) => `/public/course/all-by-type/${id}`,
     COURSE_USER: '/user-course/get-page',
     COURSE_TYPE_ALL: '/public/course-type-all',
     EVALUATE: '/evaluate/save',
@@ -37,6 +38,21 @@ const getCourseById = async (
     };
     const [{ response, error }] = await Promise.all([
         callApi<CourseApiProps['CourseById']['Response']>(options),
+        debounce(timer),
+    ]);
+    return error || response;
+};
+
+const getCourseAllByTypeByIdApi = async (
+    payload: CourseApiProps['CourseAllByTypeById']['Payload']
+): Promise<CourseApiProps['CourseAllByTypeById']['Response']> => {
+    const { timer = TIMING_API_PENDING, data } = payload;
+    const options = {
+        url: COURSE_API_PATH.COURSE_ALL_BY_TYPE_BY_ID(data.id),
+        method: 'get',
+    };
+    const [{ response, error }] = await Promise.all([
+        callApi<CourseApiProps['CourseAllByTypeById']['Response']>(options),
         debounce(timer),
     ]);
     return error || response;
@@ -104,4 +120,12 @@ const setEvaluateApi = async (
     return error || response;
 };
 
-export { getCourseAll, getCourseById, getCourseByUser, getCourseTypeAll, setEvaluateApi, getCoursePopularApi };
+export {
+    getCourseAll,
+    getCourseById,
+    getCourseByUser,
+    getCourseTypeAll,
+    setEvaluateApi,
+    getCoursePopularApi,
+    getCourseAllByTypeByIdApi,
+};

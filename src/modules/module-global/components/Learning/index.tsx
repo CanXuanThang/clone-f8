@@ -10,6 +10,7 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { Lesson } from '../../models/apis';
 import CircularBase from '@src/modules/module-base/components/CircularBase';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import RatingElm from './RatingElm';
 
 function Learning() {
     const [open, setOpen] = useState(true);
@@ -64,13 +65,7 @@ function Learning() {
                 <Box position="relative">
                     <Grid container>
                         <Grid item xs={open ? 9 : 12}>
-                            <ReactPlayer
-                                url={data?.embeddedLink}
-                                controls={true}
-                                width="100%"
-                                height="550px"
-                                // style={{ maxHeight: '550px' }}
-                            />
+                            <ReactPlayer url={data?.embeddedLink} controls={true} width="100%" height="550px" />
                             <Box mx={8}>
                                 <Typography variant="h3" mt={6}>
                                     {data?.name}
@@ -80,6 +75,10 @@ function Learning() {
                                 </Typography>
                             </Box>
                             <Comment />
+                            <RatingElm
+                                data={lessons.data?.data}
+                                onRefetch={() => lessons.mutate({ data: { id: Number(param.courseId) } })}
+                            />
                         </Grid>
                         {open && (
                             <Grid item xs={3}>

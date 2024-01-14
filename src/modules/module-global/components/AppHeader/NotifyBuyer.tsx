@@ -66,7 +66,7 @@ function NotifyBuyer({ data }: Props) {
                 }}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
-                {data?.content &&
+                {data?.content ? (
                     data?.content.map((item) => (
                         <MenuItem key={item.id} sx={{ my: 1 }}>
                             {item.course.image && (
@@ -83,7 +83,10 @@ function NotifyBuyer({ data }: Props) {
                                 </Typography>
                             </Box>
                         </MenuItem>
-                    ))}
+                    ))
+                ) : (
+                    <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>Chưa có thông báo nào</Typography>
+                )}
             </Menu>
         </Box>
     );

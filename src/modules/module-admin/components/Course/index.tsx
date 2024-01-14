@@ -34,6 +34,11 @@ function Course() {
             render: (item) => <Typography variant="caption">{item.name}</Typography>,
         },
         {
+            id: 'code',
+            label: 'Code',
+            render: (item) => <Typography variant="caption">{item.code}</Typography>,
+        },
+        {
             id: 'description',
             label: 'Mô tả',
             render: (item) => <Typography variant="caption">{item.description}</Typography>,

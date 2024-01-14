@@ -17,7 +17,7 @@ interface Props {
 }
 
 type DataCourse = {
-    code: any;
+    code: string;
     name: string;
     courseType: any;
     description: string;
@@ -75,10 +75,6 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
         refetch().then();
     }, []);
 
-    useEffect(() => {
-        setValue('code', data?.data.find((item) => watch('courseType') === item.id)?.code);
-    }, [watch('courseType')]);
-
     const onSubmit = (formData: DataCourse) => {
         mutation.mutate({
             data: {
@@ -110,6 +106,18 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
                             required: 'Bạn cần nhập tên khóa học',
                             validate: {
                                 value: (value) => !!value.trim() || 'Bạn cần nhập tên khóa học',
+                            },
+                        }}
+                    />
+                    <FormControlInput
+                        name="code"
+                        label="Mã khóa học"
+                        control={control}
+                        required
+                        rules={{
+                            required: 'Bạn cần nhập mã khóa học',
+                            validate: {
+                                value: (value) => !!value.trim() || 'Bạn cần nhập mã khóa học',
                             },
                         }}
                     />

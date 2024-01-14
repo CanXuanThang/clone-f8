@@ -1,5 +1,4 @@
-import { Box, Button, Card, CardContent, CardMedia, IconButton, Rating, Typography } from '@mui/material';
-import SpeedIcon from '@mui/icons-material/Speed';
+import { Box, Card, CardContent, CardMedia, IconButton, Rating, Typography } from '@mui/material';
 import TheatersIcon from '@mui/icons-material/Theaters';
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 import PlayCircle from '@mui/icons-material/PlayCircle';
@@ -11,9 +10,9 @@ import { CHANGE_LINK, SCREEN } from '../../constants/screen';
 import ReactPlayer from 'react-player';
 import CircularBase from '@src/modules/module-base/components/CircularBase';
 import { useMutation } from '@tanstack/react-query';
-import { getCourseByUser, setEvaluateApi } from '../../api/Course';
+import { getCourseByUser } from '../../api/Course';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { accessToken } from '@src/modules/module-base/constants';
 import { AppState } from '../../redux';
@@ -22,16 +21,14 @@ import { LoadingButton } from '@mui/lab';
 interface Props {
     data: DataCourse;
     isLoading: boolean;
-    onRefetch: () => void;
 }
 
-function Intro({ data, isLoading, onRefetch }: Props) {
+function Intro({ data, isLoading }: Props) {
     const [open, setOpen] = useState<boolean>(false);
     const [openLogin, setOpenLogin] = useState<boolean>(false);
     const [type, setType] = useState<string>('login');
     const [isCourse, setIsCourse] = useState<boolean>();
     const [text, setText] = useState<string>('ĐĂNG NHẬP');
-    const dispatch = useDispatch();
 
     const navigation = useNavigate();
     const token = useSelector((state: AppState) => state.profile.token);
@@ -49,30 +46,6 @@ function Intro({ data, isLoading, onRefetch }: Props) {
             } else {
                 setIsCourse(false);
             }
-        },
-    });
-
-    const setEvaluate = useMutation({
-        mutationFn: setEvaluateApi,
-        onSuccess: (res) => {
-            let message;
-            let mode;
-            if (res?.code === '200') {
-                mode = 'success';
-                message = 'Đánh giá thành công';
-                onRefetch();
-            }
-            if (res?.code === '400') {
-                mode = 'error';
-                message = 'Đánh giá thất bại';
-            }
-            return dispatch({
-                type: 'notify',
-                payload: {
-                    mode: mode,
-                    message: message,
-                },
-            });
         },
     });
 
@@ -134,12 +107,6 @@ function Intro({ data, isLoading, onRefetch }: Props) {
                 </LoadingButton>
                 <Box display="flex" flexDirection="column" alignItems="center">
                     <Box display="flex" alignItems="center">
-                        <SpeedIcon />
-                        <Typography ml={1} my={1}>
-                            Trình độ cơ bản
-                        </Typography>
-                    </Box>
-                    <Box display="flex" alignItems="center">
                         <TheatersIcon />
                         <Typography ml={1} my={1}>
                             Tổng số {data?.lessons.length} bài học
@@ -155,17 +122,7 @@ function Intro({ data, isLoading, onRefetch }: Props) {
                         sx={{ display: 'flex', alignItems: 'center', mt: 1 }}
                         name="simple-controlled"
                         value={data.rating}
-                        onChange={(e, newValue) =>
-                            isCourse
-                                ? setEvaluate.mutate({ data: { courseId: data.id, numberStar: Number(newValue) } })
-                                : dispatch({
-                                      type: 'notify',
-                                      payload: {
-                                          mode: 'error',
-                                          message: 'Bạn chưa đăng ký khóa học này',
-                                      },
-                                  })
-                        }
+                        readOnly
                     />
                 </Box>
             </CardContent>

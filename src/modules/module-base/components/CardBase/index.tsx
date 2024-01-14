@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router-dom';
 interface Props {
     item: DataCourse;
     disable?: boolean;
+    isStar?: boolean;
 }
 
-function CardBase({ item, disable = false }: Props) {
+function CardBase({ item, disable = false, isStar = true }: Props) {
     const navigation = useNavigate();
 
     return (
@@ -54,7 +55,7 @@ function CardBase({ item, disable = false }: Props) {
                 }}>
                 <Box display="flex" alignItems="center" justifyContent="space-between">
                     <Typography variant="subtitle2">{item.name}</Typography>
-                    <Rating size="small" name="simple-controlled" defaultValue={item.rating} readOnly />
+                    {isStar && <Rating size="small" name="simple-controlled" defaultValue={item.rating} readOnly />}
                 </Box>
                 {!disable && (
                     <Box display="flex" alignItems="center" justifyContent="space-between" my={1}>

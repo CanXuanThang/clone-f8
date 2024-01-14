@@ -5,6 +5,7 @@ import { callAdminApi } from '@src/modules/module-base/apis/apiAdmin';
 
 const COURSE_API_PATH = Object.freeze({
     GET_BILL: '/bill/admin/get',
+    GET_TOTAL_BILL: '/bill/get-report',
     DELETE_BILL: '/bill/cancel',
     APPROVE_BILL: '/bill/approve',
 });
@@ -20,6 +21,22 @@ const getBillApi = async (
     };
     const [{ response, error }] = await Promise.all([
         callAdminApi<BillAdminApiProps['GetBill']['Response']>(options),
+        debounce(timer),
+    ]);
+    return error || response;
+};
+
+const getTotalBillApi = async (
+    payload: BillAdminApiProps['GetTotalBill']['Payload']
+): Promise<BillAdminApiProps['GetTotalBill']['Response']> => {
+    const { timer = TIMING_API_PENDING, data } = payload;
+    const options = {
+        url: COURSE_API_PATH.GET_TOTAL_BILL,
+        method: 'post',
+        data,
+    };
+    const [{ response, error }] = await Promise.all([
+        callAdminApi<BillAdminApiProps['GetTotalBill']['Response']>(options),
         debounce(timer),
     ]);
     return error || response;
@@ -57,4 +74,4 @@ const approveBillApi = async (
     return error || response;
 };
 
-export { getBillApi, deleteBillApi, approveBillApi };
+export { getBillApi, deleteBillApi, approveBillApi, getTotalBillApi };

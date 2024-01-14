@@ -95,6 +95,10 @@ interface CourseApiProps {
         Payload: CallApiDebounse & { data: { id?: number } };
         Response?: CallApiResponseData<DataCourse>;
     };
+    CourseAllByTypeById: {
+        Payload: CallApiDebounse & { data: { id?: number } };
+        Response?: CallApiResponseData<DataCourse[]>;
+    };
     CourseUser: {
         Payload: CallApiDebounse & { data: { pageIndex: number; pageSize: number } };
         Response?: CourseByUser;
