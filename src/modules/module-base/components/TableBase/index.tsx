@@ -37,7 +37,7 @@ function TableBase<T>(props: TableBaseProps<T>) {
     return (
         <Box className={classNames(classes.tableBox, className)} sx={sx}>
             <TableLoading loading={loading} empty={!data?.length} emptyText={emptyText} />
-            <TableContainer onScroll={onScroll} className={classes.tableContainer}>
+            <TableContainer onScroll={onScroll} className={classes.tableContainer} sx={{ maxHeight: '500px !important' }}>
                 <Table stickyHeader size="medium" className={classes.table}>
                     <TableHeader rows={rows} orderBy={orderBy} orderType={orderType} onRequestSort={onRequestSort} />
                     <TableBody data={data} rows={rows} onClickItem={onClickItem} tableRowProps={tableRowProps} />

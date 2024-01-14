@@ -19,17 +19,17 @@ const useStyles = makeStyles(() => ({
         },
         '&::-webkit-scrollbar-track, ::-webkit-scrollbar-track': {
             borderRadius: '10px',
-            backgroundColor: 'black',
+            backgroundColor: 'white',
         },
         '&::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb': {
             borderRadius: '10px',
-            backgroundColor: 'black',
+            backgroundColor: 'white',
         },
         '&::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:hover': {
-            backgroundColor: 'black',
+            backgroundColor: 'white',
         },
         '&::-webkit-scrollbar-thumb:active, ::-webkit-scrollbar-thumb:active': {
-            backgroundColor: 'black',
+            backgroundColor: 'white',
         },
     },
     table: { minHeight: 200, height: '100%' },

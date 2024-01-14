@@ -84,7 +84,7 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
                 description: formData.description,
                 shortDescription: formData.shortDescription,
                 price: formData.price,
-                discount: formData.discount,
+                discount: formData.discount ? formData.discount : 1,
             },
         });
     };

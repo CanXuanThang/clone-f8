@@ -41,7 +41,8 @@ function DialogRegister({ setType }: Props) {
             if (res?.code === '400') {
                 mode = 'error';
                 message = 'Tên đăng nhập đã tồn tại';
-            } else {
+            }
+            if (res?.code !== '200' && res?.code !== '400') {
                 {
                     mode = 'error';
                     message = 'Đăng ký tài khoản thất bại';

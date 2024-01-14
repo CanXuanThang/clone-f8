@@ -19,6 +19,7 @@ function TotalPrice() {
     const dispatch = useDispatch();
     const [data, setData] = useState<TGetTotalBill[]>([]);
     const { control, handleSubmit, reset } = useForm<FormData>();
+
     const getTotalBill = useMutation({
         mutationFn: getTotalBillApi,
         onSuccess: (res) => {

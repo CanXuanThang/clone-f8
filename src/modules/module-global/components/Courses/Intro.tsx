@@ -67,7 +67,7 @@ function Intro({ data, isLoading }: Props) {
                         width: '100%',
                     },
                 }}>
-                <img src={data?.image.replace(CHANGE_LINK, '')} alt="" />
+                <img src={data?.image.replace(CHANGE_LINK, '../../../../../public/')} alt={data.name} />
                 <IconButton
                     sx={{
                         position: 'absolute',
