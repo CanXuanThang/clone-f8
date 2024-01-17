@@ -7,9 +7,10 @@ interface Props {
     item: DataCourse;
     disable?: boolean;
     isStar?: boolean;
+    isHome?: boolean;
 }
 
-function CardBase({ item, disable = false, isStar = true }: Props) {
+function CardBase({ item, disable = false, isStar = true, isHome = true }: Props) {
     const navigation = useNavigate();
 
     return (
@@ -30,7 +31,13 @@ function CardBase({ item, disable = false, isStar = true }: Props) {
                         },
                     },
                 }}>
-                {item.image && <img src={item.image.replace(CHANGE_LINK, '')} alt={item.name} />}
+                {item.image && (
+                    <img
+                        style={{ maxWidth: '303px', maxHeight: '170px' }}
+                        src={item.image.replace(CHANGE_LINK, isHome ? '' : '../../../../../public/')}
+                        alt={item.name}
+                    />
+                )}
                 <Button className="course" onClick={() => navigation(SCREEN.COURSE.replace('/:courseId', `/${item.id}`))}>
                     <Typography
                         variant="subtitle2"
@@ -54,7 +61,11 @@ function CardBase({ item, disable = false, isStar = true }: Props) {
                     flexDirection: 'column',
                 }}>
                 <Box display="flex" alignItems="center" justifyContent="space-between">
-                    <Typography variant="subtitle2">{item.name}</Typography>
+                    <Typography
+                        variant="subtitle2"
+                        sx={{ maxWidth: '170px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {item.name}
+                    </Typography>
                     {isStar && <Rating size="small" name="simple-controlled" defaultValue={item.rating} readOnly />}
                 </Box>
                 {!disable && (

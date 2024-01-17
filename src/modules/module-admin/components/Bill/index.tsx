@@ -33,6 +33,11 @@ function Bill() {
             render: (item) => <Typography variant="caption">{item.course.name}</Typography>,
         },
         {
+            id: 'displayName',
+            label: 'Tên user',
+            render: (item) => <Typography variant="caption">{item.buyUser.displayName}</Typography>,
+        },
+        {
             id: 'username',
             label: 'Tên user',
             render: (item) => <Typography variant="caption">{item.buyUser.username}</Typography>,

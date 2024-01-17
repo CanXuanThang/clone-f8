@@ -6,10 +6,14 @@ import Cookies from 'js-cookie';
 import { username } from '@src/modules/module-base/constants';
 import { Logout } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { SCREEN } from '../../constants/screen';
+import InfoIcon from '@mui/icons-material/Info';
 
 function User() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const dispatch = useDispatch();
+    const navigation = useNavigate();
 
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -63,6 +67,12 @@ function User() {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
                 <MenuItem sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                    <Button onClick={() => navigation(SCREEN.USER)}>
+                        <ListItemIcon>
+                            <InfoIcon fontSize="small" />
+                        </ListItemIcon>
+                        Thông tin cá nhân
+                    </Button>
                     <ChangePassword />
                     <Button
                         onClick={() => {

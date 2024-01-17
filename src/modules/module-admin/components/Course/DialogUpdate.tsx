@@ -145,7 +145,7 @@ function DialogUpdate({ open, setOpen, onRefesh, dataUpdate }: Props) {
             open={open}
             displayWitdh="sm"
             setOpen={setOpen}
-            textTitle={<Typography>Thêm danh mục</Typography>}
+            textTitle={<Typography>Sửa khóa học</Typography>}
             contentText={
                 <Box component="form" onSubmit={handleSubmit(onSubmit)}>
                     <FormControlInput

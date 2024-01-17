@@ -36,12 +36,8 @@ function BodyComponent() {
         mutationFn: getCourseByUser,
     });
 
-    const getCourseAllByTypeById = useMutation({
-        mutationFn: getCourseAllByTypeByIdApi,
-    });
-
     useEffect(() => {
-        (!!token || !!tokenCookie) && mutation.mutate({ data: { pageIndex: 1, pageSize: 10 } });
+        (!!token || !!tokenCookie) && mutation.mutate({ data: { pageIndex: 1, pageSize: 40 } });
     }, [token, tokenCookie]);
 
     useEffect(() => {
@@ -51,8 +47,6 @@ function BodyComponent() {
     useEffect(() => {
         getCourseType.refetch().then();
     }, []);
-
-    console.log(getCourseType?.data?.data);
 
     return (
         <Box px={10} sx={{ md: { px: 0 } }} mb={8}>

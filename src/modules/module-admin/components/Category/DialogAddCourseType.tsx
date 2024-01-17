@@ -57,7 +57,7 @@ function DialogAddCourseType({ open, setOpen, onRefesh }: Props) {
             open={open}
             displayWitdh="sm"
             setOpen={setOpen}
-            textTitle={<Typography variant="h4">Thêm khóa học</Typography>}
+            textTitle={<Typography variant="h4">Thêm danh mục</Typography>}
             contentText={
                 <Box component="form" onSubmit={handleSubmit(onSubmit)}>
                     <FormControlInput

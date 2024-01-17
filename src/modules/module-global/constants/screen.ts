@@ -9,6 +9,7 @@ const SCREEN = Object.freeze({
     SASS: 'sass',
     LEARNING: '/learning/:courseId',
     PAYMENT: '/payment/:courseId',
+    USER: '/auth/user',
 });
 
 const CHANGE_LINK = 'C:/Users/thang/OneDrive/Front-end/clone-f8/public/';
