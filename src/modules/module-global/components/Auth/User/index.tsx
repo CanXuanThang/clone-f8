@@ -1,4 +1,4 @@
-import { Avatar, Box, Grid, Typography } from '@mui/material';
+import { Avatar, Box, Button, Grid, Typography } from '@mui/material';
 import avatar from '../../../../../../public/avatar.jpg';
 import { useSelector } from 'react-redux';
 import { AppState } from '@src/modules/module-global/redux';
@@ -6,13 +6,15 @@ import Cookies from 'js-cookie';
 import { accessToken } from '@src/modules/module-base/constants';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getCourseByUser } from '@src/modules/module-global/api/Course';
-import { useEffect } from 'react';
-import { TCourseTypeUser } from '@src/modules/module-global/models/apis';
+import { useEffect, useState } from 'react';
+import { DataRegister, TCourseTypeUser } from '@src/modules/module-global/models/apis';
 import { getCurrentUserApi } from '@src/modules/module-global/api/Auth';
 import CircularBase from '@src/modules/module-base/components/CircularBase';
 import CourseForUser from './CourseForUser';
+import DialogUpdateInfo from './DialogUpdateInfo';
 
 function User() {
+    const [open, setOpen] = useState<boolean>(false);
     const token = useSelector((state: AppState) => state.profile.token);
     const tokenCookie = Cookies.get(accessToken);
     const mutation = useMutation({
@@ -84,6 +86,12 @@ function User() {
                             <Typography sx={{ pl: 1 }}>{getCurrentUser.data?.data.phoneNumber}</Typography>
                         </Box>
                     )}
+                    <Button
+                        variant="contained"
+                        sx={{ bgcolor: '#ff8f26', borderRadius: '99px', p: '9px 20px', mt: 2 }}
+                        onClick={() => setOpen(true)}>
+                        Thay đổi thông tin
+                    </Button>
                 </Grid>
                 <Grid xs={12} sm={12} md={7} item>
                     {mutation.data?.content && mutation.data?.content.length !== 0 ? (
@@ -106,6 +114,12 @@ function User() {
                     )}
                 </Grid>
             </Grid>
+            <DialogUpdateInfo
+                open={open}
+                setOpen={setOpen}
+                onRefesh={() => getCurrentUser.refetch().then()}
+                data={getCurrentUser.data?.data}
+            />
         </Box>
     );
 }

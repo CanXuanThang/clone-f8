@@ -26,6 +26,7 @@ type FormDataCourse = {
     shortDescription: string;
     price: number;
     discount: number;
+    courseIndex: number;
     image: File | null;
 };
 
@@ -37,6 +38,7 @@ const defaultValueForm: FormDataCourse = {
     shortDescription: '',
     price: 0,
     discount: 0,
+    courseIndex: 0,
     image: null,
 };
 
@@ -121,6 +123,7 @@ function DialogUpdate({ open, setOpen, onRefesh, dataUpdate }: Props) {
                 shortDescription: dataUpdate?.shortDescription,
                 price: dataUpdate?.price,
                 discount: dataUpdate?.discount,
+                courseIndex: dataUpdate?.courseIndex,
             });
         }
     }, [dataUpdate]);
@@ -136,6 +139,8 @@ function DialogUpdate({ open, setOpen, onRefesh, dataUpdate }: Props) {
                 shortDescription: formData.shortDescription,
                 price: formData.price,
                 discount: formData.discount,
+                courseIndex: formData.courseIndex,
+                status: 1,
             },
         });
     };
@@ -157,6 +162,19 @@ function DialogUpdate({ open, setOpen, onRefesh, dataUpdate }: Props) {
                             required: 'Bạn cần nhập tên khóa học',
                             validate: {
                                 value: (value) => !!value.trim() || 'Bạn cần nhập tên khóa học',
+                            },
+                        }}
+                    />
+                    <FormControlInput
+                        name="courseIndex"
+                        label="Rank"
+                        type="number"
+                        control={control}
+                        required
+                        rules={{
+                            required: 'Bạn cần rank tả khóa học',
+                            validate: {
+                                value: (value) => !!value.trim() || 'Bạn cần rank tả khóa học',
                             },
                         }}
                     />

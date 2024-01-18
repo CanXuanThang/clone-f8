@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import CircularBase from '@src/modules/module-base/components/CircularBase';
 import { useParams } from 'react-router-dom';
+import Recommandations from './Recommandations';
 
 function Courses() {
     const param = useParams();
@@ -53,6 +54,7 @@ function Courses() {
                     {mutation?.data?.data && <Intro data={mutation?.data?.data} isLoading={mutation.isLoading} />}
                 </Grid>
             </Grid>
+            <Recommandations id={Number(param.courseId)} />
         </Box>
     );
 }

@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import './BodyComponent.scss';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
@@ -16,8 +16,11 @@ import { accessToken } from '@src/modules/module-base/constants';
 import CardBase from '@src/modules/module-base/components/CardBase';
 import { TCourseTypeUser } from '@src/modules/module-global/models/apis';
 import CourseAllByType from './CourseAllByType';
+import { useNavigate } from 'react-router-dom';
+import { SCREEN } from '@src/modules/module-global/constants/screen';
 
 function BodyComponent() {
+    const navigation = useNavigate();
     const token = useSelector((state: AppState) => state.profile.token);
     const tokenCookie = Cookies.get(accessToken);
     const { refetch, data, isLoading } = useQuery({
@@ -84,9 +87,18 @@ function BodyComponent() {
             <Box>
                 {getCourseType.data?.data.map((item) => (
                     <Box key={item.id}>
-                        <Typography variant="h5" sx={{ pt: 6, pb: 2 }}>
-                            {item.name}
-                        </Typography>
+                        <Box display="flex" alignItems="center" justifyContent="space-between" sx={{ pt: 6, pb: 2 }}>
+                            <Typography variant="h5">{item.name}</Typography>
+                            <Button
+                                color="info"
+                                onClick={() =>
+                                    navigation(SCREEN.COURSE_BY_TYPE.replace('/:courseId', `/${item.id}`), {
+                                        state: item.name,
+                                    })
+                                }>
+                                Xem tất cả khóa học
+                            </Button>
+                        </Box>
                         <CourseAllByType id={item.id} />
                     </Box>
                 ))}

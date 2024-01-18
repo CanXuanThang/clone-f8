@@ -70,6 +70,17 @@ interface AuthApiProps {
         };
         Response?: CallApiResponseData<null>;
     };
+    UpdateUser: {
+        Payload: CallApiDebounse & {
+            data: {
+                id?: number;
+                email: string;
+                displayName: string;
+                phoneNumber?: string;
+            };
+        };
+        Response?: CallApiResponseData<DataRegister>;
+    };
 }
 
 export type { AuthApiProps, DataRegister };

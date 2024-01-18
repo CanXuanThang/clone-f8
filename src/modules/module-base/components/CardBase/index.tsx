@@ -8,9 +8,10 @@ interface Props {
     disable?: boolean;
     isStar?: boolean;
     isHome?: boolean;
+    isSmall?: boolean;
 }
 
-function CardBase({ item, disable = false, isStar = true, isHome = true }: Props) {
+function CardBase({ item, disable = false, isStar = true, isHome = true, isSmall = true }: Props) {
     const navigation = useNavigate();
 
     return (
@@ -21,7 +22,7 @@ function CardBase({ item, disable = false, isStar = true, isHome = true }: Props
                     img: {
                         borderRadius: '12px',
                         width: '100%',
-                        height: '200px',
+                        height: isSmall ? '200px' : '100px',
                     },
                     '&:hover': {
                         button: {

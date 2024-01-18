@@ -18,6 +18,8 @@ function NotifyBuyer({ data }: Props) {
         setAnchorEl(event.currentTarget);
     };
 
+    console.log(anchorEl);
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -71,7 +73,7 @@ function NotifyBuyer({ data }: Props) {
                         <MenuItem key={item.id} sx={{ my: 1 }}>
                             {item.course.image && (
                                 <img
-                                    src={item.course.image.replace(CHANGE_LINK, '')}
+                                    src={item.course.image.replace(CHANGE_LINK, '../../../../../public/')}
                                     alt={item.course.name}
                                     style={{ width: '120px', borderRadius: '8px', marginRight: '8px' }}
                                 />

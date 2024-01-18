@@ -10,6 +10,7 @@ const SCREEN = Object.freeze({
     LEARNING: '/learning/:courseId',
     PAYMENT: '/payment/:courseId',
     USER: '/auth/user',
+    COURSE_BY_TYPE: '/danh-sach-khoa-hoc/:courseId',
 });
 
 const CHANGE_LINK = 'C:/Users/thang/OneDrive/Front-end/clone-f8/public/';

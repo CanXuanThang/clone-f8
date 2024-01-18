@@ -35,6 +35,7 @@ type DataCourse = {
     lessons: Lesson[];
     rating: number;
     evaluates: Evaluate[];
+    courseIndex: number;
 };
 
 type CourseAll = {
@@ -51,6 +52,25 @@ type TCourseTypeUser = {
 
 type CourseByUser = {
     content: TCourseTypeUser[];
+    pageable: {
+        sort: {
+            empty: boolean;
+            unsorted: boolean;
+            sorted: boolean;
+        };
+        offset: number;
+        pageNumber: number;
+        pageSize: number;
+        unpage: boolean;
+        page: boolean;
+    };
+    numberOfElements: number;
+    first: boolean;
+    empty: boolean;
+};
+
+type TSearchCorse = {
+    content: DataCourse[];
     pageable: {
         sort: {
             empty: boolean;
@@ -107,6 +127,12 @@ interface CourseApiProps {
         Payload: CallApiDebounse;
         Response?: CallApiResponseData<TCourseTypeAll[]>;
     };
+    SearchCourse: {
+        Payload: CallApiDebounse & {
+            data: { pageIndex: number; pageSize: number; textSearch?: string; courseTypeId?: number };
+        };
+        Response?: TSearchCorse;
+    };
     Evaluate: {
         Payload: CallApiDebounse & {
             data: {
@@ -116,6 +142,10 @@ interface CourseApiProps {
             };
         };
         Response?: CallApiResponseData<Evaluate>;
+    };
+    Recommandation: {
+        Payload: CallApiDebounse & { data: { id: number } };
+        Response?: CallApiResponseData<DataCourse[]>;
     };
 }
 

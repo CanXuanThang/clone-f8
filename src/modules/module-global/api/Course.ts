@@ -11,6 +11,8 @@ const COURSE_API_PATH = Object.freeze({
     COURSE_TYPE_ALL: '/public/course-type-all',
     EVALUATE: '/evaluate/save',
     COURSE_POPULAR: '/public/course/popular',
+    RECOMMANDATION: (id: number) => `/public/course-suggest/${id}`,
+    SEARCH_COURSE: '/course/get-page',
 });
 
 const getCourseAll = async (
@@ -120,12 +122,46 @@ const setEvaluateApi = async (
     return error || response;
 };
 
+const searchCourseApi = async (
+    payload: CourseApiProps['SearchCourse']['Payload']
+): Promise<CourseApiProps['SearchCourse']['Response']> => {
+    const { timer = 1000, data } = payload;
+    const options = {
+        url: COURSE_API_PATH.SEARCH_COURSE,
+        method: 'post',
+        data,
+    };
+    const [{ response, error }] = await Promise.all([
+        callApi<CourseApiProps['SearchCourse']['Response']>(options),
+        debounce(timer),
+    ]);
+    return error || response;
+};
+
+const getRecommandationApi = async (
+    payload: CourseApiProps['Recommandation']['Payload']
+): Promise<CourseApiProps['Recommandation']['Response']> => {
+    const { timer = TIMING_API_PENDING, data } = payload;
+    const options = {
+        url: COURSE_API_PATH.RECOMMANDATION(data.id),
+        method: 'get',
+        data,
+    };
+    const [{ response, error }] = await Promise.all([
+        callApi<CourseApiProps['Recommandation']['Response']>(options),
+        debounce(timer),
+    ]);
+    return error || response;
+};
+
 export {
     getCourseAll,
     getCourseById,
     getCourseByUser,
     getCourseTypeAll,
     setEvaluateApi,
+    searchCourseApi,
     getCoursePopularApi,
     getCourseAllByTypeByIdApi,
+    getRecommandationApi,
 };

@@ -34,6 +34,8 @@ interface CourseAdminApiProps {
                 price: DataCourse['price'];
                 discount: DataCourse['discount'];
                 courseType: { id: DataCourse['id'] };
+                courseIndex: number;
+                status: number;
             };
         };
         Response?: CallApiResponseData<DataCourse>;

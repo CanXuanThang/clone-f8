@@ -54,6 +54,11 @@ function Course() {
             render: (item) => item.discount,
         },
         {
+            id: 'courseIndex',
+            label: 'Rank',
+            render: (item) => item.courseIndex,
+        },
+        {
             id: 'totalBuy',
             label: 'Số lượng đã mua',
             render: (item) => item.totalBuy,
