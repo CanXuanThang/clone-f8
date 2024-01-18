@@ -1,6 +1,5 @@
 import { Avatar, Box, Grid, Typography } from '@mui/material';
 import avatar from '../../../../../../public/avatar.jpg';
-import CardBase from '@src/modules/module-base/components/CardBase';
 import { useSelector } from 'react-redux';
 import { AppState } from '@src/modules/module-global/redux';
 import Cookies from 'js-cookie';
@@ -11,6 +10,7 @@ import { useEffect } from 'react';
 import { TCourseTypeUser } from '@src/modules/module-global/models/apis';
 import { getCurrentUserApi } from '@src/modules/module-global/api/Auth';
 import CircularBase from '@src/modules/module-base/components/CircularBase';
+import CourseForUser from './CourseForUser';
 
 function User() {
     const token = useSelector((state: AppState) => state.profile.token);
@@ -34,11 +34,38 @@ function User() {
     }, []);
 
     return (
-        <>
+        <Box
+            sx={{
+                minHeight: '650px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                mx: { lg: '21%', md: '12%', sm: '5%', xs: 0 },
+            }}>
             <CircularBase isLoading={getCurrentUser.isLoading || mutation.isLoading} />
-            <Grid m={5} container item>
-                <Grid xs={6} item>
+            <Box
+                sx={{
+                    backgroundImage: `url("../../../../../../public/banner-user.png")`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                    borderBottomLeftRadius: '16px',
+                    borderBottomRightRadius: '16px',
+                    width: '100%',
+                    height: '300px',
+                    position: 'relative',
+                }}>
+                <Box sx={{ position: 'absolute', bottom: '-84px', left: '44px', display: 'flex', alignItems: 'end' }}>
                     <Avatar alt="Remy Sharp" src={avatar} sx={{ width: '9em', height: '9em' }} />
+                    {getCurrentUser.data?.data && (
+                        <Typography variant="h5" ml={2}>
+                            {getCurrentUser.data?.data.displayName}
+                        </Typography>
+                    )}
+                </Box>
+            </Box>
+            <Grid pl="54px" mt={14} container item>
+                <Grid xs={12} sm={12} md={5} item>
+                    <Typography variant="h5">Thông tin cá nhân</Typography>
                     {getCurrentUser.data?.data && (
                         <Box display="flex" flexDirection="row" my={1}>
                             <Typography>Họ và tên :</Typography>
@@ -58,13 +85,19 @@ function User() {
                         </Box>
                     )}
                 </Grid>
-                <Grid xs={6} item>
+                <Grid xs={12} sm={12} md={7} item>
                     {mutation.data?.content && mutation.data?.content.length !== 0 ? (
                         <>
-                            <Typography variant="h5">Các khóa học của bạn</Typography>
+                            <Typography variant="h5" mb={1}>
+                                Các khóa học của bạn
+                            </Typography>
                             {mutation.data?.content.map((data: TCourseTypeUser, index) => (
-                                <Box sx={{ maxWidth: '303px' }} key={index}>
-                                    <CardBase item={data.course} disable={true} isStar={false} isHome={false} />
+                                <Box sx={{ display: 'flex', mb: 2 }} key={index}>
+                                    <CourseForUser item={data.course} />
+                                    <Box ml={1}>
+                                        <Typography variant="subtitle2">{data.course.name}</Typography>
+                                        <Typography component="p">{data.course.description}</Typography>
+                                    </Box>
                                 </Box>
                             ))}
                         </>
@@ -73,7 +106,7 @@ function User() {
                     )}
                 </Grid>
             </Grid>
-        </>
+        </Box>
     );
 }
 

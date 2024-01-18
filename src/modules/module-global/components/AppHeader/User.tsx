@@ -67,7 +67,11 @@ function User() {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
                 <MenuItem sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <Button onClick={() => navigation(SCREEN.USER)}>
+                    <Button
+                        onClick={() => {
+                            navigation(SCREEN.USER);
+                            handleClose();
+                        }}>
                         <ListItemIcon>
                             <InfoIcon fontSize="small" />
                         </ListItemIcon>

@@ -42,11 +42,18 @@ function TableBody<T>(props: Pick<TableBaseProps<T>, 'data' | 'onClickItem' | 'r
                 );
             })}
             {data?.length === 0 && (
-                <Typography
-                    variant="h6"
-                    sx={{ display: 'flex', justifyContent: 'center', position: 'absolute', left: '40%', mt: 5 }}>
-                    Chưa có dữ liệu
-                </Typography>
+                <TableRow>
+                    <TableCell
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            position: 'absolute',
+                            left: '40%',
+                            marginTop: 5,
+                        }}>
+                        Chưa có dữ liệu
+                    </TableCell>
+                </TableRow>
             )}
         </TableBodyElem>
     );

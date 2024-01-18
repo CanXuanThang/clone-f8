@@ -25,6 +25,7 @@ import { useDispatch } from 'react-redux';
 import { setToken } from '@src/modules/module-global/redux/selector';
 import Cookies from 'js-cookie';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const drawerWidth = 300;
 
@@ -82,6 +83,11 @@ const listItem = [
         name: 'Danh mục',
         url: SCREEN_ADMIN.CATEGORY_ADMIN,
         icon: <CategoryIcon />,
+    },
+    {
+        name: 'Danh sách người dùng',
+        url: SCREEN_ADMIN.ALL_USER,
+        icon: <AccountCircleIcon />,
     },
     {
         name: 'Danh sách khóa học',

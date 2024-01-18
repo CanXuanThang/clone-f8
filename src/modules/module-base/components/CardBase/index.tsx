@@ -21,6 +21,7 @@ function CardBase({ item, disable = false, isStar = true, isHome = true }: Props
                     img: {
                         borderRadius: '12px',
                         width: '100%',
+                        height: '200px',
                     },
                     '&:hover': {
                         button: {
@@ -32,11 +33,7 @@ function CardBase({ item, disable = false, isStar = true, isHome = true }: Props
                     },
                 }}>
                 {item.image && (
-                    <img
-                        style={{ maxWidth: '303px', maxHeight: '170px' }}
-                        src={item.image.replace(CHANGE_LINK, isHome ? '' : '../../../../../public/')}
-                        alt={item.name}
-                    />
+                    <img src={item.image.replace(CHANGE_LINK, isHome ? '' : '../../../../../public/')} alt={item.name} />
                 )}
                 <Button className="course" onClick={() => navigation(SCREEN.COURSE.replace('/:courseId', `/${item.id}`))}>
                     <Typography

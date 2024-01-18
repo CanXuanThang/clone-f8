@@ -39,7 +39,7 @@ function Bill() {
         },
         {
             id: 'username',
-            label: 'Tên user',
+            label: 'Tên người dùng',
             render: (item) => <Typography variant="caption">{item.buyUser.username}</Typography>,
         },
         {

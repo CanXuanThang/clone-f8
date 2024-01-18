@@ -5,6 +5,7 @@ const SCREEN_ADMIN = Object.freeze({
     LESSONS: '/admin/danh-sach-khoa-hoc/:courseId',
     BILL: '/admin/hoa-don',
     TOTAL_PRICE: '/admin/tong-tien',
+    ALL_USER: '/admin/danh-sach-nguoi-dung',
 });
 
 export { SCREEN_ADMIN };

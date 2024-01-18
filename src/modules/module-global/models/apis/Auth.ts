@@ -8,7 +8,7 @@ type SignIn = {
 };
 
 type DataRegister = {
-    id: string;
+    id: number;
     username: string;
     oldPassword: string | null;
     password: string | null;
