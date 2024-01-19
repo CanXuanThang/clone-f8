@@ -1,8 +1,6 @@
 import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import React, { useEffect } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { getBuyerApi } from '../../api/Bill';
+import React from 'react';
 import { TBuyer } from '../../models/apis/Bill';
 import { CHANGE_LINK } from '../../constants/screen';
 
@@ -17,8 +15,6 @@ function NotifyBuyer({ data }: Props) {
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
-
-    console.log(anchorEl);
 
     const handleClose = () => {
         setAnchorEl(null);

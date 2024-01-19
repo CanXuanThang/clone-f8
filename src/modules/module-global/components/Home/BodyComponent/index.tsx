@@ -23,11 +23,6 @@ function BodyComponent() {
     const navigation = useNavigate();
     const token = useSelector((state: AppState) => state.profile.token);
     const tokenCookie = Cookies.get(accessToken);
-    const { refetch, data, isLoading } = useQuery({
-        queryKey: ['GET_COURSE_ALL'],
-        queryFn: () => getCourseAll({}),
-        enabled: false,
-    });
 
     const getCourseType = useQuery({
         queryKey: ['getCourseTypeAdmin'],
@@ -44,16 +39,12 @@ function BodyComponent() {
     }, [token, tokenCookie]);
 
     useEffect(() => {
-        refetch().then();
-    }, []);
-
-    useEffect(() => {
         getCourseType.refetch().then();
     }, []);
 
     return (
         <Box px={10} sx={{ md: { px: 0 } }} mb={8}>
-            <CircularBase isLoading={isLoading || mutation.isLoading} />
+            <CircularBase isLoading={mutation.isLoading} />
             <Box>
                 {mutation?.data ? (
                     <>

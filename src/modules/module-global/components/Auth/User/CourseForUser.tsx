@@ -19,7 +19,7 @@ function CourseForUser({ item }: Props) {
                     img: {
                         borderRadius: '12px',
                         width: '100%',
-                        // height: '200px',
+                        height: '150px',
                     },
                     '&:hover': {
                         button: {

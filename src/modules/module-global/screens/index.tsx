@@ -13,6 +13,7 @@ const NotFoundScreen = React.lazy(() => import('./NotFoundScreen'));
 const LearningScreen = React.lazy(() => import('./LearningScreen'));
 const PaymentScreen = React.lazy(() => import('./PaymentScreen'));
 const UserScreen = React.lazy(() => import('./UserScreen'));
+const ListCourseByTypeScreen = React.lazy(() => import('./ListCourseByTypeScreen'));
 
 // ----------admin-------------
 const LoginAdminScreeen = React.lazy(() => import('@src/modules/module-admin/components/Login'));
@@ -60,6 +61,11 @@ function HomeRouter() {
                 {renderRouter({
                     path: SCREEN.USER,
                     element: <UserScreen />,
+                    visible: !!isToken,
+                })}
+                {renderRouter({
+                    path: SCREEN.COURSE_BY_TYPE,
+                    element: <ListCourseByTypeScreen />,
                     visible: !!isToken,
                 })}
 
