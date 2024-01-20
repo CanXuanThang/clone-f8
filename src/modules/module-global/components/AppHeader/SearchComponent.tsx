@@ -5,6 +5,8 @@ import { useMutation } from '@tanstack/react-query';
 import { searchCourseApi } from '../../api/Course';
 import { debounce } from '@src/modules/module-base/hooks';
 import CardBase from '@src/modules/module-base/components/CardBase';
+import { useNavigate } from 'react-router-dom';
+import { SCREEN } from '../../constants/screen';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -44,6 +46,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 function SearchComponent() {
     const [open, setOpen] = useState<boolean>(false);
     const [value, setValue] = useState<string>('');
+    const navigation = useNavigate();
     const handleClick = () => {
         setOpen(true);
     };
@@ -88,17 +91,24 @@ function SearchComponent() {
                 aria-labelledby="demo-positioned-button"
                 open={open}
                 onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
+                sx={{
+                    'div:nth-child(3)': {
+                        top: '50px !important',
+                        left: '559px !important',
+                        width: '523px !important',
+                        maxHeight: '400px',
+                        overflow: 'auto',
+                    },
                 }}>
                 {mutation.data?.content.map((item) => (
-                    <MenuItem key={item.id} onClick={() => setOpen(false)}>
-                        <CardBase item={item} isHome={false} />
+                    <MenuItem
+                        key={item.id}
+                        onClick={() => {
+                            setOpen(false);
+                            navigation(SCREEN.COURSE.replace('/:courseId', `/${item.id}`));
+                        }}
+                        sx={{ py: 2 }}>
+                        <Typography variant="subtitle2">{item.name}</Typography>
                     </MenuItem>
                 ))}
             </Menu>
