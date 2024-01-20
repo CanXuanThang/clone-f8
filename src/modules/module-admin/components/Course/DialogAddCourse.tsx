@@ -108,7 +108,7 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
                         rules={{
                             required: 'Bạn cần nhập tên khóa học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập tên khóa học',
+                                value: (value) => !!value || 'Bạn cần nhập tên khóa học',
                             },
                         }}
                     />
@@ -120,7 +120,7 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
                         rules={{
                             required: 'Bạn cần nhập mã khóa học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập mã khóa học',
+                                value: (value) => !!value || 'Bạn cần nhập mã khóa học',
                             },
                         }}
                     />
@@ -133,7 +133,7 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
                         rules={{
                             required: 'Bạn cần rank khóa học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần rank khóa học',
+                                value: (value) => !!value || 'Bạn cần rank khóa học',
                             },
                         }}
                     />
@@ -158,7 +158,7 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
                         rules={{
                             required: 'Bạn cần nhập mô tả khóa học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập mô tả khóa học',
+                                value: (value) => !!value || 'Bạn cần nhập mô tả khóa học',
                             },
                         }}
                     />
@@ -172,7 +172,7 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
                         rules={{
                             required: 'Bạn cần nhập giá của khóa học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập giá của khóa học',
+                                value: (value) => !!value || 'Bạn cần nhập giá của khóa học',
                             },
                         }}
                     />

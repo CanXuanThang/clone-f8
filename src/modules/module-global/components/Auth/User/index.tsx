@@ -102,9 +102,13 @@ function User() {
                             {mutation.data?.content.map((data: TCourseTypeUser, index) => (
                                 <Box sx={{ display: 'flex', mb: 2 }} key={index}>
                                     <CourseForUser item={data.course} />
-                                    <Box ml={1}>
+                                    <Box ml={1} maxWidth="170px">
                                         <Typography variant="subtitle2">{data.course.name}</Typography>
-                                        <Typography component="p">{data.course.description}</Typography>
+                                        <Typography
+                                            component="p"
+                                            sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                            {data.course.description}
+                                        </Typography>
                                     </Box>
                                 </Box>
                             ))}

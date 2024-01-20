@@ -85,7 +85,7 @@ function DialogUpdateType({ open, setOpen, onRefesh, data }: Props) {
                         rules={{
                             required: 'Bạn cần nhập mã khóa học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập mã khóa học',
+                                value: (value) => !!value || 'Bạn cần nhập mã khóa học',
                             },
                         }}
                     />
@@ -97,7 +97,7 @@ function DialogUpdateType({ open, setOpen, onRefesh, data }: Props) {
                         rules={{
                             required: 'Bạn cần nhập tên khóa học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập tên khóa học',
+                                value: (value) => !!value || 'Bạn cần nhập tên khóa học',
                             },
                         }}
                     />

@@ -99,7 +99,7 @@ function DialogAddLesson({ open, setOpen, onRefesh }: Props) {
                         rules={{
                             required: 'Bạn cần nhập tên bài học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập tên bài học',
+                                value: (value) => !!value || 'Bạn cần nhập tên bài học',
                             },
                         }}
                     />
@@ -111,7 +111,7 @@ function DialogAddLesson({ open, setOpen, onRefesh }: Props) {
                         rules={{
                             required: 'Bạn cần nhập mô tả của bài học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập mô tả của bài học',
+                                value: (value) => !!value || 'Bạn cần nhập mô tả của bài học',
                             },
                         }}
                     />
@@ -123,7 +123,7 @@ function DialogAddLesson({ open, setOpen, onRefesh }: Props) {
                         rules={{
                             required: 'Bạn cần nhập đường dẫn của bài học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập đường dẫn của bài học',
+                                value: (value) => !!value || 'Bạn cần nhập đường dẫn của bài học',
                             },
                         }}
                     />

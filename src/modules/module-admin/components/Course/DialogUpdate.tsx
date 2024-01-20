@@ -161,7 +161,7 @@ function DialogUpdate({ open, setOpen, onRefesh, dataUpdate }: Props) {
                         rules={{
                             required: 'Bạn cần nhập tên khóa học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập tên khóa học',
+                                value: (value) => !!value || 'Bạn cần nhập tên khóa học',
                             },
                         }}
                     />
@@ -174,7 +174,7 @@ function DialogUpdate({ open, setOpen, onRefesh, dataUpdate }: Props) {
                         rules={{
                             required: 'Bạn cần rank tả khóa học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần rank tả khóa học',
+                                value: (value) => !!value || 'Bạn cần rank tả khóa học',
                             },
                         }}
                     />
@@ -199,7 +199,7 @@ function DialogUpdate({ open, setOpen, onRefesh, dataUpdate }: Props) {
                         rules={{
                             required: 'Bạn cần nhập mô tả khóa học',
                             validate: {
-                                value: (value) => !!value.trim() || 'Bạn cần nhập mô tả khóa học',
+                                value: (value) => !!value || 'Bạn cần nhập mô tả khóa học',
                             },
                         }}
                     />
