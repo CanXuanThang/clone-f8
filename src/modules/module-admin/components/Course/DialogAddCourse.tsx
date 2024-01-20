@@ -25,7 +25,6 @@ type DataCourse = {
     price: number;
     discount: number;
     image: File;
-    courseIndex: number;
 };
 
 function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
@@ -86,7 +85,6 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
                 shortDescription: formData.shortDescription,
                 price: formData.price,
                 discount: formData.discount ? formData.discount : 1,
-                courseIndex: formData.courseIndex,
                 status: 1,
             },
         });
@@ -121,19 +119,6 @@ function DialogAddCourse({ open, setOpen, onRefesh }: Props) {
                             required: 'Bạn cần nhập mã khóa học',
                             validate: {
                                 value: (value) => !!value || 'Bạn cần nhập mã khóa học',
-                            },
-                        }}
-                    />
-                    <FormControlInput
-                        name="courseIndex"
-                        label="Rank"
-                        control={control}
-                        required
-                        type="number"
-                        rules={{
-                            required: 'Bạn cần rank khóa học',
-                            validate: {
-                                value: (value) => !!value || 'Bạn cần rank khóa học',
                             },
                         }}
                     />
