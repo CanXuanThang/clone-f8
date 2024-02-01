@@ -7,7 +7,7 @@ import { getTotalBillApi } from '../../apis/Bill';
 import { useDispatch } from 'react-redux';
 import DateTimePickerBase from '@src/modules/module-base/components/DateTimePickerBase';
 import moment from 'moment';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TGetTotalBill } from '../../models';
 
 type FormData = {
@@ -49,6 +49,12 @@ function TotalPrice() {
         const toDate = moment(formData.toDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
         getTotalBill.mutate({ data: { fromDate: fromDate, toDate: toDate } });
     };
+
+    useEffect(() => {
+        const newDate = moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+        getTotalBill.mutate({ data: { fromDate: newDate, toDate: newDate } });
+    }, []);
+
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

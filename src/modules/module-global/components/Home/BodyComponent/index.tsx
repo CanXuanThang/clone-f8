@@ -1,12 +1,7 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 import './BodyComponent.scss';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import {
-    getCourseAll,
-    getCourseAllByTypeByIdApi,
-    getCourseByUser,
-    getCourseTypeAll,
-} from '@src/modules/module-global/api/Course';
+import { getCourseByUser, getCourseTypeAll } from '@src/modules/module-global/api/Course';
 import { useEffect } from 'react';
 import CircularBase from '@src/modules/module-base/components/CircularBase';
 import { useSelector } from 'react-redux';
